@@ -8,6 +8,7 @@ public class BilAbonnementGruppe1Application {
 
     public static void main(String[] args) {
         SpringApplication.run(BilAbonnementGruppe1Application.class, args);
+
     }
 
 }
