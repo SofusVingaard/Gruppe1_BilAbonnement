@@ -7,7 +7,7 @@ public class CarFinance {
     private double totalPrice;
     private int damageReportId;
     private LocalDate date;
-    private double co2Emissino;
+    private double co2Emissinon;
     private double kmOverLimit;
     private double rentalFee;
 }
