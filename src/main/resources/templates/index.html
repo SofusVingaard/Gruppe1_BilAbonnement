@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
 <head>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<div class="backgroundImage">
+    <img th:src="@{/img/pinkKei.png}" alt="background image">
 
-<form th:action="@{/user/createUser}" method="get">
-    <button type="submit">Create New User</button>
-</form>
+    <div class="loginInformation">
+            <h2>Log ind</h2>
+            <form th:action="@{/user/login}" method="post">
+                <div th:if="${errorMessage}" class="error-message">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+                <label for="userName">Bruger navn</label>
+                <input type="userName" id="userName" name="userName" placeholder="Dit bruger navn" required>
+                <br>
+                <label for="password">Adgangskode</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+                <br>
+                <button type="submit">Log ind</button>
 
+                <p class="signup-link">Har du ikke en konto? <a th:href="@{/user/createUser}">Opret en her</a></p>
+            </form>
+        </div>
 
+    </div>
 </body>
 </html>
