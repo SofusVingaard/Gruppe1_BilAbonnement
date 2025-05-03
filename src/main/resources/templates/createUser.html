@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+
+<h2>Opret Konto</h2>
+<form th:action="@{/user/createUser}" method="post">
+    <div th:if="${errorMessage}" class="error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <label for="userName">Vælg dit unikke bruger navn</label>
+    <input type="userName" id="userName" name="userName" placeholder="Dit bruger navn" required>
+
+    <label for="name">Fulde navn</label>
+    <input type="text" id="name" name="name" placeholder="F.eks. Anna Jensen" required>
+
+    <label for="password">Adgangskode</label>
+    <input type="password" id="password" name="password" placeholder="••••••••" required>
+
+    <button type="submit">Opret Konto</button>
+
+    <p class="signup-link">Har du allerede en konto? <a th:href="@{/users/login}">Log ind her</a></p>
+</form>
 
 </body>
 </html>
