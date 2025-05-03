@@ -1,5 +1,6 @@
 package org.example.bilabonnement_gruppe1.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.model.User;
 import org.example.bilabonnement_gruppe1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,29 @@ public class UserController {
 
     @PostMapping("/createUser")
     public String createUser
-            (@RequestParam ("userName") String userName,
+            (@RequestParam ("userLogin") String userLogin,
              @RequestParam ("name") String name,
              @RequestParam ("password") String password,
-             RedirectAttributes redirectAttributes
-            ) {
+             RedirectAttributes redirectAttributes) {
 
 
-        User user = new User(userName, name, password);
+        User user = new User(userLogin, name, password);
         userRepository.createUser(user);
 
         return "redirect:/index";
     }
+
+    /*@PostMapping("/login")
+    public String login(
+            HttpSession session,
+            RedirectAttributes redirectAttributes,
+            @RequestParam("userLogin") String userLogin,
+            @RequestParam("password") String password) {
+
+        User user = new User(userLogin,password);
+
+
+        return
+    }*/
 
 }
