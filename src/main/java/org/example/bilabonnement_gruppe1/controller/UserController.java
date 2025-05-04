@@ -27,6 +27,12 @@ public class UserController {
              @RequestParam ("password") String password,
              RedirectAttributes redirectAttributes) {
 
+        User doesExist= userRepository.findByUserLogin(userLogin);
+
+        if( doesExist!=null){
+            redirectAttributes.addFlashAttribute("errorMessage", "Der findes allerede en bruger med dette brugernavn");
+            return "redirect:/user/createUser";
+        }
 
         User user = new User(userLogin, name, password);
         userRepository.createUser(user);

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/createUser.css}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,8 +14,8 @@
         <p th:text="${errorMessage}"></p>
     </div>
 
-    <label for="userName">Vælg dit unikke bruger navn</label>
-    <input type="userName" id="userName" name="userName" placeholder="Dit bruger navn" required>
+    <label for="userLogin">Vælg dit unikke bruger navn</label>
+    <input type="text" id="userLogin" name="userLogin" placeholder="Dit bruger navn" required>
 
     <label for="name">Fulde navn</label>
     <input type="text" id="name" name="name" placeholder="F.eks. Anna Jensen" required>
