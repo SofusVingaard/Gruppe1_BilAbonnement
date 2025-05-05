@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="backgroundImage">
-    <img th:src="@{/img/pinkKei.png}" alt="background image">
+    <img th:src="@{/img/}" alt="background image">
 
     <div class="loginInformation">
             <h2>Log ind</h2>
@@ -17,8 +17,8 @@
                 <div th:if="${errorMessage}" class="error-message">
                     <p th:text="${errorMessage}"></p>
                 </div>
-                <label for="userName">Bruger navn</label>
-                <input type="text" id="userName" name="userName" placeholder="Dit bruger navn" required>
+                <label for="userLogin">Bruger navn</label>
+                <input type="text" id="userLogin" name="userLogin" placeholder="Dit bruger navn" required>
                 <br>
                 <label for="password">Adgangskode</label>
                 <input type="password" id="password" name="password" placeholder="••••••••" required>

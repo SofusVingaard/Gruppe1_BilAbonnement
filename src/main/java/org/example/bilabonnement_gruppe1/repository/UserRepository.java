@@ -55,4 +55,30 @@ public class UserRepository {
         return user;
     }
 
+    public User login(String userLogin){
+        String sql = "SELECT * FROM user WHERE userLogin = ?";
+        User user = null;
+
+        try (Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setString(1, user.getUserLogin());
+
+            try (ResultSet resultSet = statement.executeQuery()){
+                if (resultSet.next()){
+                    user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setUserLogin(resultSet.getString("userLogin"));
+                    user.setName(resultSet.getString("name"));
+                    user.setPassword(resultSet.getString("password"));
+                }
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
 }

@@ -40,17 +40,28 @@ public class UserController {
         return "redirect:/index";
     }
 
-    /*@PostMapping("/login")
+    @GetMapping ("/login")
+    public String loginPage(){
+        return "login";
+    }
+
+
+    @PostMapping("/login")
     public String login(
             HttpSession session,
             RedirectAttributes redirectAttributes,
             @RequestParam("userLogin") String userLogin,
             @RequestParam("password") String password) {
 
-        User user = new User(userLogin,password);
+        User user = userRepository.findByUserLogin(userLogin);
 
 
-        return
-    }*/
-
+        if (user != null && user.getPassword().equals(password)) {
+            session.setAttribute("currentUser", user);
+            return "redirect:/dashboard";
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "User login er forkert/Bruger eksistere ikke");
+            return "redirect:/index";
+        }
+    }
 }
