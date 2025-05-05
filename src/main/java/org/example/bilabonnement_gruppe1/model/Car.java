@@ -1,6 +1,8 @@
 package org.example.bilabonnement_gruppe1.model;
 
 public class Car {
+
+
     private String vehicleNumber;
     private String chassisnumber;
     private String brand;
@@ -17,5 +19,12 @@ public class Car {
     private double registrationFee;
     private double kmDriven;
 
+    public String getVehicleNumber() {
+        return vehicleNumber;
+    }
+
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
+    }
 
 }
