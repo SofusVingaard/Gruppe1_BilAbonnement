@@ -6,7 +6,7 @@ CREATE TABLE user (
     userLogin VARCHAR(100) UNIQUE,
     name VARCHAR(50),
     password VARCHAR(100)
-                  );
+);
 
 CREATE TABLE car (
     vehicleNumber INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +26,24 @@ CREATE TABLE customer (
     phoneNumber VARCHAR(250)
 );
 
+CREATE TABLE damageReport(
+                             id INT AUTO_INCREMENT PRIMARY KEY,
+                             userId INT,
+                             kmOverLimit DOUBLE,
+                             repairCost DOUBLE,
+
+                             FOREIGN KEY (userId) REFERENCES user (id)
+);
+
+CREATE TABLE damage (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        damageReportId INT,
+                        damageType VARCHAR(500),
+                        price DOUBLE,
+
+                        FOREIGN KEY (damageReportId) REFERENCES damageReport(id)
+);
+
 CREATE TABLE rentalAgreement (
     id INT AUTO_INCREMENT PRIMARY KEY,
     carId INT,
@@ -43,23 +61,6 @@ CREATE TABLE rentalAgreement (
     FOREIGN KEY (damageReportId) REFERENCES damageReport (id)
 );
 
-CREATE TABLE damageReport(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    userId INT,
-    kmOverLimit DOUBLE,
-    repairCost DOUBLE,
-
-    FOREIGN KEY (userId) REFERENCES user (id)
-);
-
-CREATE TABLE damage (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    damageReportId INT,
-    damageType VARCHAR(500),
-    price DOUBLE,
-
-    FOREIGN KEY (damageReportId) REFERENCES damageReport(id)
-);
 
 CREATE TABLE carFinance(
     id INT AUTO_INCREMENT PRIMARY KEY,
