@@ -63,5 +63,18 @@ public class RentalAgreementRepository {
             e.printStackTrace();
         }
     }
+
+    public void deleteRentalAgreement(int id) {
+        String sql = "DELETE FROM rentalAgreement WHERE id = ?";
+
+        try( Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+        statement.setInt(1,id);
+        statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 

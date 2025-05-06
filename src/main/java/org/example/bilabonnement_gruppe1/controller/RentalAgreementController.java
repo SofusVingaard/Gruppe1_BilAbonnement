@@ -49,7 +49,7 @@ import java.time.LocalDate;
             rentalAgreementRepository.createRentalAgreement(agreement);
             redirectAttributes.addFlashAttribute("successMessage", "Lejeaftale oprettet!");
 
-            return "redirect:/index";
+            return "redirect:/dashboard";
         }
     }
 
