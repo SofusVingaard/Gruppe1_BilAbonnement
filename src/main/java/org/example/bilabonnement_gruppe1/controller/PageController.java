@@ -10,5 +10,9 @@ public class PageController {
     public String index() {
         return "index"; // viser templates/index.html
     }
+    @GetMapping("/dashboard")
+    public String dashboard(){
+        return "dashboard"; 
+    }
 }
 

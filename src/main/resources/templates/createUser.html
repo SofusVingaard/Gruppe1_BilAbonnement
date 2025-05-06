@@ -2,11 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/css/createUser.css">
+    <title>Opret bruger</title>
+    <link rel="stylesheet" th:href="@{/css/createUser.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
+
+<header>
+    <<img th:src="@{/img/logo.png}" alt="Logo" class="logo">
+</header>
+
 <body>
 
+<div class="loginInformation">
 <h2>Opret Konto</h2>
 <form th:action="@{/user/createUser}" method="post">
     <div th:if="${errorMessage}" class="error-message">
@@ -26,6 +33,7 @@
 
     <p class="signup-link">Har du allerede en konto? <a th:href="@{/index}">Log ind her</a></p>
 </form>
+</div>
 
 </body>
 </html>
