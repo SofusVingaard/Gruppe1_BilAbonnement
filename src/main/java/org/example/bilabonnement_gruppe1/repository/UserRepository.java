@@ -33,11 +33,12 @@ public class UserRepository {
     }
 
     public User findByUserLogin(String userLogin){
-        String sql = "SELECT * FROM user WHERE userLogin = ?";
+        String sql = "SELECT user_login, name, password FROM users WHERE user_login = ?";
         User user = null;
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
+
             statement.setString(1, userLogin);
 
             try (ResultSet resultSet = statement.executeQuery()){
@@ -55,8 +56,8 @@ public class UserRepository {
         return user;
     }
 
-    public User login(String userLogin){
-        String sql = "SELECT * FROM user WHERE userLogin = ?";
+    /*public User login(String userLogin){
+        String sql = "SELECT userLogin name, passowrd FROM users WHERE userLogin = ?";
         User user = null;
 
         try (Connection connection = dataSource.getConnection();
@@ -80,5 +81,7 @@ public class UserRepository {
 
         return user;
     }
+
+     */
 
 }

@@ -56,7 +56,7 @@ public class UserController {
         User user = userRepository.findByUserLogin(userLogin);
 
 
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && user.getPassword() !=null && user.getPassword().equals(password)) {
             session.setAttribute("currentUser", user);
             return "redirect:/dashboard";
         } else {
