@@ -4,13 +4,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}">
-    <link rel="stylesheet" href="/css/index.css">
+    <title>Login ind</title>
+    <link rel="stylesheet" th:href="@{/css/createUser.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
+<header>
+    <img th:src="@{/img/logo.png}" alt="Logo" class="logo">
+</header>
 <body>
-<div class="backgroundImage">
-    <img th:src="@{/img/}" alt="background image">
 
     <div class="loginInformation">
             <h2>Log ind</h2>
@@ -29,7 +30,5 @@
                 <p class="signup-link">Har du ikke en konto? <a th:href="@{/user/createUser}">Opret en her</a></p>
             </form>
         </div>
-
-    </div>
 </body>
 </html>
