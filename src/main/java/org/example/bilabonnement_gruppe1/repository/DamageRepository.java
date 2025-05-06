@@ -74,8 +74,8 @@ public class DamageRepository {
 
             while (result.next()){
                 Damage damage = new Damage();
-                damage.setDamageType(result.getString("damageType");
-                damage.setPrice(result.getDouble("price");
+                damage.setDamageType(result.getString("damageType"));
+                damage.setPrice(result.getDouble("price"));
                 damageList.add(damage);
             }
         } catch (SQLException e) {
