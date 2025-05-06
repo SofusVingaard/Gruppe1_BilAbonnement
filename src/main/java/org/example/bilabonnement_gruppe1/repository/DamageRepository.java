@@ -42,6 +42,7 @@ public class DamageRepository {
         Damage damage = null;
         double totalPrice = 0;
 
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -59,4 +60,29 @@ public class DamageRepository {
         }
         return totalPrice;
     }
+
+    public ArrayList<Damage> getDamageList(int damageReportId) {
+        String sql = "SELECT damageType, price FROM damage WHERE damageReportId = ?";
+        ArrayList<Damage> damageList = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setInt(1, damageReportId);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()){
+                Damage damage = new Damage();
+                damage.setDamageType(result.getString("damageType");
+                damage.setPrice(result.getDouble("price");
+                damageList.add(damage);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return damageList;
+    }
+
+
 }
