@@ -2,6 +2,7 @@ package org.example.bilabonnement_gruppe1.model;
 
 public class Customer {
     private int id;
+
     private String name;
     private String email;
     private int phoneNumber;
@@ -12,6 +13,11 @@ public class Customer {
         this.email = email;
         this.name = name;
     }
+
+    public Customer(int id) {
+        this.id = id;
+    }
+
 
     public int getId() {
         return id;

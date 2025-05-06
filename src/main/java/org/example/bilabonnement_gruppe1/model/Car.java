@@ -27,4 +27,8 @@ public class Car {
         this.vehicleNumber = vehicleNumber;
     }
 
+    public Car(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
+    }
+
 }
