@@ -12,4 +12,6 @@ public class DamageReportRepository {
     @Autowired
     private DataSource dataSource;
 
+    public void createDamageReport(int userID, double kmOverLimit) {}
+
 }

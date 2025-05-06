@@ -36,7 +36,12 @@ public class DamageReportController {
     }
 
     @PostMapping("/damageReport")
-    public String createDamageReport(@RequestParam("kmOverLimit") double kmOverLimit) {
+    public String createDamageReport(@RequestParam("userId") int userId,
+                                     @RequestParam("kmOverLimit") double kmOverLimit) {
+
+        damageRepository.createDamageReport();
+
+        damageRepository.getRepairCost(damageReportId);
 
 
 
