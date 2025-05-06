@@ -45,10 +45,11 @@ import java.time.LocalDate;
             agreement.setEndDate(LocalDate.parse(endDate));
             agreement.setActive(true);
 
+
             rentalAgreementRepository.createRentalAgreement(agreement);
             redirectAttributes.addFlashAttribute("successMessage", "Lejeaftale oprettet!");
 
-            return "redirect:/index";
+            return "redirect:/dashboard";
         }
     }
 

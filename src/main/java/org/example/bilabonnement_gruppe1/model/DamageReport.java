@@ -4,12 +4,17 @@ import java.util.List;
 
 public class DamageReport {
     private int id;
-    private User user;
+    private int userID;
     private double kmOverLimit;
     private double repairCost;
     private List<Damage> damage;
 
     public DamageReport() {
+    }
+
+    public DamageReport(int userID, double kmOverLimit) {
+        this.userID = userID;
+        this.kmOverLimit = kmOverLimit;
     }
 
     public int getId() {
@@ -18,14 +23,6 @@ public class DamageReport {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public double getKmOverLimit() {
@@ -50,5 +47,13 @@ public class DamageReport {
 
     public void setDamage(List<Damage> damage) {
         this.damage = damage;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 }
