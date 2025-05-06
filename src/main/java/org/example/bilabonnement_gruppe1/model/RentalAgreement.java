@@ -31,6 +31,9 @@ public class RentalAgreement {
         this.id = id;
         this.damageReport = damageReport;
     }
+    public RentalAgreement(){
+
+    }
 
     public int getId() {
         return id;}
