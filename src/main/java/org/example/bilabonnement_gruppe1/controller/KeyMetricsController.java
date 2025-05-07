@@ -8,21 +8,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class PageController {
+class KeyMetricsController {
 
     @Autowired
-    RentalAgreementRepository rentalAgreementRepository;
+    private RentalAgreementRepository rentalAgreementRepository;
 
     @Autowired
-    CarRepository carRepository;
+    private CarRepository carRepository;
 
-    @GetMapping("/index")
-    public String index() {
-        return "index"; // viser templates/index.html
-    }
-    @GetMapping("/dashboard")
-    public String dashboard(Model model){
-
+    @GetMapping("/metrics")
+    public String showMetricsPage(Model model) {
         int activeSubscriptions = rentalAgreementRepository.countActiveAgreements();
         double avgRentalLength = rentalAgreementRepository.averageRentalPeriodLength();
         int availableCars = carRepository.countAvailableCars();
@@ -31,7 +26,7 @@ public class PageController {
         model.addAttribute("avgRentalLength", avgRentalLength);
         model.addAttribute("availableCars", availableCars);
 
-        return "dashboard"; 
+        return "metrics";
     }
 }
 

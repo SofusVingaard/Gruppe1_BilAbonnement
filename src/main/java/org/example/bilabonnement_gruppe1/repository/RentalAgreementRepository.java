@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 @Repository
 public class RentalAgreementRepository {
@@ -19,20 +17,19 @@ public class RentalAgreementRepository {
 
     public void createRentalAgreement(RentalAgreement agreement) {
         String sql = "INSERT INTO rentalAgreement " +
-                "(carId, customerPhoneNumber, userLogin, damageReportId, startDate, endDate, active, allowedKM) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?,?)";
+                "(carId, customerId, userLogin, damageReportId, startDate, endDate, active) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, agreement.getCarId());
-            statement.setInt(2, agreement.getCustomerPhoneNumber());
-            statement.setString(3, agreement.getUserLogin());
+            statement.setString(1, agreement.getCar().getVehicleNumber());
+            statement.setInt(2, agreement.getCustomer().getId());
+            statement.setString(3, agreement.getUser().getUserLogin());
             statement.setInt(4, agreement.getDamageReport().getId());
             statement.setDate(5, java.sql.Date.valueOf(agreement.getStartDate()));
             statement.setDate(6, java.sql.Date.valueOf(agreement.getEndDate()));
             statement.setBoolean(7, agreement.isActive());
-            statement.setDouble(8, agreement.getAllowedKM());
 
             statement.executeUpdate();
 
@@ -43,23 +40,21 @@ public class RentalAgreementRepository {
     }
 
     public void updateRentalAgreement(RentalAgreement agreement) {
-        String sql = "UPDATE rentalAgreement SET " + "carId = ?, " + "customerPhoneNumber = ?, " + "userId = ?, " +
-                "damageReportId = ?, " + "startDate = ?, " + "endDate = ?, " + "active = ? " + "WHERE id = ?"+"allowedKM =?;";
+        String sql = "UPDATE rentalAgreement SET " + "carId = ?, " + "customerId = ?, " + "userId = ?, " +
+                "damageReportId = ?, " + "startDate = ?, " + "endDate = ?, " + "active = ? " + "WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, agreement.getCarId());
-            statement.setInt(2, agreement.getCustomerPhoneNumber());
-            statement.setString(3, agreement.getUserLogin());
+            statement.setString(1, agreement.getCar().getVehicleNumber());
+            statement.setInt(2, agreement.getCustomer().getId());
+            statement.setInt(3, agreement.getUser().getId());
             statement.setInt(4, agreement.getDamageReport().getId());
             statement.setDate(5, java.sql.Date.valueOf(agreement.getStartDate()));
             statement.setDate(6, java.sql.Date.valueOf(agreement.getEndDate()));
             statement.setBoolean(7, agreement.isActive());
 
             statement.setInt(8, agreement.getId()); // WHERE id = ?
-            statement.setDouble(9, agreement.getAllowedKM());
-
 
             statement.executeUpdate();
 
@@ -151,6 +146,36 @@ public class RentalAgreementRepository {
         }
 
         return agreements;
+    }
+
+
+
+    public int countActiveAgreements() {
+        String sql = "SELECT COUNT(*) FROM rentalAgreement WHERE active = TRUE";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            var result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public double averageRentalPeriodLength() {
+        String sql = "SELECT AVG(DATEDIFF(endDate, startDate)) FROM rentalAgreement";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            var result = statement.executeQuery();
+            if (result.next()) {
+                return result.getDouble(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 

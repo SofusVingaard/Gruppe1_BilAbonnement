@@ -9,7 +9,14 @@
 
 <form th:action="@{/rentalAgreement/create}" method="post" th:object="${rentalAgreement}">
     <label for="carId">Bilens registreringsnummer:</label>
-    <input type="text" id="carId" name="carId" required><br><br>
+    <select id="carId" name="carId" required>
+        <option value="" disabled selected>Vælg en bil</option>
+        <th:block th:each="car : ${carList}">
+            <option th:value="${car.vehicleNumber}"
+                    th:text="${car.vehicleNumber} + ' - ' + ${car.model}"></option>
+        </th:block>
+    </select>
+    <br><br>
 
     <label for="customerId">Kunde ID:</label>
     <input type="number" id="customerId" name="customerId" required><br><br>

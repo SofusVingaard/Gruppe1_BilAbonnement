@@ -68,4 +68,4 @@ CREATE TABLE rentalAgreement (
 CREATE TABLE carFinance(
     id INT AUTO_INCREMENT PRIMARY KEY,
     totalPrice DOUBLE
-)
+);
