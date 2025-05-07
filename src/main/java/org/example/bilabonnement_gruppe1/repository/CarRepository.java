@@ -1,5 +1,18 @@
 package org.example.bilabonnement_gruppe1.repository;
 
+import org.example.bilabonnement_gruppe1.model.Car;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+
+@Repository
 public class CarRepository {
 
     @Autowired
@@ -35,7 +48,7 @@ public class CarRepository {
 
         return carList;
     }
-}
+
 
 
 
@@ -55,4 +68,5 @@ public class CarRepository {
         return 0;
     }
 }
+
 
