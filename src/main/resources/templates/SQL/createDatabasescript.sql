@@ -53,6 +53,8 @@ CREATE TABLE rentalAgreement (
     startDate date,
     endDate date,
     active boolean DEFAULT TRUE,
+    allowedKM double,
+    kmOverLimit double,
 
 
     FOREIGN KEY (carId) REFERENCES car (vehicleNumber),
