@@ -76,5 +76,35 @@ public class RentalAgreementRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public int countActiveAgreements() {
+        String sql = "SELECT COUNT(*) FROM rentalAgreement WHERE active = TRUE";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            var result = statement.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public double averageRentalPeriodLength() {
+        String sql = "SELECT AVG(DATEDIFF(endDate, startDate)) FROM rentalAgreement";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            var result = statement.executeQuery();
+            if (result.next()) {
+                return result.getDouble(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
 }
 
