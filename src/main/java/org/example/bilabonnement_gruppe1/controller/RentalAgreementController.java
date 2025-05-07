@@ -17,11 +17,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 
 @Controller
-    @RequestMapping("/rentalAgreement")
-    public class RentalAgreementController {
+@RequestMapping("/rentalAgreement")
+public class RentalAgreementController {
 
         @Autowired
         RentalAgreementRepository rentalAgreementRepository;
+
+    @GetMapping("/rentalAgreement")
+    public String rentalAgreement() {
+        return "RentalAgreement";
+    }
 
         @GetMapping("/create")
         public String showCreateForm() {
