@@ -25,7 +25,7 @@ public class RentalAgreementController {
 
     @GetMapping("/rentalAgreement")
     public String rentalAgreement() {
-        return "createRentalAgreement";
+        return "RentalAgreement";
     }
 
         @GetMapping("/create")

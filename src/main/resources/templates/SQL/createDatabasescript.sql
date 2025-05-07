@@ -47,8 +47,8 @@ CREATE TABLE damage (
 CREATE TABLE rentalAgreement (
     id INT AUTO_INCREMENT PRIMARY KEY,
     carId INT,
-    customerId int,
-    userId int,
+    customerPhoneNumber int,
+    userLogin VARCHAR(100),
     damageReportId INT,
     startDate date,
     endDate date,
@@ -58,8 +58,8 @@ CREATE TABLE rentalAgreement (
 
 
     FOREIGN KEY (carId) REFERENCES car (vehicleNumber),
-    FOREIGN KEY (customerId) REFERENCES customer (id),
-    FOREIGN KEY (userId) REFERENCES user (id),
+    FOREIGN KEY (customerPhoneNumber) REFERENCES customer (PhoneNumber),
+    FOREIGN KEY (userLogin) REFERENCES user (userLogin),
     FOREIGN KEY (damageReportId) REFERENCES damageReport (id)
 );
 
