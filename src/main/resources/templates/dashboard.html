@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/css/dashboard}">
-
     <meta charset="UTF-8">
     <title>dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
+    <header>
+        <img th:src="@{/img/logo.png}" alt="Logo" class="logo">
+
+        <nav>
+            <a th:href="@{/}">Billiste</a>
+            <a th:href="@{/}">Leje aftale</a>
+            <a th:href="@{/}">Skade rapport</a>
+            <a th:href="@{/}">Opret Bil</a>
+            <a th:href="@{/}">Regnskab</a>
+        </nav>
+    </header>
+
 <body>
-<nav>
-    <a th:href ="@{/carList.html}" class="nav-menu-button">Biler</a>
-    <a th:href ="@{/finance.html}" class="nav-menu-button">Finans</a>
-    <a th:href ="@{/rentalAgreement.html}" class="nav-menu-button">Rental Agreement</a>
-</nav>
+<div class="key-metrics">
+    <h2>Nøgletal</h2>
+    <h2>Nøgletal</h2>
+    <p>Aktive abonnementer: <span th:text="${activeSubscriptions}">0</span></p>
+    <p>Gennemsnitlig lejeperiode (dage): <span th:text="${avgRentalLength}">0</span></p>
+    <p>Antal ledige biler: <span th:text="${availableCars}">0</span></p>
+</div>
+
 
 </body>
 </html>

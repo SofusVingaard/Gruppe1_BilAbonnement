@@ -39,9 +39,9 @@ public class DamageReportController {
     public String createDamageReport(@RequestParam("userId") int userId,
                                      @RequestParam("kmOverLimit") double kmOverLimit) {
 
-//        damageRepository.createDamage();
+        //damageRepository.createDamageReport();
 
-  //      damageRepository.getRepairCost(damageReportId);
+        //damageRepository.getRepairCost(damageReportId);
 
 
 
