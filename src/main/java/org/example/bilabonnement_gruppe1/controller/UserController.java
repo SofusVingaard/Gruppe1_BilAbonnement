@@ -2,9 +2,12 @@ package org.example.bilabonnement_gruppe1.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.model.User;
+import org.example.bilabonnement_gruppe1.repository.CarRepository;
+import org.example.bilabonnement_gruppe1.repository.RentalAgreementRepository;
 import org.example.bilabonnement_gruppe1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -14,6 +17,8 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+
 
     @GetMapping("/createUser")
     public String createUser() {
@@ -51,10 +56,10 @@ public class UserController {
             HttpSession session,
             RedirectAttributes redirectAttributes,
             @RequestParam("userLogin") String userLogin,
-            @RequestParam("password") String password) {
+            @RequestParam("password") String password,
+            Model model) {
 
         User user = userRepository.findByUserLogin(userLogin);
-
 
         if (user != null && user.getPassword() !=null && user.getPassword().equals(password)) {
             session.setAttribute("currentUser", user);
