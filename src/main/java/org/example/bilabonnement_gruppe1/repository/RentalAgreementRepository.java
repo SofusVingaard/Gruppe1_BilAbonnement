@@ -19,14 +19,14 @@ public class RentalAgreementRepository {
 
     public void createRentalAgreement(RentalAgreement agreement) {
         String sql = "INSERT INTO rentalAgreement " +
-                "(carId, customerId, userLogin, damageReportId, startDate, endDate, active) " +
+                "(carId, customerPhoneNumber, userLogin, damageReportId, startDate, endDate, active) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, agreement.getCar().getVehicleNumber());
-            statement.setInt(2, agreement.getCustomer().getId());
+            statement.setInt(2, agreement.getCustomerPhoneNumber());
             statement.setString(3, agreement.getUser().getUserLogin());
             statement.setInt(4, agreement.getDamageReport().getId());
             statement.setDate(5, java.sql.Date.valueOf(agreement.getStartDate()));
