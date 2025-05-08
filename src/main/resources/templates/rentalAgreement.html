@@ -8,6 +8,50 @@
 <h1>Opret Lejeaftale</h1>
 <a th:href ="@{/rentalAgreement/create}" class="nav-menu-button">Lav ny lejeaftale rental Agreement</a>
 
+<form th:action="@{/rentalAgreement/rentalAgreement}" method="post">
+
+    <label for="phone">Telefonnummer:</label>
+    <input type="text" id="phone" name="phoneNumber" placeholder="f.eks. 12345678"/>
+
+    <label for="status">Status:</label>
+    <select id="status" name="status">
+        <option value="">Alle</option>
+        <option value="active">Aktive</option>
+        <option value="inactive">Inaktive</option>
+    </select>
+
+    <button type="submit">Søg</button>
+</form>
+
+<!-- Resultattabel -->
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Bil ID</th>
+        <th>Kunde Tlf.</th>
+        <th>Brugerlogin</th>
+        <th>Startdato</th>
+        <th>Slutdato</th>
+        <th>Aktiv</th>
+        <th>KM tilladt</th>
+        <th>KM over</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="agreement, iter : ${agreements}">
+        <td th:text="${iter.count}">1</td>
+        <td th:text="${agreement.carId}">2</td>
+        <td th:text="${agreement.customerPhoneNumber}">12345678</td>
+        <td th:text="${agreement.userLogin}">demo</td>
+        <td th:text="${agreement.startDate}">2025-08-20</td>
+        <td th:text="${agreement.endDate}">2026-08-20</td>
+        <td th:text="${agreement.active ? 'Ja' : 'Nej'}">Ja</td>
+        <td th:text="${agreement.allowedKM}">20000</td>
+        <td th:text="${agreement.kmOverLimit}">500</td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

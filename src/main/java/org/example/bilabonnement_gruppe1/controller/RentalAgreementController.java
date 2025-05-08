@@ -31,7 +31,9 @@ public class RentalAgreementController {
     CarRepository carRepository;
 
     @GetMapping("/rentalAgreement")
-    public String rentalAgreement() {
+    public String rentalAgreement(Model model) {
+        ArrayList<RentalAgreement> agreements = rentalAgreementRepository.getAllRentalAgreements();
+        model.addAttribute("agreements", agreements);
         return "RentalAgreement";
     }
 
@@ -73,29 +75,34 @@ public class RentalAgreementController {
         // Vis alle lejeaftaler som default
         ArrayList<RentalAgreement> agreements = rentalAgreementRepository.getAllRentalAgreements();
         model.addAttribute("agreements", agreements);
-        return "rentalAgreementSearch";
+        return "rentalAgreement";
     }
 
-    @PostMapping("/search")
+    @PostMapping("/rentalAgreement")
     public String filterRentalAgreements(
             @RequestParam(value = "phoneNumber", required = false) Integer phoneNumber,
             @RequestParam(value = "status", required = false) String status,
-            Model model) throws SQLException {
+            Model model) {
 
         ArrayList<RentalAgreement> agreements;
 
-        if (phoneNumber != null) {
-            agreements = rentalAgreementRepository.getRentalAgreementByPhoneNumber(phoneNumber);
-        } else if ("active".equals(status)) {
-            agreements = rentalAgreementRepository.getActiveRentalAgreements();
-        } else if ("inactive".equals(status)) {
-            agreements = rentalAgreementRepository.getInactiveRentalAgreements();
-        } else {
-            agreements = rentalAgreementRepository.getAllRentalAgreements();
-        }
+        try {
+            if (phoneNumber != null) {
+                agreements = rentalAgreementRepository.getRentalAgreementByPhoneNumber(phoneNumber);
+            } else if ("active".equals(status)) {
+                agreements = rentalAgreementRepository.getActiveRentalAgreements();
+            } else if ("inactive".equals(status)) {
+                agreements = rentalAgreementRepository.getInactiveRentalAgreements();
+            } else {
+                agreements = rentalAgreementRepository.getAllRentalAgreements();
+            }
 
-        model.addAttribute("agreements", agreements);
-        return "rentalAgreementSearch";
+            model.addAttribute("agreements", agreements);
+            return "rentalAgreement";
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/updateRentalAgreement")

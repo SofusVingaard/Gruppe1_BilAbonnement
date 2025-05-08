@@ -1,8 +1,10 @@
 package org.example.bilabonnement_gruppe1.controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.example.bilabonnement_gruppe1.model.Customer;
 import org.example.bilabonnement_gruppe1.model.User;
 import org.example.bilabonnement_gruppe1.repository.CarRepository;
+import org.example.bilabonnement_gruppe1.repository.CustomerRepository;
 import org.example.bilabonnement_gruppe1.repository.RentalAgreementRepository;
 import org.example.bilabonnement_gruppe1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
 
 
@@ -69,4 +74,19 @@ public class UserController {
             return "redirect:/index";
         }
     }
+
+    @GetMapping("/createCustomer")
+    public String createCustomer() {
+
+        return "createCustomer";
+    }
+
+    @PostMapping("/createCustomer")
+    public String createCustomer(@RequestParam("name")String name,
+                                     @RequestParam("email")String email,
+                                     @RequestParam("phoneNumbeer") int phoneNumber) {
+        Customer customer = new Customer(name, email, phoneNumber);
+        customerRepository.createCustomer(customer);
+        return "redirect:/dashboard";
+        }
 }

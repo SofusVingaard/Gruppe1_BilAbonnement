@@ -16,7 +16,7 @@ public class CustomerRepository {
 private DataSource dataSource;
 
     public void createCustomer(Customer customer) {
-        String sql = "INSERT INTO customer values(name,email,phoneNumber)(?,?,?)";
+        String sql = "INSERT INTO customer (name, email, phoneNumber) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -30,5 +30,6 @@ private DataSource dataSource;
             e.printStackTrace();
         }
     }
+
 }
 

@@ -119,7 +119,7 @@ public class RentalAgreementRepository {
         return getRentalAgreementsByActiveStatus(false);
     }
 
-    public ArrayList<RentalAgreement> getRentalAgreementByPhoneNumber(int customerPhoneNumber) throws SQLException {
+    public ArrayList<RentalAgreement> getRentalAgreementByPhoneNumber(int customerPhoneNumber)  {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement WHERE customerPhoneNumber = ?";
 
@@ -252,7 +252,7 @@ public class RentalAgreementRepository {
 
 
 
-    public ArrayList<RentalAgreement> getAllRentalAgreements() throws SQLException {
+    public ArrayList<RentalAgreement> getAllRentalAgreements()  {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement";
 
@@ -265,7 +265,7 @@ public class RentalAgreementRepository {
                 agreement.setId(resultSet.getInt("id"));
                 agreement.setCarId(resultSet.getInt("carId"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
-                agreement.setDamageReportId(resultSet.getInt("damageReportId"));
+                agreement.setUserLogin(resultSet.getString("userLogin"));
                 agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
                 agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
                 agreement.setActive(resultSet.getBoolean("active"));
@@ -274,6 +274,8 @@ public class RentalAgreementRepository {
 
                 agreements.add(agreement);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return agreements;
     }
