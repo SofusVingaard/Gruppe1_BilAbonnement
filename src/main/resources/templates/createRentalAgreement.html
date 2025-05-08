@@ -7,7 +7,7 @@
 <body>
 <h1>Opret Lejeaftale</h1>
 
-<form th:action="@{/rentalAgreement/create}" method="post" th:object="${rentalAgreement}">
+<form th:action="@{/rentalAgreement/create}" method="post">
     <label for="carId">Bilens registreringsnummer:</label>
     <select id="carId" name="carId" required>
         <option value="" disabled selected>Vælg en bil</option>
@@ -18,17 +18,23 @@
     </select>
     <br><br>
 
-    <label for="customerId">Kunde ID:</label>
-    <input type="number" id="customerId" name="customerId" required><br><br>
+    <label for="customerPhoneNumber">Kundens telefonnummer:</label>
+    <input type="text" id="customerPhoneNumber" name="customerPhoneNumber" required><br><br>
 
-    <label for="userLogin">Medarbejder-bruger login:</label>
-    <input type="text" id="userLogin" name="userLogin" required><br><br>
+    <label for="userId">Medarbejder ID:</label>
+    <input type="number" id="userId" name="userId" required><br><br>
 
     <label for="startDate">Startdato:</label>
     <input type="date" id="startDate" name="startDate" required><br><br>
 
     <label for="endDate">Slutdato:</label>
     <input type="date" id="endDate" name="endDate" required><br><br>
+
+    <label for="allowedKM">Tilladte KM:</label>
+    <input type="number" step="0.1" id="allowedKM" name="allowedKM" required><br><br>
+
+    <label for="kmOverLimit">KM over grænsen (valgfrit):</label>
+    <input type="number" step="0.1" id="kmOverLimit" name="kmOverLimit"><br><br>
 
     <button type="submit">Opret lejeaftale</button>
 </form>

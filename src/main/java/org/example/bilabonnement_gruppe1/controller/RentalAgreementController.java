@@ -52,7 +52,6 @@ public class RentalAgreementController {
                 @RequestParam("startDate") String startDate,
                 @RequestParam("endDate") String endDate,
                 @RequestParam ("allowedKM") double allowedKM,
-                @RequestParam (required = false) double kmOverLimit,
                 RedirectAttributes redirectAttributes) {
 
             RentalAgreement agreement = new RentalAgreement();
@@ -67,7 +66,7 @@ public class RentalAgreementController {
             rentalAgreementRepository.createRentalAgreement(agreement);
             redirectAttributes.addFlashAttribute("successMessage", "Lejeaftale oprettet!");
 
-            return "redirect:/dashboard";
+            return "/dashboard";
         }
     @GetMapping("/search")
     public String showSearchPage(Model model) throws SQLException {
@@ -105,6 +104,5 @@ public class RentalAgreementController {
         model.addAttribute("agreement", agreement);
         return "updateRentalAgreement";
     }
-
 }
 

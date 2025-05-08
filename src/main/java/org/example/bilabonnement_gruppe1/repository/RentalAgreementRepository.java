@@ -19,7 +19,7 @@ public class RentalAgreementRepository {
 
     public void createRentalAgreement(RentalAgreement agreement) {
         String sql = "INSERT INTO rentalAgreement " +
-                "(carId, customerPhoneNumber, userLogin, damageReportId, startDate, endDate, active) " +
+                "(carId, customerPhoneNumber, userLogin, startDate, endDate, active, allowedKM) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection();
@@ -28,10 +28,10 @@ public class RentalAgreementRepository {
             statement.setString(1, agreement.getCar().getVehicleNumber());
             statement.setInt(2, agreement.getCustomerPhoneNumber());
             statement.setString(3, agreement.getUser().getUserLogin());
-            statement.setInt(4, agreement.getDamageReport().getId());
-            statement.setDate(5, java.sql.Date.valueOf(agreement.getStartDate()));
-            statement.setDate(6, java.sql.Date.valueOf(agreement.getEndDate()));
-            statement.setBoolean(7, agreement.isActive());
+            statement.setDate(4, java.sql.Date.valueOf(agreement.getStartDate()));
+            statement.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
+            statement.setBoolean(6, agreement.isActive());
+            statement.setDouble(7, agreement.getAllowedKM());
 
             statement.executeUpdate();
 
@@ -207,6 +207,51 @@ public class RentalAgreementRepository {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public ArrayList<RentalAgreement> getAllRentalAgreements() throws SQLException {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement";
@@ -232,5 +277,22 @@ public class RentalAgreementRepository {
         }
         return agreements;
     }
+
+    /*public void updateRentalAgreementDamageReport(int rentalAgreementId, DamageReport damageReport) {
+        String sql = "UPDATE rentalAgreement SET damageReportId = ? WHERE id = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, damageReport.getId());
+            statement.setInt(2, rentalAgreementId);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+
 }
 
