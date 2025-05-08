@@ -23,7 +23,7 @@ CREATE TABLE customer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(250),
     email VARCHAR(250),
-    phoneNumber VARCHAR(250)
+    phoneNumber INT UNIQUE
 );
 
 CREATE TABLE damageReport(
@@ -59,7 +59,7 @@ CREATE TABLE rentalAgreement (
 
 
     FOREIGN KEY (carId) REFERENCES car (vehicleNumber),
-    FOREIGN KEY (customerPhoneNumber) REFERENCES customer (PhoneNumber),
+    FOREIGN KEY (customerPhoneNumber) REFERENCES customer (phoneNumber),
     FOREIGN KEY (userLogin) REFERENCES user (userLogin),
     FOREIGN KEY (damageReportId) REFERENCES damageReport (id)
 );

@@ -94,5 +94,13 @@ public class RentalAgreementController {
         model.addAttribute("agreements", agreements);
         return "rentalAgreementList";
     }
+
+    @GetMapping("/updateRentalAgreement")
+    public String updateRentalAgreement(@RequestParam("id") int id, Model model) {
+        RentalAgreement agreement = rentalAgreementRepository.getRentalAgreement(id);
+        model.addAttribute("agreement", agreement);
+        return "updateRentalAgreement";
     }
+
+}
 

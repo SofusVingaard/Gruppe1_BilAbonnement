@@ -11,6 +11,7 @@ public class RentalAgreement {
     private String userLogin;
     private User user;
     private DamageReport damageReport;
+    private int damageReportId;
     private LocalDate startDate;
     private LocalDate endDate;
     private boolean active;
@@ -134,4 +135,12 @@ public class RentalAgreement {
 
     public void setActive(boolean active) {
         this.active = active;}
+
+    public int getDamageReportId() {
+        return damageReportId;
+    }
+
+    public void setDamageReportId(int damageReportId) {
+        this.damageReportId = damageReportId;
+    }
 }

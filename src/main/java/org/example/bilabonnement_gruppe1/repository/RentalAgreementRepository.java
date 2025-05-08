@@ -180,6 +180,32 @@ public class RentalAgreementRepository {
         return 0;
     }
 
+    public RentalAgreement getRentalAgreement(int id){
+        String sql = "SELECT * FROM rentalAgreement WHERE id = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                RentalAgreement agreement = new RentalAgreement();
+                agreement.setId(resultSet.getInt("id"));
+                agreement.setCarId(resultSet.getInt("carId"));
+                agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
+                agreement.setDamageReportId(resultSet.getInt("damageReportId"));
+                agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
+                agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
+                agreement.setActive(resultSet.getBoolean("active"));
+                agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
+                agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+                return agreement;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
 
