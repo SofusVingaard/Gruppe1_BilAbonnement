@@ -23,7 +23,7 @@ public class FinanceReportController {
 
     @GetMapping("/financeReport")
     public String financeReport(){
-        return "FinanceReport";
+        return "financeReport";
     }
 
     @GetMapping("/create")
