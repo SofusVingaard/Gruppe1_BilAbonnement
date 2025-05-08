@@ -181,5 +181,67 @@ public class RentalAgreementRepository {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public ArrayList<RentalAgreement> getAllRentalAgreements() throws SQLException {
+        ArrayList<RentalAgreement> agreements = new ArrayList<>();
+        String sql = "SELECT * FROM rentalAgreement";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                RentalAgreement agreement = new RentalAgreement();
+                // udfyld dine felter...
+                // fx agreement.setId(resultSet.getInt("id"));
+                agreements.add(agreement);
+            }
+        }
+        return agreements;
+    }
 }
 
