@@ -12,6 +12,10 @@ public class DamageReport {
     public DamageReport() {
     }
 
+    public DamageReport(int id) {
+        this.id = id;
+    }
+
     public DamageReport(int userID, double kmOverLimit) {
         this.userID = userID;
         this.kmOverLimit = kmOverLimit;

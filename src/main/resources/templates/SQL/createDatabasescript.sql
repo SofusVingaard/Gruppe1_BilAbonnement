@@ -57,6 +57,7 @@ CREATE TABLE rentalAgreement (
     kmOverLimit double,
 
 
+
     FOREIGN KEY (carId) REFERENCES car (vehicleNumber),
     FOREIGN KEY (customerPhoneNumber) REFERENCES customer (PhoneNumber),
     FOREIGN KEY (userLogin) REFERENCES user (userLogin),

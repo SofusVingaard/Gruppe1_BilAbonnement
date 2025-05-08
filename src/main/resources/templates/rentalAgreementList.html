@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lejeaftaler</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    a {
+      display: inline-block;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Liste over Lejeaftaler</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Bil ID</th>
+    <th>Kunde ID</th>
+    <th>Bruger ID</th>
+    <th>Startdato</th>
+    <th>Slutdato</th>
+    <th>Aktiv</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="agreement : ${agreements}">
+    <td th:text="${agreement.id}">1</td>
+    <td th:text="${agreement.car.vehicleNumber}">XX12345</td>
+    <td th:text="${agreement.customer.id}">1001</td>
+    <td th:text="${agreement.user.id}">2002</td>
+    <td th:text="${agreement.startDate}">2024-01-01</td>
+    <td th:text="${agreement.endDate}">2024-12-31</td>
+    <td th:text="${agreement.active ? 'Ja' : 'Nej'}">Ja</td>
+  </tr>
+  </tbody>
+</table>
+
+<div style="text-align: center;">
+  <a th:href="@{/rentalagreement/active}">Vis Aktive</a>
+  <a th:href="@{/rentalagreement/inactive}">Vis Inaktive</a>
+  <a th:href="@{/}">Tilbage til Forside</a>
+</div>
+
+</body>
+</html>

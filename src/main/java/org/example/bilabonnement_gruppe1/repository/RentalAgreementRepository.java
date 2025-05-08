@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @Repository
 public class RentalAgreementRepository {
@@ -76,6 +78,79 @@ public class RentalAgreementRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public ArrayList<RentalAgreement> getRentalAgreementsByActiveStatus(boolean active) {
+        ArrayList<RentalAgreement> agreements = new ArrayList<>();
+        String sql = "SELECT * FROM rentalAgreement WHERE active = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setBoolean(1, active);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                RentalAgreement agreement = new RentalAgreement();
+                agreement.setId(resultSet.getInt("id"));
+                agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
+                agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
+                agreement.setActive(resultSet.getBoolean("active"));
+
+                // Du kan fylde resten ud med fx: carId, customerId, userId osv.
+                // Eller lave joins senere hvis du vil vise fx navn i stedet for ID
+
+                agreements.add(agreement);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Fejl ved hentning af lejeaftaler: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return agreements;
+    }
+
+
+    public ArrayList<RentalAgreement> getActiveRentalAgreements() {
+        return getRentalAgreementsByActiveStatus(true);
+    }
+
+    public ArrayList<RentalAgreement> getInactiveRentalAgreements() {
+        return getRentalAgreementsByActiveStatus(false);
+    }
+
+    public ArrayList<RentalAgreement> getRentalAgreementByPhoneNumber(int customerPhoneNumber) throws SQLException {
+        ArrayList<RentalAgreement> agreements = new ArrayList<>();
+        String sql = "SELECT * FROM rentalAgreement WHERE customerPhoneNumber = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)){
+                 statement.setInt(1, customerPhoneNumber);
+                 ResultSet resultSet = statement.executeQuery();
+                 while (resultSet.next()) {
+                     RentalAgreement agreement = new RentalAgreement();
+                     agreement.setId(resultSet.getInt("id"));
+                     agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
+                     agreement.setUserLogin(resultSet.getString("userLogin"));
+                     agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
+                     agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
+                     agreement.setActive(resultSet.getBoolean("active"));
+                     agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
+                     agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+
+
+                     agreements.add(agreement);
+                 }
+
+        } catch (SQLException e) {
+            System.err.println("Fejl ved hentning af lejeaftaler: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return agreements;
+    }
+
+
 
     public int countActiveAgreements() {
         String sql = "SELECT COUNT(*) FROM rentalAgreement WHERE active = TRUE";

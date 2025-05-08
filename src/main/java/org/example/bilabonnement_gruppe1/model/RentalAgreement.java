@@ -6,30 +6,85 @@ public class RentalAgreement {
     private int id;
     private Car car;
     private Customer customer;
+    private int carId;
+    private int customerPhoneNumber;
+    private String userLogin;
     private User user;
     private DamageReport damageReport;
     private LocalDate startDate;
     private LocalDate endDate;
     private boolean active;
+    private double allowedKM;
+
+    public RentalAgreement(int customerPhoneNumber, int carId, String userLogin, DamageReport damageReport, LocalDate startDate, LocalDate endDate, boolean active, double kmOverLimit) {
+        this.customerPhoneNumber = customerPhoneNumber;
+        this.carId = carId;
+        this.userLogin = userLogin;
+        this.damageReport = damageReport;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.active = active;
+        this.kmOverLimit = kmOverLimit;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public int getCustomerPhoneNumber() {
+        return customerPhoneNumber;
+    }
+
+    public void setCustomerPhoneNumber(int customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
+    }
+
+    public int getCarId() {
+        return carId;
+    }
+
+    public void setCarId(int carId) {
+        this.carId = carId;
+    }
+
+    public double getAllowedKM() {
+        return allowedKM;
+    }
+
+    public void setAllowedKM(double allowedKM) {
+        this.allowedKM = allowedKM;
+    }
+
+    public double getKmOverLimit() {
+        return kmOverLimit;
+    }
+
+    public void setKmOverLimit(double kmOverLimit) {
+        this.kmOverLimit = kmOverLimit;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private double kmOverLimit;
 
 
     //uden ID
     public RentalAgreement(Car car, Customer customer, User user,
-                           LocalDate startDate, LocalDate endDate, boolean active) {
+                           LocalDate startDate, LocalDate endDate, boolean active, double allowedKM, double kmOverLimit) {
         this.car = car;
         this.customer = customer;
         this.user = user;
         this.startDate = startDate;
         this.endDate = endDate;
         this.active = active;
-    }
-
-    // med id
-    public RentalAgreement(int id, Car car, Customer customer, User user,
-                           DamageReport damageReport, LocalDate startDate, LocalDate endDate, boolean active) {
-        this(car, customer, user, startDate, endDate, active);
-        this.id = id;
-        this.damageReport = damageReport;
+        this.allowedKM = allowedKM;
+        this.kmOverLimit = kmOverLimit;
     }
     public RentalAgreement(){
 
