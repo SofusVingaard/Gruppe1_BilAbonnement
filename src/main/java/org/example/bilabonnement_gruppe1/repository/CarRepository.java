@@ -49,8 +49,30 @@ public class CarRepository {
         return carList;
     }
 
+    public boolean createCar(Car car) {
+        String sql = "INSERT INTO car (vehicle_number, chassisnumber, model, equipment, km_driven, co2_emission, image, status) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
+            statement.setString(1, car.getVehicleNumber());
+            statement.setString(2, car.getChassisnumber());
+            statement.setString(3, car.getModel());
+            statement.setString(4, car.getEquipment());
+            statement.setInt(5, car.getKmDriven());
+            statement.setInt(6, car.getCo2Emission());
+            statement.setString(7, car.getImage());
+            statement.setString(8, car.getStatus());
+
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public int countAvailableCars() {
         String sql = "SELECT COUNT(*) FROM car WHERE status = 'available'";

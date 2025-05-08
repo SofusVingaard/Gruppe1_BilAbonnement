@@ -26,9 +26,11 @@ public class CarController {
         model.addAttribute("carList", carList);
 
         return "carList";
-
-
-
-
     }
+    @GetMapping("/cars/create")
+    public String showCreateCarForm(Model model) {
+        model.addAttribute("car", new Car());
+        return "createCar";
+    }
+
 }

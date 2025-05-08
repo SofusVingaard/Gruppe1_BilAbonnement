@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Opret bil</title>
 </head>
 <body>
+<h1>Opret ny bil</h1>
+<form action="/cars/create" method="post">
+    <label for="vehicleNumber">Registreringsnummer:</label>
+    <input type="text" id="vehicleNumber" name="vehicleNumber" required><br><br>
 
+    <label for="chassisnumber">Stelnummer:</label>
+    <input type="text" id="chassisnumber" name="chassisnumber" required><br><br>
+
+    <label for="model">Model:</label>
+    <input type="text" id="model" name="model" required><br><br>
+
+    <label for="equipment">Udstyr:</label>
+    <input type="text" id="equipment" name="equipment"><br><br>
+
+    <label for="kmDriven">Kilometer kørt:</label>
+    <input type="number" id="kmDriven" name="kmDriven" required><br><br>
+
+    <label for="co2Emission">CO2-udledning:</label>
+    <input type="number" id="co2Emission" name="co2Emission" required><br><br>
+
+    <label for="image">Billed-URL:</label>
+    <input type="text" id="image" name="image"><br><br>
+
+    <label for="status">Status:</label>
+    <select id="status" name="status" required>
+        <option value="available">Tilgængelig</option>
+        <option value="unavailable">Ikke tilgængelig</option>
+    </select><br><br>
+
+    <button type="submit">Opret bil</button>
+</form>
 </body>
 </html>
