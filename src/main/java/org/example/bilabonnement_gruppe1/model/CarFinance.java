@@ -3,11 +3,71 @@ package org.example.bilabonnement_gruppe1.model;
 import java.time.LocalDate;
 
 public class CarFinance {
-    private int id;
+
     private double totalPrice;
     private int damageReportId;
     private LocalDate date;
-    private double co2Emissinon;
+    private double co2Emission;
     private double kmOverLimit;
     private double rentalFee;
+
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public int getDamageReportId() {
+        return damageReportId;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public double getCo2Emissinon() {
+        return co2Emission;
+    }
+
+    public double getKmOverLimit() {
+        return kmOverLimit;
+    }
+
+    public double getRentalFee() {
+        return rentalFee;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setDamageReportId(int damageReportId) {
+        this.damageReportId = damageReportId;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setCo2Emissinon(double Co2Emission) {
+        this.co2Emission = Co2Emission;
+    }
+
+    public void setKmOverLimit(double kmOverLimit) {
+        this.kmOverLimit = kmOverLimit;
+    }
+
+    public void setRentalFee(double rentalFee) {
+        this.rentalFee = rentalFee;
+    }
+
+
 }
