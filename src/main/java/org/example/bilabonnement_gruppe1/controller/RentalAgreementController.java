@@ -24,11 +24,11 @@ import java.util.ArrayList;
 @RequestMapping("/rentalAgreement")
 public class RentalAgreementController {
 
-        @Autowired
-        RentalAgreementRepository rentalAgreementRepository;
+    @Autowired
+    RentalAgreementRepository rentalAgreementRepository;
 
-        @Autowired
-        CarRepository carRepository;
+    @Autowired
+    CarRepository carRepository;
 
     @GetMapping("/rentalAgreement")
     public String rentalAgreement() {
