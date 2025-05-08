@@ -1,5 +1,8 @@
 package org.example.bilabonnement_gruppe1.model;
 
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
 public class Car {
 
 
@@ -114,8 +117,8 @@ public class Car {
         this.image = image;
     }
 
-    public double getCo2Emission() {
-        return co2Emission;
+    public int getCo2Emission() {
+        return (int) co2Emission;
     }
 
     public void setCo2Emission(double co2Emission) {
@@ -138,11 +141,11 @@ public class Car {
         this.registrationFee = registrationFee;
     }
 
-    public double getKmDriven() {
-        return kmDriven;
+    public int getKmDriven() {
+        return (int) kmDriven;
     }
-
     public void setKmDriven(double kmDriven) {
         this.kmDriven = kmDriven;
     }
+
 }

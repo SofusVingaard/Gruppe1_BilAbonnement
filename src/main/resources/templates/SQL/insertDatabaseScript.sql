@@ -1,3 +1,4 @@
+USE testdb;
 USE bilabonnement;
 
     INSERT INTO car (chassisNumber, model, equipment, kmDriven, co2Emission, image, status)
