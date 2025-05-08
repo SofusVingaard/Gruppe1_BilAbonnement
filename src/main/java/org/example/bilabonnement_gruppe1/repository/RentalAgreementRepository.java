@@ -207,51 +207,6 @@ public class RentalAgreementRepository {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public ArrayList<RentalAgreement> getAllRentalAgreements() throws SQLException {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement";
@@ -262,8 +217,16 @@ public class RentalAgreementRepository {
 
             while (resultSet.next()) {
                 RentalAgreement agreement = new RentalAgreement();
-                // udfyld dine felter...
-                // fx agreement.setId(resultSet.getInt("id"));
+                agreement.setId(resultSet.getInt("id"));
+                agreement.setCarId(resultSet.getInt("carId"));
+                agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
+                agreement.setDamageReportId(resultSet.getInt("damageReportId"));
+                agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
+                agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
+                agreement.setActive(resultSet.getBoolean("active"));
+                agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
+                agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+
                 agreements.add(agreement);
             }
         }
