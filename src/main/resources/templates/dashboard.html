@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard}">
 
     <meta charset="UTF-8">
     <title>dashboard</title>
@@ -10,11 +10,10 @@
         <img th:src="@{/img/logo.png}" alt="Logo" class="logo">
 
         <nav>
-            <a th:href="@{/cars}" class="nav-menu-button">Biler</a>
+            <a th:href="@{/carList.html}" class="nav-menu-button">Biler</a>
             <a th:href="@{/rentalAgreement/rentalAgreement}" class="nav-menu-button">Rental Agreement</a>
             <a th:href="@{/}">Skade rapport</a>
-            <a th:href="@{/cars/cars/create}" class="nav-menu-button">opret bil</a>
-            <a th:href="@{/user/createCustomer}" class="nav-menu-button">opret kunde</a>
+            <a th:href="@{/cars/create}" class="nav-menu-button">opret bil</a>
             <a th:href ="@{/financeReport/financeReport}" class="nav-menu-button">Finans</a>
         </nav>
     </header>

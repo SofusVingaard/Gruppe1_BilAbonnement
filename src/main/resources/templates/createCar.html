@@ -6,35 +6,46 @@
 </head>
 <body>
 <h1>Opret ny bil</h1>
-<form action="/cars/create" method="post">
-    <label for="vehicleNumber">Registreringsnummer:</label>
-    <input type="text" id="vehicleNumber" name="vehicleNumber" required><br><br>
 
-    <label for="chassisnumber">Stelnummer:</label>
-    <input type="text" id="chassisnumber" name="chassisnumber" required><br><br>
-
-    <label for="model">Model:</label>
-    <input type="text" id="model" name="model" required><br><br>
-
-    <label for="equipment">Udstyr:</label>
-    <input type="text" id="equipment" name="equipment"><br><br>
-
-    <label for="kmDriven">Kilometer kørt:</label>
-    <input type="number" id="kmDriven" name="kmDriven" required><br><br>
-
-    <label for="co2Emission">CO2-udledning:</label>
-    <input type="number" id="co2Emission" name="co2Emission" required><br><br>
-
-    <label for="image">Billed-URL:</label>
-    <input type="text" id="image" name="image"><br><br>
-
-    <label for="status">Status:</label>
-    <select id="status" name="status" required>
-        <option value="available">Tilgængelig</option>
-        <option value="unavailable">Ikke tilgængelig</option>
-    </select><br><br>
-
-    <button type="submit">Opret bil</button>
+<h1>Opret Bil</h1>
+<form th:action="@{/cars/create}" th:object="${car}" method="post">
+    <div>
+        <label for="vehicleNumber">Nummerplade</label>
+        <input type="text" id="vehicleNumber" th:field="*{vehicleNumber}" />
+    </div>
+    <div>
+        <label for="chassisnumber">chassisnumber</label>
+        <input type="text" id="chassisnumber" th:field="*{chassisnumber}" />
+    </div>
+    <div>
+        <label for="model">Model</label>
+        <input type="text" id="model" th:field="*{model}" />
+    </div>
+    <div>
+        <label for="equipment">Udstyr</label>
+        <input type="text" id="equipment" th:field="*{equipment}" />
+    </div>
+    <div>
+        <label for="kmDriven">Kilometer kørt</label>
+        <input type="number" id="kmDriven" th:field="*{kmDriven}" />
+    </div>
+    <div>
+        <label for="co2Emission">CO₂-udslip</label>
+        <input type="number" step="0.01" id="co2Emission" th:field="*{co2Emission}" />
+    </div>
+    <div>
+        <label for="image">Billed-URL</label>
+        <input type="text" id="image" th:field="*{image}" />
+    </div>
+    <div>
+        <label for="status">Status</label>
+        <input type="text" id="status" th:field="*{status}" />
+    </div>
+    <div>
+        <button type="submit">Gem bil</button>
+    </div>
 </form>
+</body>
+
 </body>
 </html>
