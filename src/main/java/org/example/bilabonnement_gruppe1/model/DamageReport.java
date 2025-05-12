@@ -5,6 +5,7 @@ import java.util.List;
 public class DamageReport {
     private int id;
     private int userID;
+    private int rentalAgreementID;
     private double kmOverLimit;
     private double repairCost;
     private List<Damage> damage;

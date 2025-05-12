@@ -120,7 +120,7 @@ public class RentalAgreementRepository {
         return getRentalAgreementsByActiveStatus(false);
     }
 
-    public ArrayList<RentalAgreement> getRentalAgreementByPhoneNumber(int customerPhoneNumber)  {
+        public ArrayList<RentalAgreement> getRentalAgreementByPhoneNumber(int customerPhoneNumber)  {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement WHERE customerPhoneNumber = ?";
 

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 @Repository
 public class CustomerRepository {
 
-    @Autowired
+@Autowired
 private DataSource dataSource;
 
     public void createCustomer(Customer customer) {

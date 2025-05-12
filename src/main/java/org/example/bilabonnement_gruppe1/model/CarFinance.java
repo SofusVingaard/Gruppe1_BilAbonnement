@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class CarFinance {
 
+    private int id;
     private double totalPrice;
     private int damageReportId;
     private LocalDate date;
@@ -11,7 +12,7 @@ public class CarFinance {
     private double kmOverLimit;
     private double rentalFee;
 
-    private int id;
+
 
     public int getId() {
         return id;
