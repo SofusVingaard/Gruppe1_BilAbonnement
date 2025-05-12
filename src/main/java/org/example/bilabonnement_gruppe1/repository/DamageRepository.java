@@ -39,16 +39,13 @@ public class DamageRepository {
 
     public double getRepairCost(int damageReportId) {
         String sql = "SELECT price FROM damage WHERE damageReportId = ?";
-        Damage damage = null;
         double totalPrice = 0;
 
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, damage.getDamageReportId());
-
-            statement.executeUpdate();
+            statement.setInt(1, damageReportId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {

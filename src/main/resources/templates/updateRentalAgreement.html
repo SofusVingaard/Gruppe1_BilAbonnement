@@ -39,8 +39,9 @@
 
     <button type="submit">Opdater</button>
 
-    <a th:href="@{'/damageReport/damageReport?damageReportId=' + ${someId}}">Gå til skadesrapport</a>
-
+    <a th:href="@{'/damageReport/damageReport?damageReportId=' + ${agreement.id}}">
+        Gå til skadesrapport
+    </a>
 </form>
 
 </body>
