@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/damageReport")
 public class DamageReportController {
@@ -32,18 +34,25 @@ public class DamageReportController {
         if (session.getAttribute("currentUser") == null) {
             return "redirect:/index";
         }
-        else {
-            damageRepository.getRepairCost(damageReportId);
-            return "damageReport";
-        }
+
+        List<Damage> damageList = damageRepository.getDamageList(damageReportId);
+        double totalPrice = damageRepository.getRepairCost(damageReportId);
+
+        model.addAttribute("damageList", damageList);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("damageReportId", damageReportId);
+
+        return "damageReport";
     }
+
+
+
+
 
     @PostMapping("/damageReport")
     public String createDamageReport() {
 
         //damageRepository.createDamageReport();
-
-        //damageRepository.getRepairCost(damageReportId);
 
 
 
@@ -68,7 +77,17 @@ public class DamageReportController {
         damageRepository.createDamage(damage);
 
 
-        return "redirect:/damageReport";
+        return "redirect:/damageReport/damageReport?damageReportId=" + damageReportId;
+    }
+
+    @PostMapping("/delete")
+    public String deleteDamage(@RequestParam("damageReportId") int damageReportId,
+                               @RequestParam("damageId") int damageId) {
+
+        damageRepository.deleteDamage(damageId);
+
+        return "redirect:/damageReport/damageReport?damageReportId=" + damageReportId;
+
     }
 
 

@@ -59,7 +59,7 @@ public class DamageRepository {
     }
 
     public ArrayList<Damage> getDamageList(int damageReportId) {
-        String sql = "SELECT damageType, price FROM damage WHERE damageReportId = ?";
+        String sql = "SELECT id, damageType, price FROM damage WHERE damageReportId = ?";
         ArrayList<Damage> damageList = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
@@ -71,6 +71,7 @@ public class DamageRepository {
 
             while (result.next()){
                 Damage damage = new Damage();
+                damage.setId(result.getInt("id"));
                 damage.setDamageType(result.getString("damageType"));
                 damage.setPrice(result.getDouble("price"));
                 damageList.add(damage);
@@ -81,5 +82,19 @@ public class DamageRepository {
         return damageList;
     }
 
+    public void deleteDamage(int damageId) {
+        String sql = "DELETE FROM damage WHERE Id = ?";
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setInt(1, damageId);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
