@@ -1,8 +1,5 @@
 package org.example.bilabonnement_gruppe1.model;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
 public class Car {
 
 
@@ -23,6 +20,20 @@ public class Car {
     private double kmDriven;
 
     public Car() {
+    }
+
+    public Car(String vehicleNumber, String chassisnumber, String model, String status, String equipment, String image, double co2Emission, double kmDriven) {
+        this.vehicleNumber = vehicleNumber;
+        this.chassisnumber = chassisnumber;
+        this.model = model;
+        this.status = status;
+        this.equipment = equipment;
+        this.image = image;
+        this.co2Emission = co2Emission;
+        this.kmDriven = kmDriven;
+    }
+
+    public Car(String registrationNumber, String chassisnumber, String model, String equipment, double kmDriven, double co2Emission, String image, String status) {
     }
 
     public String getVehicleNumber() {
@@ -117,8 +128,8 @@ public class Car {
         this.image = image;
     }
 
-    public int getCo2Emission() {
-        return (int) co2Emission;
+    public double getCo2Emission() {
+        return (double) co2Emission;
     }
 
     public void setCo2Emission(double co2Emission) {
@@ -141,8 +152,8 @@ public class Car {
         this.registrationFee = registrationFee;
     }
 
-    public int getKmDriven() {
-        return (int) kmDriven;
+    public double getKmDriven() {
+        return (double) kmDriven;
     }
     public void setKmDriven(double kmDriven) {
         this.kmDriven = kmDriven;
