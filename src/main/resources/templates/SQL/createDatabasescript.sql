@@ -9,7 +9,7 @@ CREATE TABLE user (
 );
 
 CREATE TABLE car (
-    vehicleNumber INT AUTO_INCREMENT PRIMARY KEY,
+    vehicleNumber VARCHAR(50) PRIMARY KEY,
     chassisNumber VARCHAR(250) UNIQUE,
     model VARCHAR(250) NOT NULL,
     equipment VARCHAR(250),
@@ -29,7 +29,6 @@ CREATE TABLE customer (
 CREATE TABLE damageReport(
                              id INT AUTO_INCREMENT PRIMARY KEY,
                              userId INT,
-                             kmOverLimit DOUBLE,
                              repairCost DOUBLE,
 
                              FOREIGN KEY (userId) REFERENCES user (id)
@@ -46,7 +45,7 @@ CREATE TABLE damage (
 
 CREATE TABLE rentalAgreement (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    carId INT,
+    carId VARCHAR(50),
     customerPhoneNumber int,
     userLogin VARCHAR(100),
     damageReportId INT,
