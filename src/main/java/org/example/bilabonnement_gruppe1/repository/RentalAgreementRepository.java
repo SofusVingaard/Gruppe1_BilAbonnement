@@ -92,12 +92,13 @@ public class RentalAgreementRepository {
             while (resultSet.next()) {
                 RentalAgreement agreement = new RentalAgreement();
                 agreement.setId(resultSet.getInt("id"));
+                agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
+                agreement.setUserLogin(resultSet.getString("userLogin"));
                 agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
                 agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
                 agreement.setActive(resultSet.getBoolean("active"));
-
-                // Du kan fylde resten ud med fx: carId, customerId, userId osv.
-                // Eller lave joins senere hvis du vil vise fx navn i stedet for ID
+                agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
+                agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
 
                 agreements.add(agreement);
             }
