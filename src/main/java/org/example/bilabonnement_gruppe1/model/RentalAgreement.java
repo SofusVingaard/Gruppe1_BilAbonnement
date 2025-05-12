@@ -6,7 +6,7 @@ public class RentalAgreement {
     private int id;
     private Car car;
     private Customer customer;
-    private int carId;
+    private String carId;
     private int customerPhoneNumber;
     private String userLogin;
     private User user;
@@ -17,7 +17,7 @@ public class RentalAgreement {
     private boolean active;
     private double allowedKM;
 
-    public RentalAgreement(int customerPhoneNumber, int carId, String userLogin, DamageReport damageReport, LocalDate startDate, LocalDate endDate, boolean active, double kmOverLimit) {
+    public RentalAgreement(int customerPhoneNumber, String carId, String userLogin, DamageReport damageReport, LocalDate startDate, LocalDate endDate, boolean active, double kmOverLimit) {
         this.customerPhoneNumber = customerPhoneNumber;
         this.carId = carId;
         this.userLogin = userLogin;
@@ -44,11 +44,11 @@ public class RentalAgreement {
         this.customerPhoneNumber = customerPhoneNumber;
     }
 
-    public int getCarId() {
+    public String getCarId() {
         return carId;
     }
 
-    public void setCarId(int carId) {
+    public void setCarId(String carId) {
         this.carId = carId;
     }
 

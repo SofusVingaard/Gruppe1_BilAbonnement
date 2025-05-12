@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 @Repository
@@ -18,28 +15,42 @@ public class RentalAgreementRepository {
     private DataSource dataSource;
 
     public void createRentalAgreement(RentalAgreement agreement) {
-        String sql = "INSERT INTO rentalAgreement " +
+        String rentalSql = "INSERT INTO rentalAgreement " +
                 "(carId, customerPhoneNumber, userLogin, startDate, endDate, active, allowedKM) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
+        String damageSql = "INSERT INTO damageReport (rentalAgreementId, repairCost, note) VALUES (?, ?, ?)";
+
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement rentalStmt = connection.prepareStatement(rentalSql, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement damageStmt = connection.prepareStatement(damageSql)) {
 
-            statement.setString(1, agreement.getCar().getVehicleNumber());
-            statement.setInt(2, agreement.getCustomerPhoneNumber());
-            statement.setString(3, agreement.getUser().getUserLogin());
-            statement.setDate(4, java.sql.Date.valueOf(agreement.getStartDate()));
-            statement.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
-            statement.setBoolean(6, agreement.isActive());
-            statement.setDouble(7, agreement.getAllowedKM());
+            rentalStmt.setString(1, agreement.getCar().getVehicleNumber());
+            rentalStmt.setInt(2, agreement.getCustomerPhoneNumber());
+            rentalStmt.setString(3, agreement.getUser().getUserLogin());
+            rentalStmt.setDate(4, java.sql.Date.valueOf(agreement.getStartDate()));
+            rentalStmt.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
+            rentalStmt.setBoolean(6, agreement.isActive());
+            rentalStmt.setDouble(7, agreement.getAllowedKM());
 
-            statement.executeUpdate();
+            rentalStmt.executeUpdate();
+
+            ResultSet generatedKeys = rentalStmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int rentalAgreementId = generatedKeys.getInt(1);
+
+                damageStmt.setInt(1, rentalAgreementId);
+                damageStmt.setDouble(2, 0.0);
+                damageStmt.setString(3, "");
+                damageStmt.executeUpdate();
+            }
 
         } catch (SQLException e) {
-            System.err.println("Fejl ved oprettelse af lejeaftale: " + e.getMessage());
+            System.err.println("Fejl ved oprettelse af lejeaftale og damageReport: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
     public void updateRentalAgreement(RentalAgreement agreement) {
         String sql = "UPDATE rentalAgreement SET " + "carId = ?, " + "customerId = ?, " + "userId = ?, " +
@@ -191,7 +202,7 @@ public class RentalAgreementRepository {
             if (resultSet.next()) {
                 RentalAgreement agreement = new RentalAgreement();
                 agreement.setId(resultSet.getInt("id"));
-                agreement.setCarId(resultSet.getInt("carId"));
+                agreement.setCarId(resultSet.getString("carId"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
                 agreement.setDamageReportId(resultSet.getInt("damageReportId"));
                 agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
@@ -264,7 +275,7 @@ public class RentalAgreementRepository {
             while (resultSet.next()) {
                 RentalAgreement agreement = new RentalAgreement();
                 agreement.setId(resultSet.getInt("id"));
-                agreement.setCarId(resultSet.getInt("carId"));
+                agreement.setCarId(resultSet.getString("carId"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
                 agreement.setUserLogin(resultSet.getString("userLogin"));
                 agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());

@@ -36,6 +36,8 @@
     <th>Aktiv</th>
     <th>KM tilladt</th>
     <th>KM over</th>
+    <th>Handling</th>
+
   </tr>
   </thead>
   <tbody>
@@ -50,6 +52,9 @@
     <td th:text="${agreement.active ? 'Ja' : 'Nej'}">Ja</td>
     <td th:text="${agreement.allowedKM}">20000</td>
     <td th:text="${agreement.kmOverLimit}">500</td>
+    <td>
+      <a th:href="@{'/rentalAgreement/updateRentalAgreement/' + ${agreement.id}}">Rediger</a>
+    </td>
   </tr>
   </tbody>
 </table>

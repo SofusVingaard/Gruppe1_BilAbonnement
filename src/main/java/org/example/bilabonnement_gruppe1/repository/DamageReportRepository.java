@@ -18,7 +18,7 @@ public class DamageReportRepository {
     private DataSource dataSource;
 
     public void createDamageReport(DamageReport damageReport) {
-        String sql ="INSERT INTO damageReport (userID, kmOverLimit) VALUES (?, ?)";
+        String sql ="INSERT INTO damageReport (userID) VALUES (?, ?)";
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){

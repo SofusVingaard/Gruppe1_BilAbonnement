@@ -25,19 +25,21 @@ public class DamageReportController {
     private DamageRepository damageRepository;
 
     @GetMapping("/damageReport")
-    public String showDamageReport(HttpSession session) {
+    public String showDamageReport(HttpSession session,
+                                   Model model,
+                                   @RequestParam("damageReportId") int damageReportId) {
 
         if (session.getAttribute("currentUser") == null) {
             return "redirect:/index";
         }
         else {
+            damageRepository.getRepairCost(damageReportId);
             return "damageReport";
         }
     }
 
     @PostMapping("/damageReport")
-    public String createDamageReport(@RequestParam("userId") int userId,
-                                     @RequestParam("kmOverLimit") double kmOverLimit) {
+    public String createDamageReport() {
 
         //damageRepository.createDamageReport();
 

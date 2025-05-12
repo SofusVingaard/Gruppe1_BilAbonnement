@@ -28,11 +28,14 @@ CREATE TABLE customer (
 
 CREATE TABLE damageReport(
                              id INT AUTO_INCREMENT PRIMARY KEY,
-                             userId INT,
+                             rentalAgreementId INT,
+                             note TEXT,
                              repairCost DOUBLE,
 
-                             FOREIGN KEY (userId) REFERENCES user (id)
+                             FOREIGN KEY (rentalAgreementId) REFERENCES rentalAgreement (id)
 );
+
+
 
 CREATE TABLE damage (
                         id INT AUTO_INCREMENT PRIMARY KEY,
