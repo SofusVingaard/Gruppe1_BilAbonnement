@@ -2,9 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Opret Finansrapport</title>
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+  <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
 <h1>Opret Finansrapport</h1>
+<header>
+  <div th:replace="fragments/header :: site-header"></div>
+</header>
 <form action="/create" method="post">
   <label>Total pris:</label>
   <input type="number" step="0.01" name="totalPrice" required><br>

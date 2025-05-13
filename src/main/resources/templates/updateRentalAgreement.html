@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Opdater Lejeaftale</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+<header>
+    <div th:replace="fragments/header :: site-header"></div>
+</header>
 <h1>Opdater Lejeaftale</h1>
 
 <form th:action="@{/rentalAgreement/update}" th:object="${agreement}" method="post">

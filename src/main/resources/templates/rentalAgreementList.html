@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <title>Lejeaftaler</title>
   <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+  <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+<header>
+  <div th:replace="fragments/header :: site-header"></div>
+</header>
 <h1>Oversigt over lejeaftaler</h1>
 
 <!-- Søgeformular -->

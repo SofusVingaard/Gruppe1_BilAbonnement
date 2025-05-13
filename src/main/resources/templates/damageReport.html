@@ -6,11 +6,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Skadesrapport</title>
-
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+<header>
+    <div th:replace="fragments/header :: site-header"></div>
+</header>
 <h1>Skadesrapport</h1>
-
 <a th:href="@{'/rentalAgreement/updateRentalAgreement/' + ${damageReportId}}">Tilbage til lejeaftale</a>
 
 

@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret Lejeaftale</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+<header>
+    <div th:replace="fragments/header :: site-header"></div>
+</header>
 <h1>Opret Lejeaftale</h1>
 <a th:href ="@{/rentalAgreement/create}" class="nav-menu-button">Lav ny lejeaftale rental Agreement</a>
 
