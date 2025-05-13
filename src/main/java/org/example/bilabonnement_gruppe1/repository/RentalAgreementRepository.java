@@ -21,6 +21,7 @@ public class RentalAgreementRepository {
 
         String damageSql = "INSERT INTO damageReport (rentalAgreementId, repairCost, note) VALUES (?, ?, ?)";
 
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement rentalStmt = connection.prepareStatement(rentalSql, Statement.RETURN_GENERATED_KEYS);
              PreparedStatement damageStmt = connection.prepareStatement(damageSql)) {
