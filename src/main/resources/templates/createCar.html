@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret bil</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+<header>
+    <div th:replace="fragments/header :: site-header"></div>
+</header>
 <h1>Opret ny bil</h1>
 
 <h1>Opret Bil</h1>
@@ -45,7 +50,5 @@
         <button type="submit">Gem bil</button>
     </div>
 </form>
-</body>
-
 </body>
 </html>
