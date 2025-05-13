@@ -15,6 +15,7 @@ import java.util.ArrayList;
 @RequestMapping("/cars")
 public class CarController {
 
+
     @Autowired
     CarRepository carRepository;
 
@@ -36,6 +37,7 @@ public class CarController {
 
     @PostMapping("/create")
     public String handleCreate(@ModelAttribute("car") Car car) {
+
         carRepository.createCar(car);
         System.out.println("Oprettet ny bil: " + car.getVehicleNumber());
         return "redirect:/cars/create";
