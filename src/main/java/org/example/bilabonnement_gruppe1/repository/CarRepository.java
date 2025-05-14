@@ -120,7 +120,33 @@ public class CarRepository {
 
         return carList;
     }
+    public Car getCarByVehicleNumber(String vehicleNumber) {
+        String sql = "SELECT * FROM car WHERE vehicleNumber = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
+            statement.setString(1, vehicleNumber);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                Car car = new Car();
+                car.setVehicleNumber(result.getString(1));
+                car.setChassisnumber(result.getString(2));
+                car.setModel(result.getString(3));
+                car.setEquipment(result.getString(4));
+                car.setKmDriven(result.getDouble(5));
+                car.setCo2Emission(result.getDouble(6));
+                car.setImage(result.getString(7));
+                car.setStatus(result.getString(8));
+                car.setLimited(result.getBoolean(9));
+                car.setMonthlyFee(result.getInt(10));
+                return car;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 
 

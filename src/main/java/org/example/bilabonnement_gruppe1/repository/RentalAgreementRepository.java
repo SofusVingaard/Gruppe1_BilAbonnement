@@ -1,5 +1,6 @@
 package org.example.bilabonnement_gruppe1.repository;
 
+import org.example.bilabonnement_gruppe1.model.Car;
 import org.example.bilabonnement_gruppe1.model.RentalAgreement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,16 +17,32 @@ public class RentalAgreementRepository {
 
     public void createRentalAgreement(RentalAgreement agreement) {
         String rentalSql = "INSERT INTO rentalAgreement " +
-                "(carId, customerPhoneNumber, userLogin, startDate, endDate, active, allowedKM) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "(carId, customerPhoneNumber, userLogin, startDate, endDate, active, allowedKM, totalPrice, damageReportId) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        String damageSql = "INSERT INTO damageReport (rentalAgreementId, repairCost, note) VALUES (?, ?, ?)";
+        String damageSql = "INSERT INTO damageReport (repairCost, note) VALUES (?, ?)";
 
+        String updateCarSql = "UPDATE car SET status = 'udlejet' WHERE vehicleNumber = ?";
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement rentalStmt = connection.prepareStatement(rentalSql, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement damageStmt = connection.prepareStatement(damageSql)) {
+             PreparedStatement damageStmt = connection.prepareStatement(damageSql, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement rentalStmt = connection.prepareStatement(rentalSql);
+             PreparedStatement updateCarStmt = connection.prepareStatement(updateCarSql)) {
 
+            // Først opret damageReport
+            damageStmt.setDouble(1, 0.0);
+            damageStmt.setString(2, "");
+            damageStmt.executeUpdate();
+
+
+
+            ResultSet damageKeys = damageStmt.getGeneratedKeys();
+            int damageReportId = 0;
+            if (damageKeys.next()) {
+                damageReportId = damageKeys.getInt(1);
+            }
+
+            // Brug damageReportId i rentalAgreement
             rentalStmt.setString(1, agreement.getCar().getVehicleNumber());
             rentalStmt.setInt(2, agreement.getCustomerPhoneNumber());
             rentalStmt.setString(3, agreement.getUser().getUserLogin());
@@ -33,24 +50,23 @@ public class RentalAgreementRepository {
             rentalStmt.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
             rentalStmt.setBoolean(6, agreement.isActive());
             rentalStmt.setDouble(7, agreement.getAllowedKM());
+            rentalStmt.setInt(8, agreement.getTotalPrice());
+            rentalStmt.setInt(9, damageReportId);
 
             rentalStmt.executeUpdate();
 
-            ResultSet generatedKeys = rentalStmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                int rentalAgreementId = generatedKeys.getInt(1);
+            updateCarStmt.setString(1, agreement.getCar().getVehicleNumber());
+            updateCarStmt.executeUpdate();
 
-                damageStmt.setInt(1, rentalAgreementId);
-                damageStmt.setDouble(2, 0.0);
-                damageStmt.setString(3, "");
-                damageStmt.executeUpdate();
-            }
+
+
 
         } catch (SQLException e) {
             System.err.println("Fejl ved oprettelse af lejeaftale og damageReport: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
 
     public void updateRentalAgreement(RentalAgreement agreement) {
@@ -292,6 +308,9 @@ public class RentalAgreementRepository {
         }
         return agreements;
     }
+
+
+
 
     /*public void updateRentalAgreementDamageReport(int rentalAgreementId, DamageReport damageReport) {
         String sql = "UPDATE rentalAgreement SET damageReportId = ? WHERE id = ?";

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 @Controller
@@ -54,29 +55,54 @@ public class RentalAgreementController {
 
 
     @PostMapping("/create")
-        public String createRentalAgreement(
-                @RequestParam("carId") String carId,
-                @RequestParam("customerPhoneNumber") int customerPhoneNumber,
-                @RequestParam("userId") int userId,
-                @RequestParam("startDate") String startDate,
-                @RequestParam("endDate") String endDate,
-                @RequestParam ("allowedKM") double allowedKM,
-                RedirectAttributes redirectAttributes) {
+    public String createRentalAgreement(
+            @RequestParam("carId") String carId,
+            @RequestParam("customerPhoneNumber") int customerPhoneNumber,
+            @RequestParam("userId") int userId,
+            @RequestParam("startDate") String startDateStr,
+            @RequestParam("duration") int durationInMonths,
+            @RequestParam("allowedKM") double allowedKM,
+            RedirectAttributes redirectAttributes) {
 
-            RentalAgreement agreement = new RentalAgreement();
-            agreement.setCar(new Car(carId));
-            agreement.setCustomerPhoneNumber((customerPhoneNumber));
-            agreement.setUser(new User(userId));
-            agreement.setStartDate(LocalDate.parse(startDate));
-            agreement.setEndDate(LocalDate.parse(endDate));
-            agreement.setActive(true);
-
-
-            rentalAgreementRepository.createRentalAgreement(agreement);
-            redirectAttributes.addFlashAttribute("successMessage", "Lejeaftale oprettet!");
-
-            return "/dashboard";
+        Car selectedCar = carRepository.getCarByVehicleNumber(carId);
+        if (selectedCar == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Bilen blev ikke fundet.");
+            return "redirect:/create";
         }
+
+        LocalDate startDate = LocalDate.parse(startDateStr);
+        LocalDate endDate;
+
+        if (selectedCar.isLimited()) {
+            endDate = startDate.plusMonths(3);
+        } else {
+            endDate = startDate.plusMonths(durationInMonths);
+        }
+
+        RentalAgreement agreement = new RentalAgreement();
+        agreement.setCar(selectedCar);
+        agreement.setCustomerPhoneNumber(customerPhoneNumber);
+        agreement.setUser(new User(userId));
+        agreement.setStartDate(startDate);
+        agreement.setEndDate(endDate);
+        agreement.setActive(true);
+        agreement.setAllowedKM(allowedKM);
+
+        long monthsBetween = ChronoUnit.MONTHS.between(startDate, endDate);
+        if (monthsBetween < 1) {
+            monthsBetween = 1;
+        }
+
+        int totalPrice = (int) monthsBetween * selectedCar.getMonthlyFee();
+        agreement.setTotalPrice(totalPrice);
+
+        rentalAgreementRepository.createRentalAgreement(agreement);
+        redirectAttributes.addFlashAttribute("successMessage", "Lejeaftale oprettet!");
+
+        return "redirect:/dashboard";
+    }
+
+
     @GetMapping("/search")
     public String showSearchPage(Model model) throws SQLException {
         // Vis alle lejeaftaler som default
