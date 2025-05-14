@@ -19,7 +19,7 @@ public class Car {
     private double registrationFee;
     private double kmDriven;
     private boolean limited;
-    private int monthlyFee;
+    private Integer monthlyFee;
 
     public Car() {
     }
@@ -33,8 +33,6 @@ public class Car {
         this.image = image;
         this.co2Emission = co2Emission;
         this.kmDriven = kmDriven;
-        this.limited = limited;
-        this.monthlyFee = monthlyFee;
     }
 
     public Car(String registrationNumber, String chassisnumber, String model, String equipment, double kmDriven, double co2Emission, String image, String status) {
@@ -171,11 +169,11 @@ public class Car {
         this.limited = limited;
     }
 
-    public int getMonthlyFee() {
+    public Integer getMonthlyFee() {
         return monthlyFee;
     }
 
-    public void setMonthlyFee(int monthlyFee) {
-        monthlyFee = monthlyFee;
+    public void setMonthlyFee(Integer monthlyFee) {
+        this.monthlyFee = monthlyFee;
     }
 }
