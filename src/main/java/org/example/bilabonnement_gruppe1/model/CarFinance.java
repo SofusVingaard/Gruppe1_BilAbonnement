@@ -30,7 +30,7 @@ public class CarFinance {
         return date;
     }
 
-    public double getCo2Emissinon() {
+    public double getCo2Emission() {
         return co2Emission;
     }
 
@@ -58,7 +58,7 @@ public class CarFinance {
         this.date = date;
     }
 
-    public void setCo2Emissinon(double Co2Emission) {
+    public void setCo2Emission(double Co2Emission) {
         this.co2Emission = Co2Emission;
     }
 

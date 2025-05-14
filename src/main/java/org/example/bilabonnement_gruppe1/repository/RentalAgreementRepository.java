@@ -293,6 +293,10 @@ public class RentalAgreementRepository {
         return agreements;
     }
 
+    public RentalAgreement findById(int id) {
+        return null;
+    }
+
     /*public void updateRentalAgreementDamageReport(int rentalAgreementId, DamageReport damageReport) {
         String sql = "UPDATE rentalAgreement SET damageReportId = ? WHERE id = ?";
 
