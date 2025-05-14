@@ -1,12 +1,14 @@
 package org.example.bilabonnement_gruppe1.controller;
 
 
+import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.model.Car;
 import org.example.bilabonnement_gruppe1.model.Customer;
 import org.example.bilabonnement_gruppe1.model.RentalAgreement;
 import org.example.bilabonnement_gruppe1.model.User;
 import org.example.bilabonnement_gruppe1.repository.CarRepository;
 import org.example.bilabonnement_gruppe1.repository.RentalAgreementRepository;
+import org.example.bilabonnement_gruppe1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -106,7 +108,14 @@ public class RentalAgreementController {
     public String updateRentalAgreement(@PathVariable("id") int id, Model model) {
         RentalAgreement agreement = rentalAgreementRepository.getRentalAgreement(id);
         model.addAttribute("agreement", agreement);
-        return "updateRentalAgreement";
+        System.out.println("Damage report ID: " + agreement.getDamageReportId());
+        return "updateRentalAgreement"; // returner til HTML-formular
+    }
+
+    @PostMapping("/updateRentalAgreement/{id}")
+    public String updateRentalAgreement(@PathVariable("id") int id, @ModelAttribute RentalAgreement agreement) {
+        rentalAgreementRepository.updateRentalAgreement(agreement);
+        return "redirect:/rentalAgreement/updateRentalAgreement/" + agreement.getId();
     }
 
 }

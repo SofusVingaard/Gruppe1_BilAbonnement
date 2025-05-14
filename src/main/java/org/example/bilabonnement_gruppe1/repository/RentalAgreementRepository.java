@@ -21,10 +21,17 @@ public class RentalAgreementRepository {
 
         String damageSql = "INSERT INTO damageReport (rentalAgreementId, repairCost, note) VALUES (?, ?, ?)";
 
+        String updateCar = "UPDATE car SET status = 'Udlejet' WHERE vehicleNumber = ?";
+
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement rentalStmt = connection.prepareStatement(rentalSql, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement damageStmt = connection.prepareStatement(damageSql)) {
+             PreparedStatement damageStmt = connection.prepareStatement(damageSql);
+             PreparedStatement updateCarStmt = connection.prepareStatement(updateCar)
+
+        )
+
+        {
 
             rentalStmt.setString(1, agreement.getCar().getVehicleNumber());
             rentalStmt.setInt(2, agreement.getCustomerPhoneNumber());
@@ -37,6 +44,9 @@ public class RentalAgreementRepository {
             rentalStmt.executeUpdate();
 
             ResultSet generatedKeys = rentalStmt.getGeneratedKeys();
+
+
+
             if (generatedKeys.next()) {
                 int rentalAgreementId = generatedKeys.getInt(1);
 
@@ -44,7 +54,15 @@ public class RentalAgreementRepository {
                 damageStmt.setDouble(2, 0.0);
                 damageStmt.setString(3, "");
                 damageStmt.executeUpdate();
+
+                updateCarStmt.setString(1, agreement.getCar().getVehicleNumber());
+                updateCarStmt.executeUpdate();
+
+
             }
+
+
+
 
         } catch (SQLException e) {
             System.err.println("Fejl ved oprettelse af lejeaftale og damageReport: " + e.getMessage());
@@ -54,22 +72,37 @@ public class RentalAgreementRepository {
 
 
     public void updateRentalAgreement(RentalAgreement agreement) {
-        String sql = "UPDATE rentalAgreement SET " + "carId = ?, " + "customerId = ?, " + "userId = ?, " +
-                "damageReportId = ?, " + "startDate = ?, " + "endDate = ?, " + "active = ? " + "WHERE id = ?";
+        String sql = "UPDATE rentalAgreement SET " +
+                "carId = ?, customerPhoneNumber = ?, damageReportId = ?, " +
+                "startDate = ?, endDate = ?, active = ?, allowedKM = ?, kmOverLimit = ? " +
+                "WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, agreement.getCar().getVehicleNumber());
-            statement.setInt(2, agreement.getCustomer().getId());
-            statement.setInt(3, agreement.getUser().getId());
-            statement.setInt(4, agreement.getDamageReport().getId());
-            statement.setDate(5, java.sql.Date.valueOf(agreement.getStartDate()));
-            statement.setDate(6, java.sql.Date.valueOf(agreement.getEndDate()));
-            statement.setBoolean(7, agreement.isActive());
+            // Sæt værdierne for de opdaterede felter
+            statement.setString(1, agreement.getCarId());
+            statement.setInt(2, agreement.getCustomerPhoneNumber());
+            statement.setInt(3, agreement.getDamageReportId());
 
-            statement.setInt(8, agreement.getId()); // WHERE id = ?
+            if (agreement.getStartDate() != null) {
+                statement.setDate(4, java.sql.Date.valueOf(agreement.getStartDate()));
+            } else {
+                statement.setNull(4, java.sql.Types.DATE);
+            }
 
+            if (agreement.getEndDate() != null) {
+                statement.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
+            } else {
+                statement.setNull(5, java.sql.Types.DATE);
+            }
+
+            statement.setBoolean(6, agreement.isActive());
+            statement.setDouble(7, agreement.getAllowedKM());
+            statement.setDouble(8, agreement.getKmOverLimit());
+            statement.setInt(9, agreement.getId());
+
+            // Udfør opdateringen
             statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -205,6 +238,7 @@ public class RentalAgreementRepository {
                 agreement.setId(resultSet.getInt("id"));
                 agreement.setCarId(resultSet.getString("carId"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
+                agreement.setUserLogin(resultSet.getString("userLogin"));
                 agreement.setDamageReportId(resultSet.getInt("damageReportId"));
                 agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
                 agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
@@ -218,52 +252,6 @@ public class RentalAgreementRepository {
         }
         return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public ArrayList<RentalAgreement> getAllRentalAgreements()  {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();

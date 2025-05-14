@@ -3,27 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Opdater Lejeaftale</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+<header>
+    <!--<div th:replace="fragments/header :: site-header"></div>-->
+</header>
 <h1>Opdater Lejeaftale</h1>
 
-<form th:action="@{/rentalAgreement/update}" th:object="${agreement}" method="post">
+<form th:action="@{/rentalAgreement/updateRentalAgreement/{id}(id=${agreement.id})}" th:object="${agreement}" method="post">
     <input type="hidden" th:field="*{id}" />
 
     <label for="carId">Bil ID:</label>
-    <input type="text" id="carId" th:field="*{carId}" />
+    <input type="text" id="carId" th:field="*{carId}" readonly/>
 
     <label for="customerPhoneNumber">Kundens telefonnummer:</label>
     <input type="text" id="customerPhoneNumber" th:field="*{customerPhoneNumber}" />
 
     <label for="userLogin">Brugerlogin:</label>
-    <input type="text" id="userLogin" th:field="*{userLogin}" />
+    <input type="text" id="userLogin" th:field="*{userLogin}" th:readonly="*{userLogin == null}" />
 
     <label for="damageReportId">Skaderapport ID:</label>
-    <input type="number" id="damageReportId" th:field="*{damageReportId}" />
+    <input type="number" id="damageReportId" th:field="*{damageReportId}" readonly/>
 
     <label for="startDate">Startdato:</label>
-    <input type="date" id="startDate" th:field="*{startDate}" />
+    <input type="date" id="startDate" th:field="*{startDate}" readonly/>
 
     <label for="endDate">Slutdato:</label>
     <input type="date" id="endDate" th:field="*{endDate}" />
@@ -32,14 +37,14 @@
     <input type="checkbox" id="active" th:field="*{active}" />
 
     <label for="allowedKM">Tilladte KM:</label>
-    <input type="number" id="allowedKM" th:field="*{allowedKM}" />
+    <input type="number" id="allowedKM" th:field="*{allowedKM}" readonly/>
 
     <label for="kmOverLimit">KM over grænse:</label>
     <input type="number" id="kmOverLimit" th:field="*{kmOverLimit}" />
 
     <button type="submit">Opdater</button>
 
-    <a th:href="@{'/damageReport/damageReport?damageReportId=' + ${agreement.id}}">
+    <a th:href="@{'/damageReport/damageReport?damageReportId=' + ${agreement.damageReportId}}">
         Gå til skadesrapport
     </a>
 </form>
