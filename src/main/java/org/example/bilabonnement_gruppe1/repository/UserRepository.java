@@ -32,29 +32,6 @@ public class UserRepository {
         }
     }
 
-    /*public User findByUserLogin(String userLogin){
-        String sql = "SELECT userLogin, name, password FROM user WHERE userLogin = ?";
-        User user = null;
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, userLogin);
-
-            try (ResultSet resultSet = statement.executeQuery()){
-                if (resultSet.next()) {
-                    user = new User();
-                    user.setUserLogin(resultSet.getString("userLogin"));
-                    user.setUserLogin(resultSet.getString("name"));
-                    user.setUserLogin(resultSet.getString("password"));
-                }
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
-    }*/
 
     public User findByUserLogin(String userLogin){
         String sql = "SELECT id, userLogin, name, password FROM `user` WHERE userLogin = ?";

@@ -39,6 +39,8 @@ public class CarRepository {
                 car.setCo2Emission(result.getDouble(6));
                 car.setImage(result.getString(7));
                 car.setStatus(result.getString(8));
+                car.setLimited(result.getBoolean(9));
+                car.setMonthlyFee(result.getInt(10));
 
                 carList.add(car);
             }
@@ -50,8 +52,8 @@ public class CarRepository {
     }
 
     public void createCar(Car car) {
-        String sql = "INSERT INTO car (vehicleNumber, chassisnumber, model, equipment, kmDriven, co2Emission, image, status) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO car (vehicleNumber, chassisnumber, model, equipment, kmDriven, co2Emission, image, status, limited, monthlyFee) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -63,6 +65,7 @@ public class CarRepository {
             stmt.setDouble(6, car.getCo2Emission());
             stmt.setString(7, car.getImage());
             stmt.setString(8, car.getStatus());
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
