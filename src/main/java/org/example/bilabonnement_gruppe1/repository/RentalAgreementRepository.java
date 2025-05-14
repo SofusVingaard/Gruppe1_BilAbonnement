@@ -29,7 +29,6 @@ public class RentalAgreementRepository {
              PreparedStatement rentalStmt = connection.prepareStatement(rentalSql);
              PreparedStatement updateCarStmt = connection.prepareStatement(updateCarSql)) {
 
-            // Først opret damageReport
             damageStmt.setDouble(1, 0.0);
             damageStmt.setString(2, "");
             damageStmt.executeUpdate();
@@ -42,7 +41,6 @@ public class RentalAgreementRepository {
                 damageReportId = damageKeys.getInt(1);
             }
 
-            // Brug damageReportId i rentalAgreement
             rentalStmt.setString(1, agreement.getCar().getVehicleNumber());
             rentalStmt.setInt(2, agreement.getCustomerPhoneNumber());
             rentalStmt.setString(3, agreement.getUser().getUserLogin());
