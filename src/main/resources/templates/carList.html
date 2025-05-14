@@ -1,14 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/carList.css}">
+    <meta charset="UTF-8">
+    <title>Biler</title>
 </head>
 <body>
+<header>
+    <div th:replace="~{fragments/header.html :: site-header}"></div>
+</header>
+<h1 style="text-align: center;">Biloversigt</h1>
+<div class="page-wrapper">
     <header>
         <div th:replace="~{fragments/header.html :: site-header}"></div>
     </header>
-</body>
+
+    <div class="car-board">
+        <div class="container">
+            <div class="car-card" th:each="car : ${cars}">
+                <img th:src="@{${car.image}}" alt="Bilbillede" />
+                <div class="car-info">
+                    <p><strong>Model:</strong> <span th:text="${car.model}"></span></p>
+                    <p><strong>Udstyr:</strong> <span th:text="${car.equipment}"></span></p>
+                    <p><strong>Kørte km:</strong> <span th:text="${car.kmDriven}"></span></p>
+                    <p><strong>CO₂:</strong> <span th:text="${car.co2Emission} + ' g/km'"></span></p>
+                    <p><strong>Status:</strong> <span th:text="${car.status}"></span></p>
+                    <p><strong>Begrænset:</strong> <span th:text="${car.limited} ? 'Ja' : 'Nej'"></span></p>
+                    <p><strong>Månedlig pris:</strong> <span th:text="${car.monthlyFee} + ' kr'"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body></body>
 </html>
