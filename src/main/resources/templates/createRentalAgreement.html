@@ -5,6 +5,7 @@
     <title>Opret Lejeaftale</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/createCar.css}">
 </head>
 <body>
 <header>
@@ -23,6 +24,7 @@
 
 
 <form th:action="@{/rentalAgreement/create}" method="post">
+
     <label for="carId">Bilens registreringsnummer:</label>
     <select id="carId" name="carId" required>
         <option value="" disabled selected>Vælg en bil</option>
