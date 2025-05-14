@@ -17,6 +17,10 @@ public class RentalAgreement {
     private boolean active;
     private double allowedKM;
 
+
+
+    private int totalPrice;
+
     public RentalAgreement(int customerPhoneNumber, String carId, String userLogin, DamageReport damageReport, LocalDate startDate, LocalDate endDate, boolean active, double kmOverLimit) {
         this.customerPhoneNumber = customerPhoneNumber;
         this.carId = carId;
@@ -142,5 +146,12 @@ public class RentalAgreement {
 
     public void setDamageReportId(int damageReportId) {
         this.damageReportId = damageReportId;
+    }
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

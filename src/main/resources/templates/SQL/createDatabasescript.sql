@@ -62,6 +62,7 @@ CREATE TABLE rentalAgreement (
     active boolean DEFAULT TRUE,
     allowedKM double,
     kmOverLimit double,
+    totalPrice INT,
 
 
 
