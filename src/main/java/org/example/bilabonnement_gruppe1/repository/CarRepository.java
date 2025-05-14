@@ -89,6 +89,38 @@ public class CarRepository {
 
         return 0;
     }
+    public ArrayList<Car> getCarsByLimited(boolean limited) {
+        String sql = "SELECT * FROM car WHERE status = ? AND limited = ?";
+        ArrayList<Car> carList = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, "available");
+            statement.setBoolean(2, limited);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Car car = new Car();
+                car.setVehicleNumber(result.getString(1));
+                car.setChassisnumber(result.getString(2));
+                car.setModel(result.getString(3));
+                car.setEquipment(result.getString(4));
+                car.setKmDriven(result.getDouble(5));
+                car.setCo2Emission(result.getDouble(6));
+                car.setImage(result.getString(7));
+                car.setStatus(result.getString(8));
+                car.setLimited(result.getBoolean(9));
+                car.setMonthlyFee(result.getInt(10));
+                carList.add(car);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return carList;
+    }
+
 }
 
 

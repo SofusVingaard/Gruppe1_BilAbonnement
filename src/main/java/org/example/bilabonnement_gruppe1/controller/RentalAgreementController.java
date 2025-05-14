@@ -35,15 +35,25 @@ public class RentalAgreementController {
     }
 
         @GetMapping("/create")
-        public String showCreateForm(Model model) {
+        public String showCreateForm(@RequestParam(value = "limitFilter", required = false) String filter, Model model) {
+            ArrayList<Car> carList;
 
-            ArrayList<Car> carList = carRepository.showAvailableCars("available");
+            if ("limited".equals(filter)) {
+                carList = carRepository.getCarsByLimited(true);
+            } else if ("unlimited".equals(filter)) {
+                carList = carRepository.getCarsByLimited(false);
+            } else {
+                carList = carRepository.showAvailableCars("available");
+            }
+
             model.addAttribute("carList", carList);
+            model.addAttribute("filter", filter);
 
             return "createRentalAgreement";
         }
 
-        @PostMapping("/create")
+
+    @PostMapping("/create")
         public String createRentalAgreement(
                 @RequestParam("carId") String carId,
                 @RequestParam("customerPhoneNumber") int customerPhoneNumber,
