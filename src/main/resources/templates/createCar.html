@@ -44,7 +44,19 @@
     </div>
     <div>
         <label for="status">Status</label>
-        <input type="text" id="status" th:field="*{status}" />
+        <select id="status" th:field="*{status}">
+            <option value="available">Available</option>
+            <option value="rented">Rented</option>
+            <option value="til reparation">Til reparation</option>
+        </select>
+    </div>
+    <div>
+        <label for="limited">Er bilen limited?</label>
+        <input type="checkbox" id="limited" th:field="*{limited}" />
+    </div>
+    <div>
+        <label for="monthlyFee">Månedlig pris (kr)</label>
+        <input type="number" id="monthlyFee" th:field="*{monthlyFee}" />
     </div>
     <div>
         <button type="submit">Gem bil</button>
