@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Opret bil</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/createCar.css}">
 </head>
 <body>
 <header>
-    <div th:replace="fragments/header :: site-header"></div>
+    <div th:replace="~{fragments/header.html :: site-header}"></div>
 </header>
-<h1>Opret ny bil</h1>
 
 <h1>Opret Bil</h1>
 <form th:action="@{/cars/create}" th:object="${car}" method="post">

@@ -1,37 +1,40 @@
 .site-header {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    height: 100px;
-    left: 20%;
-    top: 10%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: #f0f0f0; /* Light gray */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
 
+.logo {
+    width: 150px;
+    margin-bottom: 40px;
+}
 
-    nav {
-        position: fixed;
-        top: 80px;
-        left: 20px;
-        bottom: 200px;
-        width: 200px;
-        background-color: rgba(0, 0, 0, 0.34);
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        border-radius: 8px;
-    }
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
 
+.nav-menu-button {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
 
-    nav a {
-        color: #ffffff;
-        text-decoration: none;
-        margin-bottom: 15px;
-        font-size: 30px;
-        padding: 10px;
-        border-radius: 4px;
-        transition: background 0.3s;
-    }
-
-    nav a:hover {
-        background-color: #34495e;
-    }
+.nav-menu-button:hover {
+    background-color: #d0d0d0;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Opret Finansrapport</title>
   <link rel="stylesheet" th:href="@{/css/dashboard.css}">
@@ -8,7 +8,7 @@
 <body>
 <h1>Opret Finansrapport</h1>
 <header>
-  <div th:replace="fragments/header :: site-header"></div>
+  <div th:replace="~{fragments/header.html :: site-header}"></div>
 </header>
 <form action="/create" method="post">
   <label>Total pris:</label>
