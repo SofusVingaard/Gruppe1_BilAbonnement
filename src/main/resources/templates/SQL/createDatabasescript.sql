@@ -16,8 +16,13 @@ CREATE TABLE car (
     kmDriven INT,
     co2Emission INT,
     image VARCHAR(250),
-    status VARCHAR(50)
+    status VARCHAR(50),
+    limited boolean,
+    monthlyFee int
 );
+
+ALTER TABLE car ADD COLUMN limited BOOLEAN DEFAULT FALSE;
+ALTER TABLE car ADD COLUMN monthlyFee INT;
 
 CREATE TABLE customer (
     id INT AUTO_INCREMENT PRIMARY KEY,

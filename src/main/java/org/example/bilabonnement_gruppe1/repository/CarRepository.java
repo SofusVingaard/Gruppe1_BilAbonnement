@@ -65,6 +65,8 @@ public class CarRepository {
             stmt.setDouble(6, car.getCo2Emission());
             stmt.setString(7, car.getImage());
             stmt.setString(8, car.getStatus());
+            stmt.setBoolean(9,car.isLimited());
+            stmt.setInt(10, car.getMonthlyFee());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
