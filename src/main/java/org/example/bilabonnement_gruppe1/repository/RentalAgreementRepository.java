@@ -48,8 +48,11 @@ public class RentalAgreementRepository {
             rentalStmt.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
             rentalStmt.setBoolean(6, agreement.isActive());
             rentalStmt.setDouble(7, agreement.getAllowedKM());
+            System.out.println("DEBUG: Inserting agreement with totalPrice: " + agreement.getTotalPrice());
+
             rentalStmt.setInt(8, agreement.getTotalPrice());
             rentalStmt.setInt(9, damageReportId);
+
 
             rentalStmt.executeUpdate();
 

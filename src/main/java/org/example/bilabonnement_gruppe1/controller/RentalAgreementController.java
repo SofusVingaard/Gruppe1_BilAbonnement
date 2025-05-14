@@ -74,10 +74,12 @@ public class RentalAgreementController {
         LocalDate endDate;
 
         if (selectedCar.isLimited()) {
-            endDate = startDate.plusMonths(3);
+            endDate = startDate.plusMonths(3);  // Fixed 3 months for limited cars
         } else {
             endDate = startDate.plusMonths(durationInMonths);
         }
+
+
 
         RentalAgreement agreement = new RentalAgreement();
         agreement.setCar(selectedCar);
@@ -93,8 +95,15 @@ public class RentalAgreementController {
             monthsBetween = 1;
         }
 
-        int totalPrice = (int) monthsBetween * selectedCar.getMonthlyFee();
+// Calculate total price
+        int totalPrice = (int) (monthsBetween * selectedCar.getMonthlyFee());
         agreement.setTotalPrice(totalPrice);
+
+// Debug output
+        System.out.println("DEBUG: Calculated price - Months: " + monthsBetween
+                + ", Monthly fee: " + selectedCar.getMonthlyFee()
+                + ", Total: " + totalPrice);
+
 
         rentalAgreementRepository.createRentalAgreement(agreement);
         redirectAttributes.addFlashAttribute("successMessage", "Lejeaftale oprettet!");

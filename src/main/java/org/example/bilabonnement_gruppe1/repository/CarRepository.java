@@ -130,16 +130,17 @@ public class CarRepository {
 
             if (result.next()) {
                 Car car = new Car();
-                car.setVehicleNumber(result.getString(1));
-                car.setChassisnumber(result.getString(2));
-                car.setModel(result.getString(3));
-                car.setEquipment(result.getString(4));
-                car.setKmDriven(result.getDouble(5));
-                car.setCo2Emission(result.getDouble(6));
-                car.setImage(result.getString(7));
-                car.setStatus(result.getString(8));
-                car.setLimited(result.getBoolean(9));
-                car.setMonthlyFee(result.getInt(10));
+                car.setVehicleNumber(result.getString("vehicleNumber"));
+                car.setChassisnumber(result.getString("chassisnumber"));
+                car.setModel(result.getString("model"));
+                car.setEquipment(result.getString("equipment"));
+                car.setKmDriven(result.getDouble("kmDriven"));
+                car.setCo2Emission(result.getDouble("co2Emission"));
+                car.setImage(result.getString("image"));
+                car.setStatus(result.getString("status"));
+                car.setLimited(result.getBoolean("limited"));
+                car.setMonthlyFee(result.getInt("monthlyFee"));
+
                 return car;
             }
         } catch (SQLException e) {
