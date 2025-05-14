@@ -309,6 +309,10 @@ public class RentalAgreementRepository {
         return agreements;
     }
 
+    public RentalAgreement findById(int id) {
+        return null;
+    }
+
 
 
 
