@@ -12,6 +12,16 @@
 </header>
 <h1>Opret Lejeaftale</h1>
 
+<form th:action="@{/rentalAgreement/create}" method="get">
+    <label for="limitFilter">Filtrér efter begrænsning:</label>
+    <select id="limitFilter" name="limitFilter" onchange="this.form.submit()">
+        <option value="">Alle</option>
+        <option th:selected="${filter == 'limited'}" value="limited">Limited</option>
+        <option th:selected="${filter == 'unlimited'}" value="unlimited">Unlimited</option>
+    </select>
+</form>
+
+
 <form th:action="@{/rentalAgreement/create}" method="post">
     <label for="carId">Bilens registreringsnummer:</label>
     <select id="carId" name="carId" required>
