@@ -90,7 +90,10 @@ public class FinanceReportController {
         double totalPrice = report.getRentalFee() + rental.getKmOverLimit() * 2;
         report.setTotalPrice(totalPrice);
 
+
         financeRepository.createFinanceReport(report);
+
+        System.out.println("Finans rapport oprettet");
 
         redirectAttributes.addFlashAttribute("succesMessage", "Finansrapport oprettet.");
         return "redirect:/dashboard";

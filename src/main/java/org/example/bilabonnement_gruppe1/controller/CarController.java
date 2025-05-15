@@ -19,6 +19,13 @@ public class CarController {
     @Autowired
     CarRepository carRepository;
 
+    @GetMapping("/carList")
+    public String showCarList(Model model) {
+        model.addAttribute("cars", carRepository.findAll(false));
+        return "carList";
+    }
+
+
     @GetMapping("/availableCars")
     public String showAvailableCars(Model model) {
         ArrayList<Car> carList = carRepository.showAvailableCars("available");
