@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Repository
@@ -67,26 +68,34 @@ public class RentalAgreementRepository {
 
 
     public void updateRentalAgreement(RentalAgreement agreement) {
-        String sql = "UPDATE rentalAgreement SET " + "carId = ?, " + "customerId = ?, " + "userId = ?, " +
-                "damageReportId = ?, " + "startDate = ?, " + "endDate = ?, " + "active = ? " + "WHERE id = ?";
+        String sql = "UPDATE rentalAgreement SET " + "carId = ?, " + "customerPhoneNumber = ?, " + "userLogin = ?, " +
+                "damageReportId = ?, " + "startDate = ?, " + "endDate = ?, " + "active = ? "+ "allowedKM = ?, " +
+                "kmOverLimit = ? " + "WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, agreement.getCar().getVehicleNumber());
-            statement.setInt(2, agreement.getCustomer().getId());
-            statement.setInt(3, agreement.getUser().getId());
-            statement.setInt(4, agreement.getDamageReport().getId());
-            statement.setDate(5, java.sql.Date.valueOf(agreement.getStartDate()));
-            statement.setDate(6, java.sql.Date.valueOf(agreement.getEndDate()));
+            statement.setInt(2, agreement.getCustomerPhoneNumber());
+            statement.setString(3, agreement.getUser().getUserLogin());
+            statement.setInt(4, agreement.getDamageReportId());
+
+            if (agreement.getStartDate() != null) {
+                statement.setDate(5, java.sql.Date.valueOf(agreement.getStartDate()));
+            } else {
+                statement.setNull(5, Types.DATE);
+            }
+
+            if (agreement.getEndDate() != null) {
+                statement.setDate(6, java.sql.Date.valueOf(agreement.getEndDate()));
+            } else {
+                statement.setNull(6, Types.DATE);
+            }
+
             statement.setBoolean(7, agreement.isActive());
-
-            statement.setInt(8, agreement.getId()); // WHERE id = ?
-
-            statement.setBoolean(6, agreement.isActive());
-            statement.setDouble(7, agreement.getAllowedKM());
-            statement.setDouble(8, agreement.getKmOverLimit());
-            statement.setInt(9, agreement.getId());
+            statement.setDouble(8, agreement.getAllowedKM());
+            statement.setDouble(9, agreement.getKmOverLimit());
+            statement.setInt(10, agreement.getId());
 
             // Udfør opdateringen
             statement.executeUpdate();
@@ -125,8 +134,16 @@ public class RentalAgreementRepository {
                 agreement.setId(resultSet.getInt("id"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
                 agreement.setUserLogin(resultSet.getString("userLogin"));
-                agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
-                agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
+
+                Date sqlStartDate = resultSet.getDate("startDate");
+                LocalDate startDate = (sqlStartDate != null) ? sqlStartDate.toLocalDate() : null;
+                agreement.setStartDate(startDate);
+
+
+                Date sqlEndDate = resultSet.getDate("endDate");
+                LocalDate endDate = (sqlEndDate != null) ? sqlEndDate.toLocalDate() : null;
+                agreement.setEndDate(endDate);
+
                 agreement.setActive(resultSet.getBoolean("active"));
                 agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
                 agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
@@ -164,8 +181,16 @@ public class RentalAgreementRepository {
                 agreement.setId(resultSet.getInt("id"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
                 agreement.setUserLogin(resultSet.getString("userLogin"));
-                agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
-                agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
+
+                Date sqlStartDate = resultSet.getDate("startDate");
+                LocalDate startDate = (sqlStartDate != null) ? sqlStartDate.toLocalDate() : null;
+                agreement.setStartDate(startDate);
+
+
+                Date sqlEndDate = resultSet.getDate("endDate");
+                LocalDate endDate = (sqlEndDate != null) ? sqlEndDate.toLocalDate() : null;
+                agreement.setEndDate(endDate);
+
                 agreement.setActive(resultSet.getBoolean("active"));
                 agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
                 agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
@@ -224,8 +249,16 @@ public class RentalAgreementRepository {
                 agreement.setCarId(resultSet.getString("carId"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
                 agreement.setDamageReportId(resultSet.getInt("damageReportId"));
-                agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
-                agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
+
+                Date sqlStartDate = resultSet.getDate("startDate");
+                LocalDate startDate = (sqlStartDate != null) ? sqlStartDate.toLocalDate() : null;
+                agreement.setStartDate(startDate);
+
+
+                Date sqlEndDate = resultSet.getDate("endDate");
+                LocalDate endDate = (sqlEndDate != null) ? sqlEndDate.toLocalDate() : null;
+                agreement.setEndDate(endDate);
+
                 agreement.setActive(resultSet.getBoolean("active"));
                 agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
                 agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
@@ -252,8 +285,14 @@ public class RentalAgreementRepository {
                 agreement.setCarId(resultSet.getString("carId"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
                 agreement.setUserLogin(resultSet.getString("userLogin"));
-                agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
-                agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
+
+                Date sqlStartDate = resultSet.getDate("startDate");
+                LocalDate startDate = (sqlStartDate != null) ? sqlStartDate.toLocalDate() : null;
+                agreement.setStartDate(startDate);
+
+                Date sqlEndDate = resultSet.getDate("endDate");
+                LocalDate endDate = (sqlEndDate != null) ? sqlEndDate.toLocalDate() : null;
+                agreement.setEndDate(endDate);
                 agreement.setActive(resultSet.getBoolean("active"));
                 agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
                 agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
