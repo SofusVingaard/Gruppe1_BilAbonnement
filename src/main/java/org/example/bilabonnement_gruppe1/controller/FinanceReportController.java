@@ -23,6 +23,7 @@ public class FinanceReportController {
 
     @Autowired
     FinanceRepository financeRepository;
+
     @Autowired
     private RentalAgreementRepository rentalAgreementRepository;
 

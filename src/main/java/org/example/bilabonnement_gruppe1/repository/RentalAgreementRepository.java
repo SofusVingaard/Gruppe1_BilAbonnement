@@ -29,9 +29,7 @@ public class RentalAgreementRepository {
              PreparedStatement damageStmt = connection.prepareStatement(damageSql);
              PreparedStatement updateCarStmt = connection.prepareStatement(updateCar)
 
-        )
-
-        {
+        ) {
 
             rentalStmt.setString(1, agreement.getCar().getVehicleNumber());
             rentalStmt.setInt(2, agreement.getCustomerPhoneNumber());
@@ -44,7 +42,6 @@ public class RentalAgreementRepository {
             rentalStmt.executeUpdate();
 
             ResultSet generatedKeys = rentalStmt.getGeneratedKeys();
-
 
 
             if (generatedKeys.next()) {
@@ -60,8 +57,6 @@ public class RentalAgreementRepository {
 
 
             }
-
-
 
 
         } catch (SQLException e) {
@@ -105,11 +100,11 @@ public class RentalAgreementRepository {
     public void deleteRentalAgreement(int id) {
         String sql = "DELETE FROM rentalAgreement WHERE id = ?";
 
-        try( Connection connection = dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        statement.setInt(1,id);
-        statement.executeUpdate();
+            statement.setInt(1, id);
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -156,28 +151,28 @@ public class RentalAgreementRepository {
         return getRentalAgreementsByActiveStatus(false);
     }
 
-        public ArrayList<RentalAgreement> getRentalAgreementByPhoneNumber(int customerPhoneNumber)  {
+    public ArrayList<RentalAgreement> getRentalAgreementByPhoneNumber(int customerPhoneNumber) {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement WHERE customerPhoneNumber = ?";
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)){
-                 statement.setInt(1, customerPhoneNumber);
-                 ResultSet resultSet = statement.executeQuery();
-                 while (resultSet.next()) {
-                     RentalAgreement agreement = new RentalAgreement();
-                     agreement.setId(resultSet.getInt("id"));
-                     agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
-                     agreement.setUserLogin(resultSet.getString("userLogin"));
-                     agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
-                     agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
-                     agreement.setActive(resultSet.getBoolean("active"));
-                     agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
-                     agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, customerPhoneNumber);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                RentalAgreement agreement = new RentalAgreement();
+                agreement.setId(resultSet.getInt("id"));
+                agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
+                agreement.setUserLogin(resultSet.getString("userLogin"));
+                agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
+                agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
+                agreement.setActive(resultSet.getBoolean("active"));
+                agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
+                agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
 
 
-                     agreements.add(agreement);
-                 }
+                agreements.add(agreement);
+            }
 
         } catch (SQLException e) {
             System.err.println("Fejl ved hentning af lejeaftaler: " + e.getMessage());
@@ -186,7 +181,6 @@ public class RentalAgreementRepository {
 
         return agreements;
     }
-
 
 
     public int countActiveAgreements() {
@@ -217,7 +211,7 @@ public class RentalAgreementRepository {
         return 0;
     }
 
-    public RentalAgreement getRentalAgreement(int id){
+    public RentalAgreement getRentalAgreement(int id) {
         String sql = "SELECT * FROM rentalAgreement WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -244,52 +238,7 @@ public class RentalAgreementRepository {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public ArrayList<RentalAgreement> getAllRentalAgreements()  {
+    public ArrayList<RentalAgreement> getAllRentalAgreements() {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement";
 
@@ -333,5 +282,7 @@ public class RentalAgreementRepository {
     }*/
 
 
+    public RentalAgreement findById(int id) {
+        return null;
+    }
 }
-
