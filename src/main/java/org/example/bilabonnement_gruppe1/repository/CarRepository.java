@@ -39,6 +39,8 @@ public class CarRepository {
                 car.setCo2Emission(result.getDouble(6));
                 car.setImage(result.getString(7));
                 car.setStatus(result.getString(8));
+                car.setLimited(result.getBoolean(9));
+                car.setMonthlyFee(result.getInt(10));
 
                 carList.add(car);
             }
@@ -50,8 +52,8 @@ public class CarRepository {
     }
 
     public void createCar(Car car) {
-        String sql = "INSERT INTO car (vehicleNumber, chassisnumber, model, equipment, kmDriven, co2Emission, image, status) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO car (vehicleNumber, chassisnumber, model, equipment, kmDriven, co2Emission, image, status, limited, monthlyFee) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -63,6 +65,9 @@ public class CarRepository {
             stmt.setDouble(6, car.getCo2Emission());
             stmt.setString(7, car.getImage());
             stmt.setString(8, car.getStatus());
+            stmt.setBoolean(9,car.isLimited());
+            stmt.setInt(10, car.getMonthlyFee());
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,6 +88,65 @@ public class CarRepository {
         }
 
         return 0;
+    }
+    public ArrayList<Car> getCarsByLimited(boolean limited) {
+        String sql = "SELECT * FROM car WHERE status = ? AND limited = ?";
+        ArrayList<Car> carList = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, "available");
+            statement.setBoolean(2, limited);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Car car = new Car();
+                car.setVehicleNumber(result.getString(1));
+                car.setChassisnumber(result.getString(2));
+                car.setModel(result.getString(3));
+                car.setEquipment(result.getString(4));
+                car.setKmDriven(result.getDouble(5));
+                car.setCo2Emission(result.getDouble(6));
+                car.setImage(result.getString(7));
+                car.setStatus(result.getString(8));
+                car.setLimited(result.getBoolean(9));
+                car.setMonthlyFee(result.getInt(10));
+                carList.add(car);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return carList;
+    }
+    public Car getCarByVehicleNumber(String vehicleNumber) {
+        String sql = "SELECT * FROM car WHERE vehicleNumber = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, vehicleNumber);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                Car car = new Car();
+                car.setVehicleNumber(result.getString("vehicleNumber"));
+                car.setChassisnumber(result.getString("chassisnumber"));
+                car.setModel(result.getString("model"));
+                car.setEquipment(result.getString("equipment"));
+                car.setKmDriven(result.getDouble("kmDriven"));
+                car.setCo2Emission(result.getDouble("co2Emission"));
+                car.setImage(result.getString("image"));
+                car.setStatus(result.getString("status"));
+                car.setLimited(result.getBoolean("limited"));
+                car.setMonthlyFee(result.getInt("monthlyFee"));
+
+                return car;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

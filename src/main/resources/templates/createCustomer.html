@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Opret Kunde</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+<header>
+    <div th:replace="~{fragments/header.html :: site-header}"></div>
+</header>
 <h1>Opret ny kunde</h1>
 
 <form th:action="@{/user/createCustomer}" method="post">

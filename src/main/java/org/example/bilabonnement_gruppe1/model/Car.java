@@ -18,6 +18,8 @@ public class Car {
     private double steelPrice;
     private double registrationFee;
     private double kmDriven;
+    private boolean limited;
+    private Integer monthlyFee;
 
     public Car() {
     }
@@ -159,4 +161,19 @@ public class Car {
         this.kmDriven = kmDriven;
     }
 
+    public boolean isLimited() {
+        return limited;
+    }
+
+    public void setLimited(boolean limited) {
+        this.limited = limited;
+    }
+
+    public Integer getMonthlyFee() {
+        return monthlyFee;
+    }
+
+    public void setMonthlyFee(Integer monthlyFee) {
+        this.monthlyFee = monthlyFee;
+    }
 }

@@ -2,22 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-
+    <link rel="stylesheet" th:href="@{/css/header.css}">
     <meta charset="UTF-8">
     <title>dashboard</title>
+
 </head>
     <header>
-        <img th:src="@{/img/logo.png}" alt="Logo" class="logo">
-
-        <nav>
-            <a th:href="@{/carList.html}" class="nav-menu-button">Biler</a>
-            <a th:href="@{/rentalAgreement/rentalAgreement}" class="nav-menu-button">Rental Agreement</a>
-            <a th:href="@{/}">Skade rapport</a>
-            <a th:href="@{/cars/create}" class="nav-menu-button">opret bil</a>
-            <a th:href ="@{/financeReport/financeReport}" class="nav-menu-button">Finans</a>
-        </nav>
+        <div th:replace="~{fragments/header.html :: site-header}"></div>
     </header>
-
 <body>
 <div class="key-metrics">
     <h2>Nøgletal</h2>
@@ -25,4 +17,7 @@
     <p>Gennemsnitlig lejeperiode (dage): <span th:text="${avgRentalLength}"></span></p>
     <p>Antal ledige biler: <span th:text="${availableCars}"></span></p>
 </div>
+
+</body>
+</html>
 

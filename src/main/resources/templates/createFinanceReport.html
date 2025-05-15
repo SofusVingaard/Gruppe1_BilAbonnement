@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Opret Finansrapport</title>
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+  <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
-<body>
+<!--...<body>
 <h1>Opret Finansrapport</h1>
+<header>
+  <div th:replace="~{fragments/header.html :: site-header}"></div>
+</header>
 <form action="/create" method="post">
   <label>Total pris:</label>
   <input type="number" step="0.01" name="totalPrice" required><br>
@@ -26,5 +31,16 @@
 
   <button type="submit">Opret rapport</button>
 </form>
+<form action="/financeReport/create" method="post">
+  <label for="">Udlejningsaftale ID:</label>
+  <input type="number" name="rentalAgreementId" required>
+  <button type="submit">Opret Finansrapport</button>
+</form>
+.-->
+<form action="/financeReport/create" method="post">
+  <input type="number" name="rentalAgreementId" required>
+  <button type="submit">Opret rapport</button>
+</form>
+
 </body>
 </html>

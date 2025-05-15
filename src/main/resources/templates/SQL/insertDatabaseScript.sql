@@ -16,6 +16,10 @@ values (1,12345678,'demo','2025-08-20', '2026-08-20', true,20000) ;
 INSERT INTO rentalAgreement (carId, customerPhoneNumber, userLogin, startDate, endDate, active,allowedKM)
 values(2,87654321,'demo','2025-08-20', '2026-08-20', false,20000) ;
 
+INSERT INTO damagereport (rentalAgreementId, note, repairCost)
+VALUES (10, 'nej', 1500)
+
+
 
 
 

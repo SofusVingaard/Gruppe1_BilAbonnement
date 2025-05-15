@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 @Controller
@@ -37,38 +38,82 @@ public class RentalAgreementController {
     }
 
         @GetMapping("/create")
-        public String showCreateForm(Model model) {
+        public String showCreateForm(@RequestParam(value = "limitFilter", required = false) String filter, Model model) {
+            ArrayList<Car> carList;
 
-            ArrayList<Car> carList = carRepository.showAvailableCars("available");
+            if ("limited".equals(filter)) {
+                carList = carRepository.getCarsByLimited(true);
+            } else if ("unlimited".equals(filter)) {
+                carList = carRepository.getCarsByLimited(false);
+            } else {
+                carList = carRepository.showAvailableCars("available");
+            }
+
             model.addAttribute("carList", carList);
+            model.addAttribute("filter", filter);
 
             return "createRentalAgreement";
         }
 
-        @PostMapping("/create")
-        public String createRentalAgreement(
-                @RequestParam("carId") String carId,
-                @RequestParam("customerPhoneNumber") int customerPhoneNumber,
-                @RequestParam("userId") int userId,
-                @RequestParam("startDate") String startDate,
-                @RequestParam("endDate") String endDate,
-                @RequestParam ("allowedKM") double allowedKM,
-                RedirectAttributes redirectAttributes) {
 
-            RentalAgreement agreement = new RentalAgreement();
-            agreement.setCar(new Car(carId));
-            agreement.setCustomerPhoneNumber((customerPhoneNumber));
-            agreement.setUser(new User(userId));
-            agreement.setStartDate(LocalDate.parse(startDate));
-            agreement.setEndDate(LocalDate.parse(endDate));
-            agreement.setActive(true);
+    @PostMapping("/create")
+    public String createRentalAgreement(
+            @RequestParam("carId") String carId,
+            @RequestParam("customerPhoneNumber") int customerPhoneNumber,
+            @RequestParam("userId") int userId,
+            @RequestParam("startDate") String startDateStr,
+            @RequestParam("duration") int durationInMonths,
+            @RequestParam("allowedKM") double allowedKM,
+            RedirectAttributes redirectAttributes) {
 
-
-            rentalAgreementRepository.createRentalAgreement(agreement);
-            redirectAttributes.addFlashAttribute("successMessage", "Lejeaftale oprettet!");
-
-            return "/dashboard";
+        Car selectedCar = carRepository.getCarByVehicleNumber(carId);
+        if (selectedCar == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Bilen blev ikke fundet.");
+            return "redirect:/create";
         }
+
+        LocalDate startDate = LocalDate.parse(startDateStr);
+        LocalDate endDate;
+
+        if (selectedCar.isLimited()) {
+            endDate = startDate.plusMonths(3);  // Fixed 3 months for limited cars
+        } else {
+            endDate = startDate.plusMonths(durationInMonths);
+        }
+
+
+
+        RentalAgreement agreement = new RentalAgreement();
+        agreement.setCar(selectedCar);
+        agreement.setCustomerPhoneNumber(customerPhoneNumber);
+        agreement.setUser(new User(userId));
+        agreement.setStartDate(startDate);
+        agreement.setEndDate(endDate);
+        agreement.setActive(true);
+        agreement.setAllowedKM(allowedKM);
+
+        long monthsBetween = ChronoUnit.MONTHS.between(startDate, endDate);
+        if (monthsBetween < 1) {
+            monthsBetween = 1;
+        }
+
+// Calculate total price
+        int totalPrice = (int) (monthsBetween * selectedCar.getMonthlyFee());
+        agreement.setTotalPrice(totalPrice);
+
+// Debug output
+        System.out.println("DEBUG: Calculated price - Months: " + monthsBetween
+                + ", Monthly fee: " + selectedCar.getMonthlyFee()
+                + ", Total: " + totalPrice);
+
+
+        rentalAgreementRepository.createRentalAgreement(agreement);
+        redirectAttributes.addFlashAttribute("successMessage", "Lejeaftale oprettet!");
+
+        return "redirect:/dashboard";
+    }
+
+
     @GetMapping("/search")
     public String showSearchPage(Model model) throws SQLException {
         // Vis alle lejeaftaler som default

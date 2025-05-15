@@ -72,30 +72,21 @@ public class RentalAgreementRepository {
 
 
     public void updateRentalAgreement(RentalAgreement agreement) {
-        String sql = "UPDATE rentalAgreement SET " +
-                "carId = ?, customerPhoneNumber = ?, damageReportId = ?, " +
-                "startDate = ?, endDate = ?, active = ?, allowedKM = ?, kmOverLimit = ? " +
-                "WHERE id = ?";
+        String sql = "UPDATE rentalAgreement SET " + "carId = ?, " + "customerId = ?, " + "userId = ?, " +
+                "damageReportId = ?, " + "startDate = ?, " + "endDate = ?, " + "active = ? " + "WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            // Sæt værdierne for de opdaterede felter
-            statement.setString(1, agreement.getCarId());
-            statement.setInt(2, agreement.getCustomerPhoneNumber());
-            statement.setInt(3, agreement.getDamageReportId());
+            statement.setString(1, agreement.getCar().getVehicleNumber());
+            statement.setInt(2, agreement.getCustomer().getId());
+            statement.setInt(3, agreement.getUser().getId());
+            statement.setInt(4, agreement.getDamageReport().getId());
+            statement.setDate(5, java.sql.Date.valueOf(agreement.getStartDate()));
+            statement.setDate(6, java.sql.Date.valueOf(agreement.getEndDate()));
+            statement.setBoolean(7, agreement.isActive());
 
-            if (agreement.getStartDate() != null) {
-                statement.setDate(4, java.sql.Date.valueOf(agreement.getStartDate()));
-            } else {
-                statement.setNull(4, java.sql.Types.DATE);
-            }
-
-            if (agreement.getEndDate() != null) {
-                statement.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
-            } else {
-                statement.setNull(5, java.sql.Types.DATE);
-            }
+            statement.setInt(8, agreement.getId()); // WHERE id = ?
 
             statement.setBoolean(6, agreement.isActive());
             statement.setDouble(7, agreement.getAllowedKM());
@@ -238,7 +229,6 @@ public class RentalAgreementRepository {
                 agreement.setId(resultSet.getInt("id"));
                 agreement.setCarId(resultSet.getString("carId"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
-                agreement.setUserLogin(resultSet.getString("userLogin"));
                 agreement.setDamageReportId(resultSet.getInt("damageReportId"));
                 agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
                 agreement.setEndDate(resultSet.getDate("endDate").toLocalDate());
@@ -252,6 +242,52 @@ public class RentalAgreementRepository {
         }
         return null;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public ArrayList<RentalAgreement> getAllRentalAgreements()  {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
