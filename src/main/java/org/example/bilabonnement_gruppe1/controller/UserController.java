@@ -75,6 +75,13 @@ public class UserController {
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+        session.invalidate();
+        redirectAttributes.addFlashAttribute("logoutMessage", "Du er nu logget ud.");
+        return "redirect:/index"; 
+    }
+
     @GetMapping("/createCustomer")
     public String createCustomer() {
 

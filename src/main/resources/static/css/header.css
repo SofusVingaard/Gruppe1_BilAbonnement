@@ -13,10 +13,6 @@
     z-index: 1000;
 }
 
-.logo {
-    width: 150px;
-    margin-bottom: 40px;
-}
 
 nav {
     display: flex;
@@ -37,4 +33,9 @@ nav {
 
 .nav-menu-button:hover {
     background-color: #d0d0d0;
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 40px;
 }
