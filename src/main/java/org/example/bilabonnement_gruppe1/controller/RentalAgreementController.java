@@ -60,7 +60,7 @@ public class RentalAgreementController {
     public String createRentalAgreement(
             @RequestParam("carId") String carId,
             @RequestParam("customerPhoneNumber") int customerPhoneNumber,
-            @RequestParam("userId") int userId,
+            @RequestParam("userId") String userId,
             @RequestParam("startDate") String startDateStr,
             @RequestParam("duration") int durationInMonths,
             @RequestParam("allowedKM") double allowedKM,
@@ -91,14 +91,24 @@ public class RentalAgreementController {
         agreement.setEndDate(endDate);
         agreement.setActive(true);
         agreement.setAllowedKM(allowedKM);
+        agreement.setMonthlyCarPrice(selectedCar.getMonthlyFee());
+        agreement.setMonthsRented(durationInMonths);
 
         long monthsBetween = ChronoUnit.MONTHS.between(startDate, endDate);
         if (monthsBetween < 1) {
             monthsBetween = 1;
         }
 
+        int monthlyExtraFee=0;
+        if (allowedKM==1750){
+            monthlyExtraFee=250;
+        }
+        if(allowedKM==2000){
+            monthlyExtraFee=450;
+        }
+
 // Calculate total price
-        int totalPrice = (int) (monthsBetween * selectedCar.getMonthlyFee());
+        int totalPrice = (int) (monthsBetween * (selectedCar.getMonthlyFee()+monthlyExtraFee));
         agreement.setTotalPrice(totalPrice);
 
 // Debug output

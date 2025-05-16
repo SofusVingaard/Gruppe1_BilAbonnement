@@ -59,10 +59,13 @@ CREATE TABLE rentalAgreement (
     damageReportId INT,
     startDate date,
     endDate date,
+    monthsRented INT,
     active boolean DEFAULT TRUE,
     allowedKM double,
     kmOverLimit double,
+    monthlyCarPrice INT,
     totalPrice INT,
+
 
 
 
@@ -71,6 +74,7 @@ CREATE TABLE rentalAgreement (
     FOREIGN KEY (userLogin) REFERENCES user (userLogin),
     FOREIGN KEY (damageReportId) REFERENCES damageReport (id)
 );
+
 
 
 CREATE TABLE carFinance(

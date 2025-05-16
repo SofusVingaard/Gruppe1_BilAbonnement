@@ -14,11 +14,10 @@ public class RentalAgreement {
     private int damageReportId;
     private LocalDate startDate;
     private LocalDate endDate;
+    private int monthsRented;
     private boolean active;
     private double allowedKM;
-
-
-
+    private int monthlyCarPrice;
     private int totalPrice;
 
     public RentalAgreement(int customerPhoneNumber, String carId, String userLogin, DamageReport damageReport, LocalDate startDate, LocalDate endDate, boolean active, double kmOverLimit) {
@@ -153,5 +152,21 @@ public class RentalAgreement {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public int getMonthsRented() {
+        return monthsRented;
+    }
+
+    public void setMonthsRented(int monthsRented) {
+        this.monthsRented = monthsRented;
+    }
+
+    public int getMonthlyCarPrice() {
+        return monthlyCarPrice;
+    }
+
+    public void setMonthlyCarPrice(int monthlyCarPrice) {
+        this.monthlyCarPrice = monthlyCarPrice;
     }
 }

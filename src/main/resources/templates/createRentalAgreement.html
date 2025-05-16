@@ -38,8 +38,8 @@
     <label for="customerPhoneNumber">Kundens telefonnummer:</label>
     <input type="text" id="customerPhoneNumber" name="customerPhoneNumber" required><br><br>
 
-    <label for="userId">Medarbejder ID:</label>
-    <input type="number" id="userId" name="userId" required><br><br>
+    <label for="userId">Medarbejder bruger navn:</label>
+    <input type="text" id="userId" name="userId" required><br><br>
 
     <label for="startDate">Startdato:</label>
     <input type="date" id="startDate" name="startDate" required><br><br>
@@ -53,11 +53,12 @@
         <option value="36">36 måneder(unlimited)</option>
     </select><br><br>
 
-    <label for="allowedKM">Tilladte KM:</label>
-    <input type="number" step="0.1" id="allowedKM" name="allowedKM" required><br><br>
-
-    <label for="kmOverLimit">KM over grænsen (valgfrit):</label>
-    <input type="number" step="0.1" id="kmOverLimit" name="kmOverLimit"><br><br>
+    <label for="allowedKM">Tilladte KM pr. måned:</label>
+    <select id="allowedKM" name="allowedKM" required>
+        <option value="1500">1500 km (0 kr)</option>
+        <option value="1750">1750 km (250 kr ekstra)</option>
+        <option value="2000">2000 km (450 kr ekstra)</option>
+    </select><br><br>
 
     <button type="submit">Opret lejeaftale</button>
 </form>

@@ -16,22 +16,31 @@ public class RentalAgreementRepository {
     private DataSource dataSource;
 
     public void createRentalAgreement(RentalAgreement agreement) {
+        String damageSql = "INSERT INTO damageReport (repairCost, note) VALUES (?, ?)";
+
         String rentalSql = "INSERT INTO rentalAgreement " +
-                "(carId, customerPhoneNumber, userLogin, startDate, endDate, active, allowedKM) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "(carId, customerPhoneNumber, userLogin, startDate, endDate, active, allowedKM, kmOverLimit, totalPrice, monthsRented, monthlyCarPrice, damageReportId) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        String damageSql = "INSERT INTO damageReport (rentalAgreementId, repairCost, note) VALUES (?, ?, ?)";
-
-        String updateCar = "UPDATE car SET status = 'Udlejet' WHERE vehicleNumber = ?";
-
+        String updateCarSql = "UPDATE car SET status = 'Udlejet' WHERE vehicleNumber = ?";
 
         try (Connection connection = dataSource.getConnection();
+             PreparedStatement damageStmt = connection.prepareStatement(damageSql, Statement.RETURN_GENERATED_KEYS);
              PreparedStatement rentalStmt = connection.prepareStatement(rentalSql, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement damageStmt = connection.prepareStatement(damageSql);
-             PreparedStatement updateCarStmt = connection.prepareStatement(updateCar)
+             PreparedStatement updateCarStmt = connection.prepareStatement(updateCarSql)) {
 
-        ) {
+            // 1. Opret damageReport
+            damageStmt.setDouble(1, 0.0);
+            damageStmt.setString(2, "");
+            damageStmt.executeUpdate();
 
+            ResultSet damageKeys = damageStmt.getGeneratedKeys();
+            int damageReportId = 0;
+            if (damageKeys.next()) {
+                damageReportId = damageKeys.getInt(1);
+            }
+
+            // 2. Opret rentalAgreement med damageReportId
             rentalStmt.setString(1, agreement.getCar().getVehicleNumber());
             rentalStmt.setInt(2, agreement.getCustomerPhoneNumber());
             rentalStmt.setString(3, agreement.getUser().getUserLogin());
@@ -39,32 +48,24 @@ public class RentalAgreementRepository {
             rentalStmt.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
             rentalStmt.setBoolean(6, agreement.isActive());
             rentalStmt.setDouble(7, agreement.getAllowedKM());
+            rentalStmt.setDouble(8, agreement.getKmOverLimit()); // eller 0.0 hvis ukendt
+            rentalStmt.setInt(9, agreement.getTotalPrice());
+            rentalStmt.setInt(10, agreement.getMonthsRented());
+            rentalStmt.setInt(11, agreement.getMonthlyCarPrice());
+            rentalStmt.setInt(12, damageReportId);
 
             rentalStmt.executeUpdate();
 
-            ResultSet generatedKeys = rentalStmt.getGeneratedKeys();
-
-
-            if (generatedKeys.next()) {
-                int rentalAgreementId = generatedKeys.getInt(1);
-
-                damageStmt.setInt(1, rentalAgreementId);
-                damageStmt.setDouble(2, 0.0);
-                damageStmt.setString(3, "");
-                damageStmt.executeUpdate();
-
-                updateCarStmt.setString(1, agreement.getCar().getVehicleNumber());
-                updateCarStmt.executeUpdate();
-
-
-            }
-
+            // 3. Opdater bilens status
+            updateCarStmt.setString(1, agreement.getCar().getVehicleNumber());
+            updateCarStmt.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("Fejl ved oprettelse af lejeaftale og damageReport: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
 
     public void updateRentalAgreement(RentalAgreement agreement) {
