@@ -50,4 +50,13 @@ public class CarController {
         return "redirect:/cars/create";
     }
 
+    @GetMapping("/filter")
+    public String filterCars(@RequestParam(defaultValue = "all") String status, Model model) {
+        ArrayList<Car> cars = carRepository.getCarsByStatus(status);
+        model.addAttribute("carList", cars);
+        model.addAttribute("selectedStatus", status);
+        return "carList";
+    }
+
+
 }

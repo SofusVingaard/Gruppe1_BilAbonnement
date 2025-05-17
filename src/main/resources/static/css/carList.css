@@ -1,11 +1,9 @@
-/* Gælder både header og main-indhold */
 .page-wrapper {
     max-width: 1200px;
-    margin: 0 auto; /* Center på siden */
-    padding: 0 40px; /* Ens afstand fra siderne */
+    margin: 0 auto;
+    padding: 0 0px;
 }
 
-/* Din indholdsboks */
 .car-board {
     background-color: #ffffff;
     border-radius: 15px;

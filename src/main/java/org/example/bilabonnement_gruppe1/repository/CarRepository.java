@@ -180,6 +180,40 @@ public class CarRepository {
 
         return carList;
     }
+    public ArrayList<Car> getCarsByStatus(String status) {
+        ArrayList<Car> carList = new ArrayList<>();
+        String sql;
+
+        if (status.equalsIgnoreCase("all")) {
+            sql = "SELECT * FROM car";
+        } else {
+            sql = "SELECT * FROM car WHERE LOWER(status) = ?";
+        }
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            if (!status.equalsIgnoreCase("all")) {
+                stmt.setString(1, status.toLowerCase());
+            }
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Car car = new Car();
+                car.setVehicleNumber(rs.getString("vehicleNumber"));
+                car.setChassisnumber(rs.getString("chassisnumber"));
+                car.setModel(rs.getString("model"));
+                car.setEquipment(rs.getString("equipment"));
+                car.setKmDriven(rs.getDouble("kmDriven"));
+                car.setCo2Emission(rs.getDouble("co2Emission"));
+                car.setImage(rs.getString("image"));
+                car.setStatus(rs.getString("status"));
+                car.setLimited(rs.getBoolean("limited"));
+                car.setMonthlyFee(rs.getInt("monthlyFee"));
+                carList.add(car);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return carList;
+    }
 }
 
 
