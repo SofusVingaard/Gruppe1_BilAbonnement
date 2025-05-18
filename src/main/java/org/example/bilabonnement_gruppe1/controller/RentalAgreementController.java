@@ -168,7 +168,9 @@ public class RentalAgreementController {
     }
 
     @PostMapping("/updateRentalAgreement/{id}")
-    public String updateRentalAgreement(@PathVariable("id") int id, @ModelAttribute RentalAgreement agreement) {
+    public String updateRentalAgreement(@PathVariable("id") int id,
+                                        @ModelAttribute RentalAgreement agreement) {
+
         rentalAgreementRepository.updateRentalAgreement(agreement);
         return "redirect:/rentalAgreement/updateRentalAgreement/" + agreement.getId();
     }

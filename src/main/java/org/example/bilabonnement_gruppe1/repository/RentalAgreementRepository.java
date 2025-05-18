@@ -69,36 +69,41 @@ public class RentalAgreementRepository {
 
 
     public void updateRentalAgreement(RentalAgreement agreement) {
-        String sql = "UPDATE rentalAgreement SET " + "carId = ?, " + "customerPhoneNumber = ?, " + "userLogin = ?, " +
-                "damageReportId = ?, " + "startDate = ?, " + "endDate = ?, " + "active = ? "+ "allowedKM = ?, " +
-                "kmOverLimit = ? " + "WHERE id = ?";
+        String sql = "UPDATE rentalAgreement SET " +
+                "carId = ?, " +
+                "customerPhoneNumber = ?, " +
+                "userLogin = ?, " +
+                "startDate = ?, " +
+                "endDate = ?, " +
+                "active = ?, " +
+                "allowedKM = ?, " +
+                "kmOverLimit = ? " +
+                "WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, agreement.getCar().getVehicleNumber());
+            statement.setString(1, agreement.getCarId());
             statement.setInt(2, agreement.getCustomerPhoneNumber());
-            statement.setString(3, agreement.getUser().getUserLogin());
-            statement.setInt(4, agreement.getDamageReportId());
+            statement.setString(3, agreement.getUserLogin());
 
             if (agreement.getStartDate() != null) {
-                statement.setDate(5, java.sql.Date.valueOf(agreement.getStartDate()));
+                statement.setDate(4, java.sql.Date.valueOf(agreement.getStartDate()));
+            } else {
+                statement.setNull(4, Types.DATE);
+            }
+
+            if (agreement.getEndDate() != null) {
+                statement.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
             } else {
                 statement.setNull(5, Types.DATE);
             }
 
-            if (agreement.getEndDate() != null) {
-                statement.setDate(6, java.sql.Date.valueOf(agreement.getEndDate()));
-            } else {
-                statement.setNull(6, Types.DATE);
-            }
+            statement.setBoolean(6, agreement.isActive());
+            statement.setDouble(7, agreement.getAllowedKM());
+            statement.setDouble(8, agreement.getKmOverLimit());
+            statement.setInt(9, agreement.getId());
 
-            statement.setBoolean(7, agreement.isActive());
-            statement.setDouble(8, agreement.getAllowedKM());
-            statement.setDouble(9, agreement.getKmOverLimit());
-            statement.setInt(10, agreement.getId());
-
-            // Udfør opdateringen
             statement.executeUpdate();
 
         } catch (SQLException e) {
@@ -106,6 +111,7 @@ public class RentalAgreementRepository {
             e.printStackTrace();
         }
     }
+
 
     public void deleteRentalAgreement(int id) {
         String sql = "DELETE FROM rentalAgreement WHERE id = ?";
@@ -148,6 +154,17 @@ public class RentalAgreementRepository {
                 agreement.setActive(resultSet.getBoolean("active"));
                 agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
                 agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+                int monthlyPrice=resultSet.getInt("monthlyCarPrice");
+                int allowedKM=resultSet.getInt("allowedKM");
+                int allowedKMPrice=0;
+                if (allowedKM==1750){
+                    allowedKMPrice=250;
+                }if (allowedKM==2000){
+                    allowedKMPrice=450;
+                }
+                monthlyPrice+=allowedKMPrice;
+                agreement.setMonthlyCarPrice(monthlyPrice);
+                System.out.println("Lejeaftale ID: " + agreement.getId() + ", Pris/måned: " + agreement.getMonthlyCarPrice());
 
                 agreements.add(agreement);
             }
@@ -297,6 +314,18 @@ public class RentalAgreementRepository {
                 agreement.setActive(resultSet.getBoolean("active"));
                 agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
                 agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+
+                int monthlyPrice=resultSet.getInt("monthlyCarPrice");
+                int allowedKM=resultSet.getInt("allowedKM");
+                int allowedKMPrice=0;
+                if (allowedKM==1750){
+                    allowedKMPrice=250;
+                }if (allowedKM==2000){
+                    allowedKMPrice=450;
+                }
+                monthlyPrice+=allowedKMPrice;
+                agreement.setMonthlyCarPrice(monthlyPrice);
+
 
                 agreements.add(agreement);
             }

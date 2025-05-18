@@ -1,18 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    padding: 0;
+    margin-left: 220px;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-top: 1rem;
+    color: #333;
+}
+
 .container {
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
+    justify-content: center;
+    gap: 30px;
+    margin: 2rem auto;
+    max-width: 1000px;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
 }
 
 .form-section, .list-section {
-    width: 45%;
+    flex: 1 1 45%;
+}
 
+form label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+}
 
+form input[type="text"],
+form input[type="number"],
+form input[type="hidden"],
+form select {
+    width: 100%;
+    padding: 0.6rem;
+    margin-top: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+a {
+    display: inline-block;
+    margin: 1rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #fff;
+}
+
+table th,
+table td {
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
 .total-price {
-    margin-top: 30px;
+    margin: 2rem auto;
     text-align: center;
     font-weight: bold;
     font-size: 1.2em;
+    color: #333;
 }
+a.custom-button {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 2px solid #007bff;  /* Blå kant */
+    border-radius: 8px;          /* Runde hjørner */
+    color: #007bff;              /* Blå tekst */
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-left: 90px;
+}
+
+a.custom-button:hover {
+    background-color: #007bff;  /* Blå baggrund */
+    color: white;               /* Hvid tekst */
+}
+

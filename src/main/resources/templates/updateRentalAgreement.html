@@ -10,7 +10,7 @@
 </header>
 <h1>Opdater Lejeaftale</h1>
 
-<form th:action="@{/rentalAgreement/update}" th:object="${agreement}" method="post">
+<form th:action="@{'/rentalAgreement/updateRentalAgreement/' + ${agreement.id}}" th:object="${agreement}" method="post">
     <input type="hidden" th:field="*{id}" />
 
     <label for="carId">Bil ID:</label>
@@ -19,11 +19,12 @@
     <label for="customerPhoneNumber">Kundens telefonnummer:</label>
     <input type="text" id="customerPhoneNumber" th:field="*{customerPhoneNumber}" />
 
-    <label for="userLogin">Brugerlogin:</label>
-    <input type="text" id="userLogin" th:field="*{userLogin}" />
+    <!--<<label for="userLogin">Brugerlogin:</label>
+    <input type="text" id="userLogin" th:value="${agreement.userLogin}" disabled />-->
 
-    <label for="damageReportId">Skaderapport ID:</label>
+    <!--<label for="damageReportId">Skaderapport ID:</label>
     <input type="number" id="damageReportId" th:field="*{damageReportId}" />
+    -->
 
     <label for="startDate">Startdato:</label>
     <input type="date" id="startDate" th:field="*{startDate}" />
