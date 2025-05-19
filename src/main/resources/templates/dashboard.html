@@ -11,11 +11,30 @@
         <div th:replace="~{fragments/header.html :: site-header}"></div>
     </header>
 <body>
+
 <div class="key-metrics">
     <h2>Nøgletal</h2>
-    <p>Aktive abonnementer: <span th:text="${activeSubscriptions}"></span></p>
-    <p>Gennemsnitlig lejeperiode (dage): <span th:text="${avgRentalLength}"></span></p>
-    <p>Antal ledige biler: <span th:text="${availableCars}"></span></p>
+
+    <p>
+        Aktive abonnementer:
+        <span th:text="${activeSubscriptions}"
+              th:class="${activeSubscriptions >= activeSubscriptionsTarget} ? 'green' : 'red'"></span>
+        <span class="label">(Mål: <span th:text="${activeSubscriptionsTarget}"></span>)</span>
+    </p>
+
+    <p>
+        Gennemsnitlig lejeperiode (dage):
+        <span th:text="${avgRentalLength}"
+              th:class="${avgRentalLength >= avgRentalLengthTarget} ? 'green' : 'red'"></span>
+        <span class="label">(Mål: <span th:text="${avgRentalLengthTarget}"></span>)</span>
+    </p>
+
+    <p>
+        Antal ledige biler:
+        <span th:text="${availableCars}"
+              th:class="${availableCars >= availableCarsTarget} ? 'green' : 'red'"></span>
+        <span class="label">(Mål: <span th:text="${availableCarsTarget}"></span>)</span>
+    </p>
 </div>
 
 </body>

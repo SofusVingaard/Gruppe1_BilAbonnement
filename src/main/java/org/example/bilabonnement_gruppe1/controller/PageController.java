@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PageController {
 
     @Autowired
-    RentalAgreementRepository rentalAgreementRepository;
+    private RentalAgreementRepository rentalAgreementRepository;
 
     @Autowired
-    CarRepository carRepository;
+    private CarRepository carRepository;
 
     @GetMapping("/index")
     public String index() {
-        return "index"; // viser templates/index.html
+        return "index";
     }
-    @GetMapping("/dashboard")
-    public String dashboard(Model model){
 
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
         int activeSubscriptions = rentalAgreementRepository.countActiveAgreements();
         double avgRentalLength = rentalAgreementRepository.averageRentalPeriodLength();
         int availableCars = carRepository.countAvailableCars();
@@ -31,7 +31,10 @@ public class PageController {
         model.addAttribute("avgRentalLength", avgRentalLength);
         model.addAttribute("availableCars", availableCars);
 
-        return "dashboard"; 
+        model.addAttribute("activeSubscriptionsTarget", 30);
+        model.addAttribute("avgRentalLengthTarget", 100);
+        model.addAttribute("availableCarsTarget", 10);
+
+        return "dashboard";
     }
 }
-

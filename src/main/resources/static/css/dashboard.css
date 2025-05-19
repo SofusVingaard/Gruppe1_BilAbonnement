@@ -10,3 +10,23 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: #333;
 }
+
+    .green {
+        color: white;
+        background-color: green;
+        font-weight: bold;
+        padding: 2px 5px;
+        border-radius: 3px;
+    }
+
+    .red {
+        color: white;
+        background-color: red;
+        font-weight: bold;
+        padding: 2px 5px;
+        border-radius: 3px;
+    }
+
+
+
+
