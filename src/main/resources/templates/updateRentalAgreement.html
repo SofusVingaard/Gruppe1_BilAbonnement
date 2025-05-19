@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Opdater Lejeaftale</title>
     <link rel="stylesheet" th:href="@{/css/updateRentalAgreement.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
 <header>
-    <!--<div th:replace="fragments/header :: site-header"></div>-->
+    <div th:replace="~{fragments/header :: site-header}"></div>
 </header>
 <h1>Opdater Lejeaftale</h1>
 
@@ -19,19 +20,6 @@
 
     <label for="customerPhoneNumber">Kundens telefonnummer:</label>
     <input type="text" id="customerPhoneNumber" th:field="*{customerPhoneNumber}" />
-
-    <!--<<label for="userLogin">Brugerlogin:</label>
-    <input type="text" id="userLogin" th:value="${agreement.userLogin}" disabled />-->
-
-    <!--<label for="damageReportId">Skaderapport ID:</label>
-    <input type="number" id="damageReportId" th:field="*{damageReportId}" />
-    -->
-
-    <label for="startDate">Startdato:</label>
-    <input type="date" id="startDate" th:field="*{startDate}" />
-
-    <label for="endDate">Slutdato:</label>
-    <input type="date" id="endDate" th:field="*{endDate}" />
 
     <label for="active">Aktiv:</label>
     <input type="checkbox" id="active" th:field="*{active}" />
