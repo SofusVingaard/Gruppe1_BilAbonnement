@@ -83,6 +83,9 @@ public class RentalAgreementController {
 
 
 
+
+
+
         RentalAgreement agreement = new RentalAgreement();
         agreement.setCar(selectedCar);
         agreement.setCustomerPhoneNumber(customerPhoneNumber);
@@ -107,8 +110,9 @@ public class RentalAgreementController {
             monthlyExtraFee=450;
         }
 
+
 // Calculate total price
-        int totalPrice = (int) (monthsBetween * (selectedCar.getMonthlyFee()+monthlyExtraFee));
+        double totalPrice = (int) (monthsBetween * (selectedCar.getMonthlyFee()+monthlyExtraFee));
         agreement.setTotalPrice(totalPrice);
 
 // Debug output

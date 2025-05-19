@@ -51,6 +51,8 @@ CREATE TABLE damage (
                         FOREIGN KEY (damageReportId) REFERENCES damageReport(id)
 );
 
+
+
 CREATE TABLE rentalAgreement (
     id INT AUTO_INCREMENT PRIMARY KEY,
     carId VARCHAR(50),
@@ -64,7 +66,7 @@ CREATE TABLE rentalAgreement (
     allowedKM double,
     kmOverLimit double,
     monthlyCarPrice INT,
-    totalPrice INT,
+    totalPrice DECIMAL(10,2),
 
 
 

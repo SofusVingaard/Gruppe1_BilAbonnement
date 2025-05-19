@@ -49,7 +49,7 @@ public class RentalAgreementRepository {
             rentalStmt.setBoolean(6, agreement.isActive());
             rentalStmt.setDouble(7, agreement.getAllowedKM());
             rentalStmt.setDouble(8, agreement.getKmOverLimit()); // eller 0.0 hvis ukendt
-            rentalStmt.setInt(9, agreement.getTotalPrice());
+            rentalStmt.setDouble(9, agreement.getTotalPrice());
             rentalStmt.setInt(10, agreement.getMonthsRented());
             rentalStmt.setInt(11, agreement.getMonthlyCarPrice());
             rentalStmt.setInt(12, damageReportId);
@@ -74,18 +74,22 @@ public class RentalAgreementRepository {
                 "customerPhoneNumber = ?, " +
                 "active = ?, " +
                 "allowedKM = ?, " +
-                "kmOverLimit = ? " +
+                "kmOverLimit = ?, " +
+                "totalPrice = totalPrice + ? " +
                 "WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            double kmPenalty = agreement.getKmOverLimit()*0.75; // 0.75 kr per kmOverLimit
 
             statement.setString(1, agreement.getCarId());
             statement.setInt(2, agreement.getCustomerPhoneNumber());
             statement.setBoolean(3, agreement.isActive());
             statement.setDouble(4, agreement.getAllowedKM());
             statement.setDouble(5, agreement.getKmOverLimit());
-            statement.setInt(6, agreement.getId());
+            statement.setDouble(6, kmPenalty);
+            statement.setInt(7, agreement.getId());
 
             statement.executeUpdate();
 
@@ -94,6 +98,7 @@ public class RentalAgreementRepository {
             e.printStackTrace();
         }
     }
+
 
 
     public void deleteRentalAgreement(int id) {

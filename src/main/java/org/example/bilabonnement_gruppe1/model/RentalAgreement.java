@@ -18,7 +18,7 @@ public class RentalAgreement {
     private boolean active;
     private double allowedKM;
     private int monthlyCarPrice;
-    private int totalPrice;
+    private double totalPrice;
 
     public RentalAgreement(int customerPhoneNumber, String carId, String userLogin, DamageReport damageReport, LocalDate startDate, LocalDate endDate, boolean active, double kmOverLimit) {
         this.customerPhoneNumber = customerPhoneNumber;
@@ -146,11 +146,11 @@ public class RentalAgreement {
     public void setDamageReportId(int damageReportId) {
         this.damageReportId = damageReportId;
     }
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
