@@ -12,14 +12,26 @@
     <div th:replace="~{fragments/header.html :: site-header}"></div>
 </header>
 <h1 style="text-align: center;">Biloversigt</h1>
+
 <div class="page-wrapper">
     <header>
         <div th:replace="~{fragments/header.html :: site-header}"></div>
     </header>
 
     <div class="car-board">
+        <form method="get" action="/cars/filter">
+            <label for="status">Filtrér efter status:</label>
+            <select name="status" id="status">
+                <option value="all" th:selected="${selectedStatus == 'all'}">Alle</option>
+                <option value="available" th:selected="${selectedStatus == 'available'}">Tilgængelige</option>
+                <option value="udlejet" th:selected="${selectedStatus == 'udlejet'}">Udlejede</option>
+            </select>
+            <button type="submit">Filtrer</button>
+        </form>
         <div class="container">
-            <div class="car-card" th:each="car : ${cars}">
+            <div th:each="car : ${carList}" class="car-card">
+                <h3 th:text="${car.model}"></h3>
+                <p th:text="'Status: ' + ${car.status}"></p>
                 <img th:src="@{${car.image}}" alt="Bilbillede" />
                 <div class="car-info">
                     <p><strong>Model:</strong> <span th:text="${car.model}"></span></p>

@@ -12,7 +12,9 @@
     <div th:replace="~{fragments/header.html :: site-header}"></div>
 </header>
 <h1>Skadesrapport</h1>
-<a th:href="@{'/rentalAgreement/updateRentalAgreement/' + ${damageReportId}}">Tilbage til lejeaftale</a>
+<a th:href="@{'/rentalAgreement/updateRentalAgreement/' + ${damageReportId}}" class="custom-button">
+    Tilbage til lejeaftale
+</a>
 
 
 
@@ -30,6 +32,9 @@
 
             <button type="submit">Tilføj skade</button>
         </form>
+        <div class="total-price">
+            Samlet pris: <span th:text="${totalPrice}">0.00</span> kr.
+        </div>
     </div>
 
     <div class="list-section">
@@ -60,9 +65,6 @@
     </div>
 </div>
 
-<div class="total-price">
-    Samlet pris: <span th:text="${totalPrice}">0.00</span> kr.
-</div>
 
 </body>
 </html>
