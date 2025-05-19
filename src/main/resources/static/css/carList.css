@@ -1,36 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Centrer bil-sektion som rentalAgreement */
 .page-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 0px;
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .car-board {
     background-color: #ffffff;
-    border-radius: 15px;
-    padding: 30px;
-    margin-top: 40px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
+/* Formular styling (samme stil som rentalAgreement) */
+form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+form label {
+    font-weight: bold;
+}
+
+select, button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+select:focus,
+button:hover {
+    border-color: #0077cc;
+    outline: none;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Car container & kort */
 .container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
 }
+
 .car-card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 15px;
-    width: 250px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 16px;
+    width: 260px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
 }
+
+.car-card:hover {
+    transform: translateY(-4px);
+}
+
 .car-card img {
     width: 100%;
-    height: auto;
-    border-radius: 5px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
 }
+
 .car-info {
-    margin-top: 10px;
+    margin-top: 12px;
+}
+
+.car-info p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #333;
+}
+.page-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
 }

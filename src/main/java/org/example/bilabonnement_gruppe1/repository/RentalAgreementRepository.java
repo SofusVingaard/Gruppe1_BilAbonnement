@@ -72,9 +72,6 @@ public class RentalAgreementRepository {
         String sql = "UPDATE rentalAgreement SET " +
                 "carId = ?, " +
                 "customerPhoneNumber = ?, " +
-                "userLogin = ?, " +
-                "startDate = ?, " +
-                "endDate = ?, " +
                 "active = ?, " +
                 "allowedKM = ?, " +
                 "kmOverLimit = ? " +
@@ -85,24 +82,10 @@ public class RentalAgreementRepository {
 
             statement.setString(1, agreement.getCarId());
             statement.setInt(2, agreement.getCustomerPhoneNumber());
-            statement.setString(3, agreement.getUserLogin());
-
-            if (agreement.getStartDate() != null) {
-                statement.setDate(4, java.sql.Date.valueOf(agreement.getStartDate()));
-            } else {
-                statement.setNull(4, Types.DATE);
-            }
-
-            if (agreement.getEndDate() != null) {
-                statement.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
-            } else {
-                statement.setNull(5, Types.DATE);
-            }
-
-            statement.setBoolean(6, agreement.isActive());
-            statement.setDouble(7, agreement.getAllowedKM());
-            statement.setDouble(8, agreement.getKmOverLimit());
-            statement.setInt(9, agreement.getId());
+            statement.setBoolean(3, agreement.isActive());
+            statement.setDouble(4, agreement.getAllowedKM());
+            statement.setDouble(5, agreement.getKmOverLimit());
+            statement.setInt(6, agreement.getId());
 
             statement.executeUpdate();
 

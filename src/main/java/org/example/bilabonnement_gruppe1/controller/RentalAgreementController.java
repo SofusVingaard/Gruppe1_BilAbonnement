@@ -163,7 +163,6 @@ public class RentalAgreementController {
     public String updateRentalAgreement(@PathVariable("id") int id, Model model) {
         RentalAgreement agreement = rentalAgreementRepository.getRentalAgreement(id);
         model.addAttribute("agreement", agreement);
-        System.out.println("Damage report ID: " + agreement.getDamageReportId());
         return "updateRentalAgreement"; // returner til HTML-formular
     }
 
