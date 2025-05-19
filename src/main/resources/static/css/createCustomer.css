@@ -1,0 +1,75 @@
+/* Reset og basis */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Sideoverskrift */
+h1 {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: #2c3e50;
+}
+
+/* Formular container */
+form {
+    background-color: #ffffff;
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Labels */
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+/* Inputfelter */
+form input[type="text"],
+form input[type="email"],
+form input[type="number"],
+form input[type="tel"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Knap */
+form button {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
