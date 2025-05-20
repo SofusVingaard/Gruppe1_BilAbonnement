@@ -34,7 +34,7 @@ public class RentalAgreementController {
     public String rentalAgreement(Model model) {
         ArrayList<RentalAgreement> agreements = rentalAgreementRepository.getAllRentalAgreements();
         model.addAttribute("agreements", agreements);
-        return "RentalAgreement";
+        return "rentalAgreement";
     }
 
         @GetMapping("/create")

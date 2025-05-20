@@ -52,7 +52,7 @@ public class UserController {
 
     @GetMapping ("/login")
     public String loginPage(){
-        return "login";
+        return "index";
     }
 
 
