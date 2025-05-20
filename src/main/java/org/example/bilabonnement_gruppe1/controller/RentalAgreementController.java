@@ -76,7 +76,7 @@ public class RentalAgreementController {
         LocalDate endDate;
 
         if (selectedCar.isLimited()) {
-            endDate = startDate.plusMonths(3);  // Fixed 3 months for limited cars
+            endDate = startDate.plusMonths(5);
         } else {
             endDate = startDate.plusMonths(durationInMonths);
         }

@@ -62,7 +62,10 @@
         <td th:text="${agreement.active ? 'Ja' : 'Nej'}">Ja</td>
         <td th:text="${agreement.allowedKM}">20000</td>
         <td th:text="${agreement.kmOverLimit}">500</td>
-        <td th:text="${agreement.monthlyCarPrice}">500</td>
+        <td>
+            <span th:text="${agreement.monthlyCarPrice} + ' DKK'">500 DKK</span><br>
+            <span th:text="${#numbers.formatDecimal(agreement.monthlyCarPrice / 7.5, 1, 2)} + ' EUR'">66.67 EUR</span>
+        </td>
         <td>
             <a th:href="@{'/rentalAgreement/updateRentalAgreement/' + ${agreement.id}}">Opdater lejeaftale</a>
             <a th:href="@{'/damageReport/damageReport?damageReportId=' + ${agreement.id}}">Skade rapport</a>
