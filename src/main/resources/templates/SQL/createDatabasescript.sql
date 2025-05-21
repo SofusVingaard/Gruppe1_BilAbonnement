@@ -83,6 +83,16 @@ CREATE TABLE carFinance(
     id INT AUTO_INCREMENT PRIMARY KEY,
     totalPrice DOUBLE,
     rentalAgreementId INT,
+    damagePrice DOUBLE,
+    co2Emission DOUBLE,
+    kmOverLimit DOUBLE,
+    date DATE,
+    damageReportId INT,
+    rentalFee double,
 
     FOREIGN KEY (rentalAgreementId) REFERENCES rentalAgreement (id)
 );
+
+
+
+

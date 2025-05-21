@@ -1,7 +1,8 @@
 package org.example.bilabonnement_gruppe1.repository;
 
-import org.example.bilabonnement_gruppe1.model.RentalAgreement;
+import org.example.bilabonnement_gruppe1.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -268,6 +269,93 @@ public class RentalAgreementRepository {
                 agreement.setActive(resultSet.getBoolean("active"));
                 agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
                 agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+                return agreement;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public RentalAgreement getActiveRentalAgreementByPhoneNumber(int phoneNumber) {
+        String sql = """
+        SELECT ra.id, ra.carId, ra.customerPhoneNumber, ra.userLogin, ra.damageReportId,
+        ra.startDate, ra.endDate, ra.monthsRented, ra.active,
+        ra.allowedKM, ra.kmOverLimit, ra.monthlyCarPrice, ra.totalPrice,
+        
+               c.vehicleNumber, c.model, c.monthlyFee, c.limited,c.co2Emission,
+               dr.id as dr_id, dr.note as dr_note, dr.repairCost as dr_repairCost,
+               cu.id as cu_id, cu.name as cu_name, cu.email as cu_email,
+               u.userLogin, u.name as u_name
+        FROM rentalAgreement ra
+        JOIN car c ON ra.carId = c.vehicleNumber
+        JOIN customer cu ON ra.customerPhoneNumber = cu.phoneNumber
+        LEFT JOIN user u ON ra.userLogin = u.userLogin
+        LEFT JOIN damageReport dr ON ra.damageReportId = dr.id
+        WHERE ra.customerPhoneNumber = ? AND ra.active = TRUE
+        LIMIT 1;
+    """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, phoneNumber);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                RentalAgreement agreement = new RentalAgreement();
+
+                // Basic agreement info
+                agreement.setId(resultSet.getInt("id"));
+                agreement.setCarId(resultSet.getString("carId"));
+                agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
+                agreement.setUserLogin(resultSet.getString("userLogin"));
+                agreement.setDamageReportId(resultSet.getInt("damageReportId"));
+                agreement.setStartDate(resultSet.getDate("startDate").toLocalDate());
+
+                Date sqlEndDate = resultSet.getDate("endDate");
+                if (sqlEndDate != null) {
+                    agreement.setEndDate(sqlEndDate.toLocalDate());
+                }
+
+                agreement.setActive(resultSet.getBoolean("active"));
+                agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
+                agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+                agreement.setMonthlyCarPrice(resultSet.getInt("monthlyCarPrice"));
+                agreement.setTotalPrice(resultSet.getDouble("totalPrice"));
+                agreement.setMonthsRented(resultSet.getInt("monthsRented"));
+
+                // Car info
+                Car car = new Car();
+                car.setVehicleNumber(resultSet.getString("vehicleNumber"));
+                car.setModel(resultSet.getString("model"));
+                car.setMonthlyFee(resultSet.getInt("monthlyFee"));
+                car.setLimited(resultSet.getBoolean("limited"));
+                car.setCo2Emission(resultSet.getDouble("co2Emission"));
+                agreement.setCar(car);
+
+                // Customer info
+                Customer customer = new Customer();
+                customer.setId(resultSet.getInt("cu_id"));
+                customer.setName(resultSet.getString("cu_name"));
+                customer.setEmail(resultSet.getString("cu_email"));
+                customer.setPhoneNumber(phoneNumber);
+                agreement.setCustomer(customer);
+
+                // User info
+                User user = new User();
+                user.setUserLogin(resultSet.getString("userLogin"));
+                user.setName(resultSet.getString("u_name"));
+                agreement.setUser(user);
+
+                // Damage report if exists
+                if (resultSet.getInt("dr_id") > 0) {
+                    DamageReport damageReport = new DamageReport();
+                    damageReport.setId(resultSet.getInt("dr_id"));
+                    damageReport.setRepairCost(resultSet.getDouble("dr_repairCost"));
+                    agreement.setDamageReport(damageReport);
+                }
+
                 return agreement;
             }
         } catch (SQLException e) {

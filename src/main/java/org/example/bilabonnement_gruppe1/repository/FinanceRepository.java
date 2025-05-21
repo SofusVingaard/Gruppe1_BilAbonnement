@@ -47,21 +47,23 @@ public class FinanceRepository {
 
 
     public void createFinanceReport(CarFinance report){
-        String sql = "INSERT INTO CarFinance (totalPrice, damageReportId, date, co2Emission, kmOverLimit, rentalFee)" +
-                "VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO carFinance (totalPrice, rentalAgreementId, damagePrice, co2Emission, kmOverLimit, date) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
 
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        statement.setDouble(1, report.getTotalPrice());
-        statement.setInt(2, report.getDamageReportId());
-        statement.setDate(3, java.sql.Date.valueOf(report.getDate()));
-        statement.setDouble(4, report.getCo2Emission());
-        statement.setDouble(5, report.getKmOverLimit());
-        statement.setDouble(6, report.getRentalFee());
+            statement.setDouble(1, report.getTotalPrice());
+            statement.setInt(2, report.getRentalAgreementId());
+            statement.setDouble(3, report.getDamagePrice());
+            statement.setDouble(4, report.getCo2Emission());
+            statement.setDouble(5, report.getKmOverLimit());
+            statement.setDate(6, java.sql.Date.valueOf(report.getDate()));
 
-        statement.executeUpdate();
+
+            statement.executeUpdate();
 
 
         } catch (SQLException e){

@@ -11,7 +11,10 @@ public class CarFinance {
     private double co2Emission;
     private double kmOverLimit;
     private double rentalFee;
+    private double damageCost;
+    private double additionalCharges;
     private int rentalAgreementId;
+    private double damagePrice;
 
     private boolean paid;
 
@@ -85,5 +88,27 @@ public class CarFinance {
 
     public void setRentalAgreementId(int rentalAgreementId){
         this.rentalAgreementId = rentalAgreementId;
+    }
+    public double getDamageCost() {
+        return damageCost;
+    }
+
+    public void setDamageCost(double damageCost) {
+        this.damageCost = damageCost;
+    }
+
+    public double getAdditionalCharges() {
+        return additionalCharges;
+    }
+
+    public void setAdditionalCharges(double additionalCharges) {
+        this.additionalCharges = additionalCharges;
+    }
+
+    public double getDamagePrice(){
+        return damagePrice;
+    }
+    public void setDamagePrice(double damagePrice){
+        this.damagePrice = damagePrice;
     }
 }
