@@ -1,17 +1,13 @@
 package org.example.bilabonnement_gruppe1.controller;
-
-
 import org.example.bilabonnement_gruppe1.model.CarFinance;
 import org.example.bilabonnement_gruppe1.model.RentalAgreement;
+import org.example.bilabonnement_gruppe1.repository.DamageRepository;
 import org.example.bilabonnement_gruppe1.repository.FinanceRepository;
 import org.example.bilabonnement_gruppe1.repository.RentalAgreementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -26,6 +22,8 @@ public class FinanceReportController {
 
     @Autowired
     private RentalAgreementRepository rentalAgreementRepository;
+    @Autowired
+    private DamageRepository damageRepository;
 
     @GetMapping("/financeReport")
     public String financeReport(){
@@ -67,37 +65,39 @@ public class FinanceReportController {
         return "redirect:/dashboard";
 
      */
-    @PostMapping("/create")
-    public String createFinanceReport(@RequestParam("rentalAgreementId") int id,
+    @PostMapping("/create/{rentalAgreementId}")
+    public String createFinanceReport(@RequestParam("rentalAgreementId") int rentalAgreementId,
                                       RedirectAttributes redirectAttributes) {
+        RentalAgreement agreement = rentalAgreementRepository.getRentalAgreement(rentalAgreementId);
 
-        // Hent lejeaftale
-        RentalAgreement rental = rentalAgreementRepository.findById(id);
-
-        // Stop hvis ikke fundet
-        if (rental == null) {
+        if (agreement == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Lejeaftale ikke fundet.");
-            return "redirect:/financeReport/create";
+            return "redirect:/financeReport";
         }
 
-        // Opret CarFinance
+        double damageCost = damageRepository.getRepairCost(agreement.getDamageReportId());
+
         CarFinance report = new CarFinance();
         report.setDate(LocalDate.now());
-        report.setCo2Emission(report.getCo2Emission());
-        report.setKmOverLimit(report.getKmOverLimit());
-        report.setRentalFee((report.getRentalFee()));
-
-        // Totalpris: enkel beregning
-        double totalPrice = report.getRentalFee() + rental.getKmOverLimit() * 2;
-        report.setTotalPrice(totalPrice);
-
+        report.setRentalFee(agreement.getTotalPrice());
+        report.setKmOverLimit(agreement.getKmOverLimit());
+        report.setCo2Emission(agreement.getCar().getCo2Emission());
+        report.setDamageReportId(agreement.getDamageReportId());
+        report.setTotalPrice(agreement.getTotalPrice() + damageCost);
+        report.setRentalAgreementId(agreement.getId());
 
         financeRepository.createFinanceReport(report);
 
-        System.out.println("Finans rapport oprettet");
 
-        redirectAttributes.addFlashAttribute("succesMessage", "Finansrapport oprettet.");
-        return "redirect:/dashboard";
+        redirectAttributes.addFlashAttribute("successMessage", "Finansrapport oprettet.");
+        return "redirect:/financeReport";
+
     }
+    @PostMapping("/markPaid/{id}")
+    public String markAsPaid(@PathVariable("id") int id) {
+        financeRepository.markAsPaid(id);
+        return "redirect:/financeReport";
+    }
+
 }
 

@@ -1,0 +1,48 @@
+.finance-report-section {
+    padding: 20px;
+}
+
+.finance-report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.finance-report-button {
+    background-color: #007acc;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.finance-report-button:hover {
+    background-color: #005f99;
+}
+
+.finance-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.finance-report-table th,
+.finance-report-table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.finance-report-table th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+}
+
+.finance-report-table tr:hover {
+    background-color: #f0f8ff;
+}

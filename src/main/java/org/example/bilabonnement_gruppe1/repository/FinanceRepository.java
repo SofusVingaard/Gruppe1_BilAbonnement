@@ -68,8 +68,16 @@ public class FinanceRepository {
             e.printStackTrace();
         }
     }
+    public void markAsPaid(int id) {
+        String sql = "UPDATE CarFinance SET paid = true WHERE id = ?";
 
-
-
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

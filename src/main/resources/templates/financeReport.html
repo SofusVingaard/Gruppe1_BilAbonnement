@@ -5,38 +5,44 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/financeReport.css}">
 </head>
 <body>
 <header>
     <div th:replace="~{fragments/header.html :: site-header}"></div>
 </header>
-<nav>
-    <a th:href="@{/financeReport/create}" class="nav-menu-button">Opret en finans rapport</a>
-    <h2>Finansrapporter</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Dato</th>
-            <th>Lejepris</th>
-            <th>Km over grænse</th>
-            <th>CO₂</th>
-            <th>Skade-ID</th>
-            <th>Totalpris</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="report : ${reports}">
-            <td th:text="${report.id}"></td>
-            <td th:text="${report.date}"></td>
-            <td th:text="${report.rentalFee}"></td>
-            <td th:text="${report.kmOverLimit}"></td>
-            <td th:text="${report.co2Emission}"></td>
-            <td th:text="${report.damageReportId}"></td>
-            <td th:text="${report.totalPrice}"></td>
-        </tr>
-        </tbody>
-    </table>
+<main>
+    <section class="finance-report-section">
+        <div class="finance-report-header">
+            <h2>Finansrapporter</h2>
+            <a th:href="@{/financeReport/create}" class="finance-report-button">+ Opret Finansrapport</a>
+        </div>
 
-</body>
-</html>
+        <table class="finance-report-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Dato</th>
+                <th>Lejepris</th>
+                <th>Km over grænse</th>
+                <th>CO₂-Emission</th>
+                <th>Skade-ID</th>
+                <th>Totalpris</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="report : ${reports}">
+                <td th:text="${report.id}"></td>
+                <td th:text="${report.date}"></td>
+                <td th:text="${report.rentalFee}"></td>
+                <td th:text="${report.kmOverLimit}"></td>
+                <td th:text="${report.co2Emission}"></td>
+                <td th:text="${report.damageReportId}"></td>
+                <td th:text="${report.totalPrice}"></td>
+                <td th:text="${report.paid ? 'Betalt' : 'Ikke betalt'}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>

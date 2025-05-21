@@ -81,5 +81,8 @@ CREATE TABLE rentalAgreement (
 
 CREATE TABLE carFinance(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    totalPrice DOUBLE
+    totalPrice DOUBLE,
+    rentalAgreementId INT,
+
+    FOREIGN KEY (rentalAgreementId) REFERENCES rentalAgreement (id)
 );

@@ -11,8 +11,21 @@ public class CarFinance {
     private double co2Emission;
     private double kmOverLimit;
     private double rentalFee;
+    private int rentalAgreementId;
 
+    private boolean paid;
 
+    public boolean isPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
+
+    public int getRentalAgreementId(){
+        return rentalAgreementId;
+    }
 
     public int getId() {
         return id;
@@ -70,5 +83,7 @@ public class CarFinance {
         this.rentalFee = rentalFee;
     }
 
-
+    public void setRentalAgreementId(int rentalAgreementId){
+        this.rentalAgreementId = rentalAgreementId;
+    }
 }
