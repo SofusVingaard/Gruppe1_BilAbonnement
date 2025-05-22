@@ -42,6 +42,7 @@
                     <p><strong>Begrænset:</strong> <span th:text="${car.limited} ? 'Ja' : 'Nej'"></span></p>
                     <p><strong>Månedlig pris:</strong> <span th:text="${car.monthlyFee} + ' kr'"></span></p>
                 </div>
+                <a th:href="@{'/cars/edit/' + ${car.vehicleNumber}}" class="edit-button">Rediger</a>
             </div>
         </div>
     </div>

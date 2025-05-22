@@ -214,6 +214,29 @@ public class CarRepository {
         }
         return carList;
     }
+
+    public void updateCar(Car car) {
+        String sql = "UPDATE car SET chassisnumber=?, model=?, equipment=?, kmDriven=?, co2Emission=?, image=?, status=?, limited=?, monthlyFee=? WHERE vehicleNumber=?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, car.getChassisnumber());
+            stmt.setString(2, car.getModel());
+            stmt.setString(3, car.getEquipment());
+            stmt.setDouble(4, car.getKmDriven());
+            stmt.setDouble(5, car.getCo2Emission());
+            stmt.setString(6, car.getImage());
+            stmt.setString(7, car.getStatus());
+            stmt.setBoolean(8, car.isLimited());
+            stmt.setInt(9, car.getMonthlyFee());
+            stmt.setString(10, car.getVehicleNumber());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

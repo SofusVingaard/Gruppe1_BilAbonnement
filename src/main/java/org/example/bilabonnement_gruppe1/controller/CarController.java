@@ -64,5 +64,24 @@ public class CarController {
     }
 
 
+    @GetMapping("/edit/{vehicleNumber}")
+    public String showEditForm(@PathVariable String vehicleNumber, Model model) {
+        Car car = carRepository.getCarByVehicleNumber(vehicleNumber);
+        if (car != null) {
+            model.addAttribute("car", car);
+            return "editCar";
+        } else {
+            return "redirect:/cars/carList";
+        }
+    }
+
+    @PostMapping("/edit")
+    public String handleEdit(@ModelAttribute("car") Car car) {
+        carRepository.updateCar(car);
+        return "redirect:/cars/carList";
+    }
+
+
+
 
 }
