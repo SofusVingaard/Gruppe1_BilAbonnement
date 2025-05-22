@@ -49,7 +49,7 @@ public class RentalAgreementRepository {
             rentalStmt.setDate(5, java.sql.Date.valueOf(agreement.getEndDate()));
             rentalStmt.setBoolean(6, agreement.isActive());
             rentalStmt.setDouble(7, agreement.getAllowedKM());
-            rentalStmt.setDouble(8, agreement.getKmOverLimit()); // eller 0.0 hvis ukendt
+            rentalStmt.setDouble(8, agreement.getKmOverLimit());
             rentalStmt.setDouble(9, agreement.getTotalPrice());
             rentalStmt.setInt(10, agreement.getMonthsRented());
             rentalStmt.setInt(11, agreement.getMonthlyCarPrice());

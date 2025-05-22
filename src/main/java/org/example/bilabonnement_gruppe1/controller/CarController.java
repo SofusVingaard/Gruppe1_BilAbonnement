@@ -52,11 +52,17 @@ public class CarController {
 
     @GetMapping("/filter")
     public String filterCars(@RequestParam(defaultValue = "all") String status, Model model) {
-        ArrayList<Car> cars = carRepository.getCarsByStatus(status);
-        model.addAttribute("carList", cars);
+        try {
+            ArrayList<Car> cars = carRepository.getCarsByStatus(status);
+            model.addAttribute("carList", cars);
+        } catch (Exception e) {
+            model.addAttribute("error", "Kunne ikke hente biler.");
+            model.addAttribute("carList", new ArrayList<Car>()); // tom liste
+        }
         model.addAttribute("selectedStatus", status);
         return "carList";
     }
+
 
 
 }

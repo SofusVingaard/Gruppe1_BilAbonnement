@@ -82,10 +82,6 @@ public class RentalAgreementController {
         }
 
 
-
-
-
-
         RentalAgreement agreement = new RentalAgreement();
         agreement.setCar(selectedCar);
         agreement.setCustomerPhoneNumber(customerPhoneNumber);
