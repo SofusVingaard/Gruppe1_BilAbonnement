@@ -6,7 +6,7 @@
         <a th:href="@{/cars/carList}" class="nav-menu-button">Biler</a>
         <a th:href="@{/rentalAgreement/rentalAgreement}" class="nav-menu-button">Rental Agreement</a>
         <a th:href="@{/cars/create}" class="nav-menu-button">opret bil</a>
-        <a th:href ="@{/financeReport/financeReport}" class="nav-menu-button">Finans</a>
+        <a th:href ="@{/financeReport}" class="nav-menu-button">Finans</a>
         <a th:href ="@{/user/createCustomer}" class="nav-menu-button">Opret kunde</a>
 
         <a th:if="${session.currentUser != null}" th:href="@{/user/logout}" class="nav-menu-button">Logout</a>

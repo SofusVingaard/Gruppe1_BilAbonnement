@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Betal Finansrapport</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/financeReport.css}">
+</head>
+<body>
+<header>
+    <div th:replace="~{fragments/header.html :: site-header}"></div>
+</header>
+
+<main style="margin-left: 240px; padding: 20px;">
+    <h2>Betal Finansrapport</h2>
+
+    <div class="finance-detail-box">
+        <p><strong>Rapport ID:</strong> <span th:text="${report.id}"></span></p>
+        <p><strong>Dato:</strong> <span th:text="${report.date}"></span></p>
+        <p><strong>Lejepris:</strong> <span th:text="${report.rentalFee} + ' DKK'"></span></p>
+        <p><strong>Km over grænse:</strong> <span th:text="${report.kmOverLimit} + ' km'"></span></p>
+        <p><strong>CO₂-Emission:</strong> <span th:text="${report.co2Emission} + ' g/km'"></span></p>
+        <p><strong>Skade-ID:</strong> <span th:text="${report.damageReportId}"></span></p>
+        <p><strong>Skadepris:</strong> <span th:text="${report.damagePrice} + ' DKK'"></span></p>
+        <p><strong>Totalpris:</strong> <span th:text="${report.totalPrice} + ' DKK'"></span></p>
+        <p><strong>Status:</strong> <span th:text="${report.paid ? 'Betalt' : 'Ikke betalt'}"></span></p>
+    </div>
+
+    <form th:action="@{'/financeReport/markPaid/' + ${report.id}}" method="post">
+        <button type="submit" class="finance-report-button" th:if="${!report.paid}">Markér som betalt</button>
+        <p th:if="${report.paid}" style="color: green; font-weight: bold;">Denne rapport er allerede betalt.</p>
+    </form>
+
+    <a th:href="@{/financeReport}" class="finance-report-button" style="margin-top: 20px;">← Tilbage til oversigt</a>
+</main>
+</body>
+</html>

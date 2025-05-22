@@ -82,4 +82,29 @@ public class FinanceRepository {
         }
     }
 
+    public CarFinance findById(int id) {
+        String sql = "SELECT * FROM CarFinance WHERE id = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                CarFinance report = new CarFinance();
+                report.setId(rs.getInt("id"));
+                report.setTotalPrice(rs.getDouble("totalPrice"));
+                report.setRentalFee(rs.getDouble("rentalFee"));
+                report.setDamageReportId(rs.getInt("damageReportId"));
+                report.setDamagePrice(rs.getDouble("damagePrice"));
+                report.setDate(rs.getDate("date").toLocalDate());
+                report.setCo2Emission(rs.getDouble("co2Emission"));
+                report.setKmOverLimit(rs.getDouble("kmOverLimit"));
+                report.setPaid(rs.getBoolean("paid"));
+                return report;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

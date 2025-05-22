@@ -25,46 +25,14 @@ public class FinanceReportController {
     @Autowired
     private DamageRepository damageRepository;
 
-    @GetMapping("/financeReport")
-    public String financeReport(){
-        return "financeReport";
-    }
+
     @GetMapping
     public String showAllFinanceReports(Model model) {
         List<CarFinance> reports = financeRepository.findAll();
         model.addAttribute("reports", reports);
-        return "financeReport"; // navn på HTML-siden
+        return "financeReport";
     }
 
-    @GetMapping("/create")
-    public String showCreateFinanceReport(){
-        return "createFinanceReport";
-    }
-
-    /*@PostMapping("/create")
-    public String createFinanceReport(
-            @RequestParam("totalPrice") double totalPrice,
-            @RequestParam("damageRportId") int damageReportId,
-            @RequestParam("getDate") LocalDate getDate,
-            @RequestParam("coeEmission") double co2Emission,
-            @RequestParam("kmOverLimit") double kmOverLimit,
-            @RequestParam("rentalFee") double rentalFee,
-            RedirectAttributes redirectAttributes) {
-
-        CarFinance report = new CarFinance();
-        report.setTotalPrice(totalPrice);
-        report.setDamageReportId(damageReportId);
-        report.setDate(getDate);
-        report.setCo2Emissinon(co2Emission);
-        report.setKmOverLimit(kmOverLimit);
-        report.setRentalFee(rentalFee);
-
-        financeRepository.createFinanceReport(report);
-        redirectAttributes.addFlashAttribute("succesMessage", "Rapport oprettet");
-
-        return "redirect:/dashboard";
-
-     */
     @PostMapping("/create")
     public String createFinanceReport(@RequestParam("customerPhoneNumber") int phoneNumber,
                                       RedirectAttributes redirectAttributes) {
@@ -109,12 +77,40 @@ public class FinanceReportController {
         return "redirect:/financeReport";
     }
 
-
     @PostMapping("/markPaid/{id}")
     public String markAsPaid(@PathVariable("id") int id) {
         financeRepository.markAsPaid(id);
         return "redirect:/financeReport";
     }
+    /*
+    @GetMapping("/financeReport")
+    public String showFinancePage(@RequestParam(value = "phoneNumber", required = false) Integer phoneNumber, Model model) {
+        List<CarFinance> reports;
+        if (phoneNumber != null) {
+            reports = financeRepository.findByPhoneNumber(phoneNumber);
+        } else {
+            reports = financeRepository.findAll();
+        }
+        model.addAttribute("reports", reports);
+        return "financeReport";
+    }
+
+     */
+
+    @GetMapping("/pay/{id}")
+    public String showPaymentPage(@PathVariable("id") int id, Model model) {
+        CarFinance report = financeRepository.findById(id);
+        if (report == null) {
+            return "redirect:/financeReport";
+        }
+        model.addAttribute("report", report);
+        return "payFinanceReport";
+    }
+    @GetMapping("/create")
+    public String showCreateForm() {
+        return "createFinanceReport";
+    }
+
 
 }
 
