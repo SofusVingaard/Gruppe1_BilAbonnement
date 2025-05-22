@@ -5,7 +5,6 @@ body {
     padding: 0;
 }
 
-/* Centrer bil-sektion som rentalAgreement */
 .page-wrapper {
     max-width: 1000px;
     margin: 2rem auto;
@@ -22,7 +21,6 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
-/* Formular styling (samme stil som rentalAgreement) */
 form {
     display: flex;
     align-items: center;
@@ -60,7 +58,6 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Car container & kort */
 .container {
     display: flex;
     flex-wrap: wrap;
