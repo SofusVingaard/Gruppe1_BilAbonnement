@@ -65,6 +65,9 @@ public class FinanceReportController {
             report.setAdditionalCharges(additionalCharges);
             report.setTotalPrice(rentalFee + damageCost + additionalCharges);
             report.setRentalAgreementId(agreement.getId());
+            report.setCo2Emission(agreement.getCar().getCo2Emission());
+            report.setKmOverLimit(agreement.getKmOverLimit());
+
 
             financeRepository.createFinanceReport(report);
 
