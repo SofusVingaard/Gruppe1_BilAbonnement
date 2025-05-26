@@ -2,7 +2,15 @@
 
 Dette projekt er udviklet til Keas datamatiker 2. semester eksamen
 
-Programmet er udviklet af: Sofus Vingård, Christoffer Nielsen, Gustav Wilquin og Thomas Dahl.
+Programmet er udviklet af: 
+
+-Sofus Vingård
+
+-Christoffer Nielsen
+
+-Gustav Wilquin 
+
+-Thomas Dahl
 
 # Azure-deployment 
 
