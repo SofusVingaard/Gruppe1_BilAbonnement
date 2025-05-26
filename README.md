@@ -46,7 +46,13 @@ Der skal oprettes en MySQL database, denne kan nemt laves gennem vores [createDa
 
 Husk efterfølgende at sætte application properties
 
-<![image](https://github.com/user-attachments/assets/f2d4ca7a-4120-4689-b7fe-010b872e4b4e)>
+![image](https://github.com/user-attachments/assets/f2d4ca7a-4120-4689-b7fe-010b872e4b4e)
+
+# Kør programmet
+
+Programmet burde nu kunne starte ved at køre Spring Boot-applikationen
+
+Som standard kører applikationen på http://localhost:8080
 
 
 
