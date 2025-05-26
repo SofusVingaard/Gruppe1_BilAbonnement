@@ -4,7 +4,6 @@ package org.example.bilabonnement_gruppe1.repository;
 import org.example.bilabonnement_gruppe1.model.Damage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -34,7 +33,6 @@ public class DamageRepository {
             e.printStackTrace();
         }
     }
-
 
 
     public double getRepairCost(int damageReportId) {
@@ -96,5 +94,4 @@ public class DamageRepository {
             e.printStackTrace();
         }
     }
-
 }

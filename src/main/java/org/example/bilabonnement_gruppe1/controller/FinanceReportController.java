@@ -1,4 +1,5 @@
 package org.example.bilabonnement_gruppe1.controller;
+import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.model.CarFinance;
 import org.example.bilabonnement_gruppe1.model.RentalAgreement;
 import org.example.bilabonnement_gruppe1.repository.DamageRepository;
@@ -27,7 +28,10 @@ public class FinanceReportController {
 
 
     @GetMapping
-    public String showAllFinanceReports(Model model) {
+    public String showAllFinanceReports(Model model, HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
         List<CarFinance> reports = financeRepository.findAll();
         model.addAttribute("reports", reports);
         return "financeReport";
@@ -101,7 +105,10 @@ public class FinanceReportController {
      */
 
     @GetMapping("/pay/{id}")
-    public String showPaymentPage(@PathVariable("id") int id, Model model) {
+    public String showPaymentPage(@PathVariable("id") int id, Model model, HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
         CarFinance report = financeRepository.findById(id);
         if (report == null) {
             return "redirect:/financeReport";
@@ -110,7 +117,10 @@ public class FinanceReportController {
         return "payFinanceReport";
     }
     @GetMapping("/create")
-    public String showCreateForm() {
+    public String showCreateForm(HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
         return "createFinanceReport";
     }
 

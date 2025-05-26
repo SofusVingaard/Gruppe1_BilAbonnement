@@ -3,12 +3,10 @@ package org.example.bilabonnement_gruppe1.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.model.Car;
-import org.example.bilabonnement_gruppe1.model.Customer;
 import org.example.bilabonnement_gruppe1.model.RentalAgreement;
 import org.example.bilabonnement_gruppe1.model.User;
 import org.example.bilabonnement_gruppe1.repository.CarRepository;
 import org.example.bilabonnement_gruppe1.repository.RentalAgreementRepository;
-import org.example.bilabonnement_gruppe1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,14 +29,21 @@ public class RentalAgreementController {
     CarRepository carRepository;
 
     @GetMapping("/rentalAgreement")
-    public String rentalAgreement(Model model) {
+    public String rentalAgreement(Model model, HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
         ArrayList<RentalAgreement> agreements = rentalAgreementRepository.getAllRentalAgreements();
         model.addAttribute("agreements", agreements);
         return "rentalAgreement";
     }
 
         @GetMapping("/create")
-        public String showCreateForm(@RequestParam(value = "limitFilter", required = false) String filter, Model model) {
+        public String showCreateForm(@RequestParam(value = "limitFilter", required = false) String filter, Model model,HttpSession session) {
+            if (session.getAttribute("currentUser") == null) {
+                return "redirect:/index";
+            }
+
             ArrayList<Car> carList;
 
             if ("limited".equals(filter)) {
@@ -107,11 +112,10 @@ public class RentalAgreementController {
         }
 
 
-// Calculate total price
+
         double totalPrice = (int) (monthsBetween * (selectedCar.getMonthlyFee()+monthlyExtraFee));
         agreement.setTotalPrice(totalPrice);
 
-// Debug output
         System.out.println("DEBUG: Calculated price - Months: " + monthsBetween
                 + ", Monthly fee: " + selectedCar.getMonthlyFee()
                 + ", Total: " + totalPrice);
@@ -123,14 +127,6 @@ public class RentalAgreementController {
         return "redirect:/dashboard";
     }
 
-
-    @GetMapping("/search")
-    public String showSearchPage(Model model) throws SQLException {
-        // Vis alle lejeaftaler som default
-        ArrayList<RentalAgreement> agreements = rentalAgreementRepository.getAllRentalAgreements();
-        model.addAttribute("agreements", agreements);
-        return "rentalAgreement";
-    }
 
     @PostMapping("/rentalAgreement")
     public String filterRentalAgreements(
@@ -160,10 +156,13 @@ public class RentalAgreementController {
     }
 
     @GetMapping("/updateRentalAgreement/{id}")
-    public String updateRentalAgreement(@PathVariable("id") int id, Model model) {
+    public String updateRentalAgreement(@PathVariable("id") int id, Model model, HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
         RentalAgreement agreement = rentalAgreementRepository.getRentalAgreement(id);
         model.addAttribute("agreement", agreement);
-        return "updateRentalAgreement"; // returner til HTML-formular
+        return "updateRentalAgreement";
     }
 
     @PostMapping("/updateRentalAgreement/{id}")

@@ -3,9 +3,7 @@ package org.example.bilabonnement_gruppe1.controller;
 import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.model.Customer;
 import org.example.bilabonnement_gruppe1.model.User;
-import org.example.bilabonnement_gruppe1.repository.CarRepository;
 import org.example.bilabonnement_gruppe1.repository.CustomerRepository;
-import org.example.bilabonnement_gruppe1.repository.RentalAgreementRepository;
 import org.example.bilabonnement_gruppe1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,8 +59,7 @@ public class UserController {
             HttpSession session,
             RedirectAttributes redirectAttributes,
             @RequestParam("userLogin") String userLogin,
-            @RequestParam("password") String password,
-            Model model) {
+            @RequestParam("password") String password) {
 
         User user = userRepository.findByUserLogin(userLogin);
 
@@ -83,7 +80,11 @@ public class UserController {
     }
 
     @GetMapping("/createCustomer")
-    public String createCustomer() {
+    public String createCustomer(HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
 
         return "createCustomer";
     }

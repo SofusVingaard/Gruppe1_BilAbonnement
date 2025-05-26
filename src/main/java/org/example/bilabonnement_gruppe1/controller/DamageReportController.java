@@ -20,8 +20,6 @@ import java.util.List;
 public class DamageReportController {
 
 
-    @Autowired
-    private DamageReportRepository damageReportRepository;
 
     @Autowired
     private DamageRepository damageRepository;
@@ -45,19 +43,6 @@ public class DamageReportController {
         return "damageReport";
     }
 
-
-
-
-
-    @PostMapping("/damageReport")
-    public String createDamageReport() {
-
-        //damageRepository.createDamageReport();
-
-
-
-        return "redirect:/damageReport";
-    }
 
     @GetMapping("/damage")
     public String showDamage(HttpSession session) {
@@ -89,7 +74,4 @@ public class DamageReportController {
         return "redirect:/damageReport/damageReport?damageReportId=" + damageReportId;
 
     }
-
-
-
 }

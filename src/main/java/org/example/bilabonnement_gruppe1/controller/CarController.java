@@ -20,14 +20,24 @@ public class CarController {
     CarRepository carRepository;
 
     @GetMapping("/carList")
-    public String showCarList(Model model) {
+    public String showCarList(Model model, HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
+
         model.addAttribute("cars", carRepository.findAll(false));
         return "carList";
     }
 
 
     @GetMapping("/availableCars")
-    public String showAvailableCars(Model model) {
+    public String showAvailableCars(Model model, HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
+
         ArrayList<Car> carList = carRepository.showAvailableCars("available");
 
         model.addAttribute("carList", carList);
@@ -36,8 +46,11 @@ public class CarController {
     }
 
     @GetMapping("/create")
-    public String showCreateForm(Model model)
-            {
+    public String showCreateForm(Model model, HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
         model.addAttribute("car", new Car());
         return "createCar";
     }
@@ -51,13 +64,17 @@ public class CarController {
     }
 
     @GetMapping("/filter")
-    public String filterCars(@RequestParam(defaultValue = "all") String status, Model model) {
+    public String filterCars(@RequestParam(defaultValue = "all") String status, Model model, HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
         try {
             ArrayList<Car> cars = carRepository.getCarsByStatus(status);
             model.addAttribute("carList", cars);
         } catch (Exception e) {
             model.addAttribute("error", "Kunne ikke hente biler.");
-            model.addAttribute("carList", new ArrayList<Car>()); // tom liste
+            model.addAttribute("carList", new ArrayList<Car>());
         }
         model.addAttribute("selectedStatus", status);
         return "carList";
@@ -65,7 +82,10 @@ public class CarController {
 
 
     @GetMapping("/edit/{vehicleNumber}")
-    public String showEditForm(@PathVariable String vehicleNumber, Model model) {
+    public String showEditForm(@PathVariable String vehicleNumber, Model model, HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
         Car car = carRepository.getCarByVehicleNumber(vehicleNumber);
         if (car != null) {
             model.addAttribute("car", car);
@@ -80,8 +100,4 @@ public class CarController {
         carRepository.updateCar(car);
         return "redirect:/cars/carList";
     }
-
-
-
-
 }

@@ -1,5 +1,6 @@
 package org.example.bilabonnement_gruppe1.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.repository.CarRepository;
 import org.example.bilabonnement_gruppe1.repository.RentalAgreementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,10 @@ public class PageController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(Model model) {
+    public String dashboard(Model model, HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            return "redirect:/index";
+        }
         int activeSubscriptions = rentalAgreementRepository.countActiveAgreements();
         double avgRentalLength = rentalAgreementRepository.averageRentalPeriodLength();
         int availableCars = carRepository.countAvailableCars();
