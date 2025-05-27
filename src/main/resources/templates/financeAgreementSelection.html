@@ -10,35 +10,38 @@
 <header>
   <div th:replace="~{fragments/header.html :: site-header}"></div>
 </header>
-<h1>Select Rental Agreement for Finance Report</h1>
 
-<table>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Car ID</th>
-    <th>Customer Phone</th>
-    <th>Start Date</th>
-    <th>End Date</th>
-    <th>Status</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="agreement : ${rentalAgreements}">
-    <td th:text="${agreement.id}"></td>
-    <td th:text="${agreement.carId}"></td>
-    <td th:text="${agreement.customerPhoneNumber}"></td>
-    <td th:text="${#temporals.format(agreement.startDate, 'yyyy-MM-dd')}"></td>
-    <td th:text="${#temporals.format(agreement.endDate, 'yyyy-MM-dd')}"></td>
-    <td th:text="${agreement.active} ? 'Active' : 'Inactive'"></td>
-    <td>
-      <a th:href="@{/finance/generate/{id}(id=${agreement.id})}">Generate Report</a>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="finance-page">
+  <h1>Select Rental Agreement for Finance Report</h1>
 
-<a th:href="@{/finance/reports}">Back to Reports</a>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Car ID</th>
+      <th>Customer Phone</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="agreement : ${rentalAgreements}">
+      <td th:text="${agreement.id}"></td>
+      <td th:text="${agreement.carId}"></td>
+      <td th:text="${agreement.customerPhoneNumber}"></td>
+      <td th:text="${#temporals.format(agreement.startDate, 'yyyy-MM-dd')}"></td>
+      <td th:text="${#temporals.format(agreement.endDate, 'yyyy-MM-dd')}"></td>
+      <td th:text="${agreement.active} ? 'Active' : 'Inactive'"></td>
+      <td>
+        <a th:href="@{/finance/generate/{id}(id=${agreement.id})}">Generate Report</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a th:href="@{/finance/reports}">Back to Reports</a>
+</div>
 </body>
 </html>
