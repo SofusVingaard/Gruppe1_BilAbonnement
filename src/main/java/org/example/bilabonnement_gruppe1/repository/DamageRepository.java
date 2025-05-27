@@ -19,6 +19,7 @@ public class DamageRepository {
     DataSource dataSource;
 
 
+    // Sofus
     public void createDamage(Damage damage) {
         String sql = "INSERT INTO damage (damageReportId, damageType, price) VALUES (?,?,?)";
 
@@ -38,6 +39,7 @@ public class DamageRepository {
         }
     }
 
+    // Sofus
     public double getRepairCost(int damageReportId) {
         String sql = "SELECT price FROM damage WHERE damageReportId = ?";
         double totalPrice = 0;
@@ -58,6 +60,7 @@ public class DamageRepository {
         return totalPrice;
     }
 
+    // Sofus
     public ArrayList<Damage> getDamageList(int damageReportId) {
         String sql = "SELECT id, damageType, price FROM damage WHERE damageReportId = ?";
         ArrayList<Damage> damageList = new ArrayList<>();
@@ -82,6 +85,7 @@ public class DamageRepository {
         return damageList;
     }
 
+    // Sofus
     public void deleteDamage(int damageId) {
         String getReportIdSql = "SELECT damageReportId FROM damage WHERE id = ?";
         String deleteSql = "DELETE FROM damage WHERE id = ?";
@@ -113,6 +117,7 @@ public class DamageRepository {
         }
     }
 
+    // Sofus
     public void updateDamageReportRepairCost(int damageReportId) {
         String sql = "UPDATE damageReport SET repairCost = ? WHERE id = ?";
         double totalRepairCost = getRepairCost(damageReportId);
@@ -128,5 +133,4 @@ public class DamageRepository {
             e.printStackTrace();
         }
     }
-
 }

@@ -16,6 +16,7 @@ public class RentalAgreementRepository {
     @Autowired
     private DataSource dataSource;
 
+    // Sofus
     public void createRentalAgreement(RentalAgreement agreement) {
         String damageSql = "INSERT INTO damageReport (repairCost, note) VALUES (?, ?)";
 
@@ -67,6 +68,7 @@ public class RentalAgreementRepository {
         }
     }
 
+    // Thomas
     public void updateRentalAgreement(RentalAgreement agreement) {
         String sql = "UPDATE rentalAgreement SET " +
                 "carId = ?, " +
@@ -98,6 +100,7 @@ public class RentalAgreementRepository {
         }
     }
 
+    // Thomas
     public ArrayList<RentalAgreement> getRentalAgreementsByActiveStatus(boolean active) {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement WHERE active = ?";
@@ -161,6 +164,7 @@ public class RentalAgreementRepository {
         return getRentalAgreementsByActiveStatus(false);
     }
 
+    // Thomas
     public ArrayList<RentalAgreement> getRentalAgreementByPhoneNumber(int customerPhoneNumber) {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement WHERE customerPhoneNumber = ?";
@@ -283,6 +287,7 @@ public class RentalAgreementRepository {
 
     // Denne metode bruges til at indhente alle informationer fra rentalAgreement
     // Inklusiv de tilknyttede objekter som Car, User, Customer og DamageReport
+    // Sofus og Gustav
     public RentalAgreement getActiveRentalAgreementById(int id) {
         String sql = """
         SELECT ra.id, ra.carId, ra.customerPhoneNumber, ra.userLogin, ra.damageReportId,

@@ -28,6 +28,7 @@ public class RentalAgreementController {
     @Autowired
     CarRepository carRepository;
 
+    // Sofus og Thomas
     @GetMapping("/rentalAgreement")
     public String rentalAgreement(Model model, HttpSession session) {
         if (session.getAttribute("currentUser") == null) {
@@ -38,6 +39,7 @@ public class RentalAgreementController {
         return "rentalAgreement";
     }
 
+        // Sofus og Thomas
         @GetMapping("/create")
         public String showCreateForm(@RequestParam(value = "limitFilter", required = false) String filter, Model model,HttpSession session) {
             if (session.getAttribute("currentUser") == null) {
@@ -61,6 +63,7 @@ public class RentalAgreementController {
         }
 
 
+    // Sofus
     @PostMapping("/create")
     public String createRentalAgreement(
             @RequestParam("carId") String carId,
@@ -128,6 +131,7 @@ public class RentalAgreementController {
     }
 
 
+    // Sofus og Thomas
     @PostMapping("/rentalAgreement")
     public String filterRentalAgreements(
             @RequestParam(value = "phoneNumber", required = false) Integer phoneNumber,
@@ -155,6 +159,7 @@ public class RentalAgreementController {
         }
     }
 
+    // Thomas
     @GetMapping("/updateRentalAgreement/{id}")
     public String updateRentalAgreement(@PathVariable("id") int id, Model model, HttpSession session) {
         if (session.getAttribute("currentUser") == null) {
@@ -165,6 +170,7 @@ public class RentalAgreementController {
         return "updateRentalAgreement";
     }
 
+    // Thomas
     @PostMapping("/updateRentalAgreement/{id}")
     public String updateRentalAgreement(@PathVariable("id") int id,
                                         @ModelAttribute RentalAgreement agreement) {
@@ -172,6 +178,5 @@ public class RentalAgreementController {
         rentalAgreementRepository.updateRentalAgreement(agreement);
         return "redirect:/rentalAgreement/updateRentalAgreement/" + agreement.getId();
     }
-
 }
 

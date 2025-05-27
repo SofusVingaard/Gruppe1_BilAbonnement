@@ -37,7 +37,10 @@
             <td th:text="${#numbers.formatDecimal(report.kmOverLimitCost, 1, 2)}"></td>
             <td th:text="${#numbers.formatDecimal(report.repairCost, 1, 2)}"></td>
             <td th:text="${#numbers.formatDecimal(report.damageCost, 1, 2)}"></td>
-            <td th:text="${#numbers.formatDecimal(report.totalCost, 1, 2)}"></td>
+            <td>
+                <span th:text="${#numbers.formatDecimal(report.monthlyPrice, 1, 2)} + ' DKK'">0.00 DKK</span><br>
+                <span th:text="${#numbers.formatDecimal(report.monthlyPrice / 7.5, 1, 2)} + ' EUR'">0.00 EUR</span>
+            </td>
             <td th:text="${report.status}"></td>
             <td>
                 <a th:href="@{/finance/generate/{id}(id=${report.rentalAgreementId})}">View</a>
