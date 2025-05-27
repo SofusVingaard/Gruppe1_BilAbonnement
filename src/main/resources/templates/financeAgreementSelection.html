@@ -21,6 +21,7 @@
     <th>Start Date</th>
     <th>End Date</th>
     <th>Status</th>
+    <th>Monthly Price</th>
     <th>Action</th>
   </tr>
   </thead>
@@ -32,6 +33,8 @@
     <td th:text="${#temporals.format(agreement.startDate, 'yyyy-MM-dd')}"></td>
     <td th:text="${#temporals.format(agreement.endDate, 'yyyy-MM-dd')}"></td>
     <td th:text="${agreement.active} ? 'Active' : 'Inactive'"></td>
+    <td th:text="${#numbers.formatDecimal(agreement.monthlyCarPrice, 1, 2)}">0.00</td>
+
     <td>
       <a th:href="@{/finance/generate/{id}(id=${agreement.id})}">Generate Report</a>
     </td>

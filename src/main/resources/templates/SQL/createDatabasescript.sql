@@ -93,6 +93,9 @@ CREATE TABLE IF NOT EXISTS financeReport (
     FOREIGN KEY (rentalAgreementId) REFERENCES rentalAgreement(id)
     );
 
+SELECT * FROM damageReport WHERE id = 36;
+
+
 
 
 

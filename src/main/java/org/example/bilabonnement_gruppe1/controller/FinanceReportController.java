@@ -42,6 +42,14 @@ public class FinanceReportController {
             return "redirect:/index";
         }
 
+        RentalAgreement agreement = rentalAgreementRepository.getActiveRentalAgreementById(rentalAgreementId);
+        if (agreement == null) {
+            model.addAttribute("error", "Rental Agreement not found or inactive");
+            return "errorPage";  // evt. en custom error side
+        }
+        model.addAttribute("rentalAgreement", agreement);
+
+
         FinanceReport existingReport = financeReportRepository.getFinanceReportByRentalAgreementId(rentalAgreementId);
 
         if (existingReport != null) {
@@ -56,9 +64,6 @@ public class FinanceReportController {
                 model.addAttribute("error", "Could not generate finance report for this rental agreement");
             }
         }
-
-        RentalAgreement agreement = rentalAgreementRepository.getRentalAgreement(rentalAgreementId);
-        model.addAttribute("rentalAgreement", agreement);
 
         return "financeReportDetails";
     }

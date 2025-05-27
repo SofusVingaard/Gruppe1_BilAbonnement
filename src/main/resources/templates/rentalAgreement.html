@@ -52,8 +52,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="agreement, iter : ${agreements}">
-        <td th:text="${iter.count}">1</td>
+    <tr th:each="agreement : ${agreements}">
+        <td th:text="${agreement.id}">1</td>
         <td th:text="${agreement.carId}">2</td>
         <td th:text="${agreement.customerPhoneNumber}">12345678</td>
         <td th:text="${agreement.userLogin}">demo</td>

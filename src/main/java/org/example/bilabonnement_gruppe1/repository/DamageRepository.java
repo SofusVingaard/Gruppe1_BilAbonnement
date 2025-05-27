@@ -29,10 +29,30 @@ public class DamageRepository {
             statement.setDouble(3, damage.getPrice());
 
             statement.executeUpdate();
+
+                updateDamageReportRepairCost(damage.getDamageReportId());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    public void updateDamageReportRepairCost(int damageReportId) {
+        String sql = "UPDATE damageReport SET repairCost = ? WHERE id = ?";
+        double totalRepairCost = getRepairCost(damageReportId);
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setDouble(1, totalRepairCost);
+            statement.setInt(2, damageReportId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public double getRepairCost(int damageReportId) {
@@ -81,17 +101,37 @@ public class DamageRepository {
     }
 
     public void deleteDamage(int damageId) {
-        String sql = "DELETE FROM damage WHERE Id = ?";
+        String getReportIdSql = "SELECT damageReportId FROM damage WHERE id = ?";
+        String deleteSql = "DELETE FROM damage WHERE id = ?";
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
+        int damageReportId = -1;
 
-            statement.setInt(1, damageId);
+        try (Connection connection = dataSource.getConnection()) {
 
-            statement.executeUpdate();
+            // Først find damageReportId for den skade vi sletter
+            try (PreparedStatement getStmt = connection.prepareStatement(getReportIdSql)) {
+                getStmt.setInt(1, damageId);
+                try (ResultSet rs = getStmt.executeQuery()) {
+                    if (rs.next()) {
+                        damageReportId = rs.getInt("damageReportId");
+                    }
+                }
+            }
+
+            // Slet skaden
+            try (PreparedStatement deleteStmt = connection.prepareStatement(deleteSql)) {
+                deleteStmt.setInt(1, damageId);
+                deleteStmt.executeUpdate();
+            }
+
+            // Opdater repairCost i damageReport hvis vi fandt en damageReportId
+            if (damageReportId != -1) {
+                updateDamageReportRepairCost(damageReportId);  // <-- Kald din eksisterende metode her
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }

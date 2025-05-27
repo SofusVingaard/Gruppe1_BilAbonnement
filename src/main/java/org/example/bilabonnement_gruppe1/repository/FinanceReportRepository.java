@@ -54,9 +54,17 @@ public class FinanceReportRepository {
             System.err.println("No rental agreement found for ID: " + rentalAgreementId);
             return null;
         }
+        double allowedKmPrice=0;
+
+        if (agreement.getAllowedKM()==1750){
+            allowedKmPrice=250;
+        }
+        if (agreement.getAllowedKM()==2000){
+            allowedKmPrice=450;
+        }
 
 
-        double monthlyPrice = agreement.getMonthlyCarPrice() * agreement.getMonthsRented();
+        double monthlyPrice = agreement.getMonthlyCarPrice()+allowedKmPrice;
         double kmOverLimitCost = agreement.getKmOverLimit() * 0.75; // 0.75 kr per km
 
         double repairCost = 0.0;
@@ -65,7 +73,7 @@ public class FinanceReportRepository {
             System.out.println("Repair Cost from Damage Report: " + repairCost);
         }
 
-        double totalCost = monthlyPrice + kmOverLimitCost + repairCost;
+        double totalCost = (monthlyPrice*agreement.getMonthsRented()) + kmOverLimitCost + repairCost;
 
 
         FinanceReport report = new FinanceReport();
@@ -152,25 +160,74 @@ public class FinanceReportRepository {
     }
 
     public void updatePaymentStatus(int financeReportId, boolean paid, LocalDate paymentDate) {
-        String sql = "UPDATE financeReport SET paid = ?, paymentDate = ?, status = ? WHERE id = ?";
+        String updateFinanceSql = "UPDATE financeReport SET paid = ?, paymentDate = ?, status = ? WHERE id = ?";
+        String getRentalAgreementSql = "SELECT rentalAgreementId FROM financeReport WHERE id = ?";
+        String deactivateRentalAgreementSql = "UPDATE rentalAgreement SET active = false WHERE id = ?";
+        String getCarIdSql = "SELECT carId FROM rentalAgreement WHERE id = ?";
+        String makeCarAvailableSql = "UPDATE car SET status = 'available' WHERE vehicleNumber = ?";
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false); // Start transaction
 
-            statement.setBoolean(1, paid);
-
-            if (paymentDate != null) {
-                statement.setDate(2, Date.valueOf(paymentDate));
-            } else {
-                statement.setNull(2, Types.DATE);
+            // 1. Opdater financeReport
+            try (PreparedStatement financeStmt = connection.prepareStatement(updateFinanceSql)) {
+                financeStmt.setBoolean(1, paid);
+                if (paymentDate != null) {
+                    financeStmt.setDate(2, Date.valueOf(paymentDate));
+                } else {
+                    financeStmt.setNull(2, Types.DATE);
+                }
+                financeStmt.setString(3, paid ? "Paid" : "Unpaid");
+                financeStmt.setInt(4, financeReportId);
+                financeStmt.executeUpdate();
             }
 
-            statement.setString(3, paid ? "Paid" : "Unpaid");
-            statement.setInt(4, financeReportId);
-            statement.executeUpdate();
+            if (paid) {
+                int rentalAgreementId = -1;
+                String carId = null;
 
+                // 2. Find rentalAgreementId
+                try (PreparedStatement getRentalStmt = connection.prepareStatement(getRentalAgreementSql)) {
+                    getRentalStmt.setInt(1, financeReportId);
+                    try (ResultSet rs = getRentalStmt.executeQuery()) {
+                        if (rs.next()) {
+                            rentalAgreementId = rs.getInt("rentalAgreementId");
+                        }
+                    }
+                }
+
+                // 3. Sæt rentalAgreement til inaktiv
+                if (rentalAgreementId != -1) {
+                    try (PreparedStatement deactivateStmt = connection.prepareStatement(deactivateRentalAgreementSql)) {
+                        deactivateStmt.setInt(1, rentalAgreementId);
+                        deactivateStmt.executeUpdate();
+                    }
+
+                    // 4. Find carId fra rentalAgreement
+                    try (PreparedStatement getCarStmt = connection.prepareStatement(getCarIdSql)) {
+                        getCarStmt.setInt(1, rentalAgreementId);
+                        try (ResultSet rs = getCarStmt.executeQuery()) {
+                            if (rs.next()) {
+                                carId = rs.getString("carId");
+                            }
+                        }
+                    }
+
+                    // 5. Sæt bil til 'Ledig'
+                    if (carId != null) {
+                        try (PreparedStatement makeCarAvailableStmt = connection.prepareStatement(makeCarAvailableSql)) {
+                            makeCarAvailableStmt.setString(1, carId);
+                            makeCarAvailableStmt.executeUpdate();
+                        }
+                    }
+                }
+            }
+
+            connection.commit(); // Alt lykkedes
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
 }
