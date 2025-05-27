@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-
+//Gustav
 @Controller
 @RequestMapping("/finance")
 public class FinanceReportController {
@@ -33,7 +33,7 @@ public class FinanceReportController {
         model.addAttribute("financeReports", reports);
         return "financeReports";
     }
-
+//Gustav, Christoffer og Sofus
     @GetMapping("/generate/{rentalAgreementId}")
     public String generateFinanceReport(@PathVariable int rentalAgreementId,
                                         HttpSession session,

@@ -32,7 +32,7 @@ public class UserRepository {
         }
     }
 
-
+//Gustav?
     public User findByUserLogin(String userLogin){
         String sql = "SELECT id, userLogin, name, password FROM `user` WHERE userLogin = ?";
         User user = null;

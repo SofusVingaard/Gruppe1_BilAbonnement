@@ -1,5 +1,5 @@
 package org.example.bilabonnement_gruppe1.model;
-
+// Gustav
 public class User {
     private int id;
     private String userLogin;

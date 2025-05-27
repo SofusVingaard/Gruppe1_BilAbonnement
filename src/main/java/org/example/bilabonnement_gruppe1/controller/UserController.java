@@ -53,7 +53,7 @@ public class UserController {
         return "index";
     }
 
-
+//Gustav
     @PostMapping("/login")
     public String login(
             HttpSession session,
@@ -71,7 +71,7 @@ public class UserController {
             return "redirect:/index";
         }
     }
-
+//Gustav
     @GetMapping("/logout")
     public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
         session.invalidate();
