@@ -1,19 +1,18 @@
-body {
+.finance-page {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f7fa;
     color: #333;
-    margin: 0;
-    padding: 0;
     margin-left: 220px;
+    padding: 0;
 }
 
-h1 {
+.finance-page h1 {
     text-align: center;
     margin: 30px 0;
     color: #2c3e50;
 }
 
-table {
+.finance-page table {
     width: 90%;
     margin: 0 auto 40px;
     border-collapse: collapse;
@@ -23,36 +22,37 @@ table {
     overflow: hidden;
 }
 
-thead {
+.finance-page thead {
     background-color: #34495e;
     color: white;
 }
 
-th, td {
+.finance-page th,
+.finance-page td {
     padding: 12px 15px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
-tbody tr:nth-child(even) {
+.finance-page tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-tbody tr:hover {
+.finance-page tbody tr:hover {
     background-color: #eaf2f8;
 }
 
-a {
+.finance-page a {
     color: #2980b9;
     text-decoration: none;
     font-weight: 500;
 }
 
-a:hover {
+.finance-page a:hover {
     text-decoration: underline;
 }
 
-a[href*="generate"] {
+.finance-page a[href*="generate"] {
     background-color: #27ae60;
     color: white;
     padding: 6px 12px;
@@ -62,11 +62,11 @@ a[href*="generate"] {
     transition: background-color 0.3s ease;
 }
 
-a[href*="generate"]:hover {
+.finance-page a[href*="generate"]:hover {
     background-color: #1e8449;
 }
 
-a[href*="/finance/reports"] {
+.finance-page a[href*="/finance/reports"] {
     display: block;
     text-align: center;
     margin: 20px auto;

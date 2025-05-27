@@ -4,11 +4,10 @@
 
     <nav>
       <a th:href="@{/cars/carList}" class="nav-menu-button">Biler</a>
-      <a th:href="@{/rentalAgreement/rentalAgreement}" class="nav-menu-button">Lejeaftaler</a>
-      <a th:href="@{/finance/reports}" class="nav-menu-button">Finansrapporter</a>
+      <a th:href="@{/rentalAgreement/rentalAgreement}" class="nav-menu-button">Rental Agreement</a>
       <a th:href="@{/cars/create}" class="nav-menu-button">Opret bil</a>
+      <a th:href="@{/finance/reports}" class="nav-menu-button">Finansrapport</a>
       <a th:href="@{/user/createCustomer}" class="nav-menu-button">Opret kunde</a>
-
       <a th:if="${session.currentUser != null}" th:href="@{/user/logout}" class="nav-menu-button">Logout</a>
       <a th:if="${session.currentUser == null}" th:href="@{/user/login}" class="nav-menu-button">Login</a>
     </nav>

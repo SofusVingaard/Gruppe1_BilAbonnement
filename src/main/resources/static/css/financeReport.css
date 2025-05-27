@@ -1,19 +1,18 @@
-body {
+.finance-reports-page {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f7fa;
     color: #333;
-    margin: 0;
-    padding: 0;
     margin-left: 220px;
+    padding: 0;
 }
 
-h1 {
+.finance-reports-page h1 {
     text-align: center;
     margin: 30px 0;
     color: #2c3e50;
 }
 
-table {
+.finance-reports-page table {
     width: 90%;
     margin: 0 auto 40px;
     border-collapse: collapse;
@@ -23,37 +22,38 @@ table {
     overflow: hidden;
 }
 
-thead {
+.finance-reports-page thead {
     background-color: #2980b9;
     color: white;
 }
 
-th, td {
+.finance-reports-page th,
+.finance-reports-page td {
     padding: 12px 15px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
-tbody tr:nth-child(even) {
+.finance-reports-page tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-tbody tr:hover {
+.finance-reports-page tbody tr:hover {
     background-color: #eaf2f8;
 }
 
-a {
+.finance-reports-page a {
     color: #2980b9;
     text-decoration: none;
     margin-right: 10px;
     font-weight: 500;
 }
 
-a:hover {
+.finance-reports-page a:hover {
     text-decoration: underline;
 }
 
-button {
+.finance-reports-page button {
     background-color: #27ae60;
     color: white;
     border: none;
@@ -64,18 +64,39 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+.finance-reports-page button:hover {
     background-color: #1e8449;
 }
 
-form {
+.finance-reports-page form {
     display: inline;
 }
 
-a[href*="generate"] {
+.finance-reports-page a[href*="generate"] {
     display: block;
     text-align: center;
     margin: 20px auto;
     font-weight: bold;
     color: #2c3e50;
 }
+.finance-reports-page .generate-report-btn {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-left: 150px;
+}
+
+.finance-reports-page .generate-report-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+

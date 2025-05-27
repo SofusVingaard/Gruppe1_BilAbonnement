@@ -10,7 +10,9 @@
 <header>
   <div th:replace="~{fragments/header.html :: site-header}"></div>
 </header>
-<h1>Select Rental Agreement for Finance Report</h1>
+
+<div class="finance-page">
+  <h1>Select Rental Agreement for Finance Report</h1>
 
 <table>
   <thead>
@@ -42,6 +44,7 @@
   </tbody>
 </table>
 
-<a th:href="@{/finance/reports}">Back to Reports</a>
+  <a th:href="@{/finance/reports}">Back to Reports</a>
+</div>
 </body>
 </html>
