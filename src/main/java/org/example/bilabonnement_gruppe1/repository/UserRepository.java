@@ -16,6 +16,7 @@ public class UserRepository {
     @Autowired
     private DataSource dataSource;
 
+    // Sofus
     public void createUser(User user) {
         String sql = "INSERT INTO user (userLogin, name, password) VALUES (?, ?, ?)";
 
@@ -52,7 +53,6 @@ public class UserRepository {
                     user.setPassword(resultSet.getString("password"));
                 }
             }
-
         } catch (SQLException e){
             e.printStackTrace();
         }

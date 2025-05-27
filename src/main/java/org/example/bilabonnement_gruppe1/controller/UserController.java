@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+// Sofus
 @Controller
 @RequestMapping ("/user")
 public class UserController {
@@ -22,12 +24,13 @@ public class UserController {
     CustomerRepository customerRepository;
 
 
-
+    // Sofus
     @GetMapping("/createUser")
     public String createUser() {
         return "createUser";
     }
 
+    // Sofus
     @PostMapping("/createUser")
     public String createUser
             (@RequestParam ("userLogin") String userLogin,

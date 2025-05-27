@@ -33,7 +33,9 @@ public class FinanceReportController {
         model.addAttribute("financeReports", reports);
         return "financeReports";
     }
-//Gustav, Christoffer og Sofus
+
+
+    // Sofus, Christoffer og Gustav
     @GetMapping("/generate/{rentalAgreementId}")
     public String generateFinanceReport(@PathVariable int rentalAgreementId,
                                         HttpSession session,
@@ -45,7 +47,7 @@ public class FinanceReportController {
         RentalAgreement agreement = rentalAgreementRepository.getActiveRentalAgreementById(rentalAgreementId);
         if (agreement == null) {
             model.addAttribute("error", "Rental Agreement not found or inactive");
-            return "errorPage";  // evt. en custom error side
+            return "errorPage";
         }
         model.addAttribute("rentalAgreement", agreement);
 

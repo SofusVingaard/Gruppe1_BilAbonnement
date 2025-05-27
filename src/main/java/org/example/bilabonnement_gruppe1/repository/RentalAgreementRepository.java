@@ -16,6 +16,7 @@ public class RentalAgreementRepository {
     @Autowired
     private DataSource dataSource;
 
+    // Sofus
     public void createRentalAgreement(RentalAgreement agreement) {
         String damageSql = "INSERT INTO damageReport (repairCost, note) VALUES (?, ?)";
 
@@ -30,7 +31,7 @@ public class RentalAgreementRepository {
              PreparedStatement rentalStmt = connection.prepareStatement(rentalSql, Statement.RETURN_GENERATED_KEYS);
              PreparedStatement updateCarStmt = connection.prepareStatement(updateCarSql)) {
 
-            // 1. Opret damageReport
+            // Opretter damageReport først
             damageStmt.setDouble(1, 0.0);
             damageStmt.setString(2, "");
             damageStmt.executeUpdate();
@@ -41,7 +42,7 @@ public class RentalAgreementRepository {
                 damageReportId = damageKeys.getInt(1);
             }
 
-            // 2. Opret rentalAgreement med damageReportId
+            // Oprettelse af rentalAgreement inklusiv damageReportId
             rentalStmt.setString(1, agreement.getCar().getVehicleNumber());
             rentalStmt.setInt(2, agreement.getCustomerPhoneNumber());
             rentalStmt.setString(3, agreement.getUser().getUserLogin());
@@ -57,7 +58,7 @@ public class RentalAgreementRepository {
 
             rentalStmt.executeUpdate();
 
-            // 3. Opdater bilens status
+            // Den tilknyttede bil får opdateret sin status
             updateCarStmt.setString(1, agreement.getCar().getVehicleNumber());
             updateCarStmt.executeUpdate();
 
@@ -67,8 +68,7 @@ public class RentalAgreementRepository {
         }
     }
 
-
-
+    // Thomas
     public void updateRentalAgreement(RentalAgreement agreement) {
         String sql = "UPDATE rentalAgreement SET " +
                 "carId = ?, " +
@@ -100,7 +100,7 @@ public class RentalAgreementRepository {
         }
     }
 
-
+    // Thomas
     public ArrayList<RentalAgreement> getRentalAgreementsByActiveStatus(boolean active) {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement WHERE active = ?";
@@ -131,13 +131,17 @@ public class RentalAgreementRepository {
                 agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
                 int monthlyPrice=resultSet.getInt("monthlyCarPrice");
                 int allowedKM=resultSet.getInt("allowedKM");
+
                 int allowedKMPrice=0;
+
                 if (allowedKM==1750){
                     allowedKMPrice=250;
                 }if (allowedKM==2000){
                     allowedKMPrice=450;
                 }
+
                 monthlyPrice+=allowedKMPrice;
+
                 agreement.setMonthlyCarPrice(monthlyPrice);
                 System.out.println("Lejeaftale ID: " + agreement.getId() + ", Pris/måned: " + agreement.getMonthlyCarPrice());
 
@@ -152,7 +156,6 @@ public class RentalAgreementRepository {
         return agreements;
     }
 
-
     public ArrayList<RentalAgreement> getActiveRentalAgreements() {
         return getRentalAgreementsByActiveStatus(true);
     }
@@ -161,6 +164,7 @@ public class RentalAgreementRepository {
         return getRentalAgreementsByActiveStatus(false);
     }
 
+    // Thomas
     public ArrayList<RentalAgreement> getRentalAgreementByPhoneNumber(int customerPhoneNumber) {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement WHERE customerPhoneNumber = ?";
@@ -199,7 +203,6 @@ public class RentalAgreementRepository {
 
         return agreements;
     }
-
 
     public int countActiveAgreements() {
         String sql = "SELECT COUNT(*) FROM rentalAgreement WHERE active = TRUE";
@@ -282,6 +285,9 @@ public class RentalAgreementRepository {
         return null;
     }
 
+    // Denne metode bruges til at indhente alle informationer fra rentalAgreement
+    // Inklusiv de tilknyttede objekter som Car, User, Customer og DamageReport
+    // Sofus og Gustav
     public RentalAgreement getActiveRentalAgreementById(int id) {
         String sql = """
         SELECT ra.id, ra.carId, ra.customerPhoneNumber, ra.userLogin, ra.damageReportId,
@@ -310,7 +316,7 @@ public class RentalAgreementRepository {
             if (resultSet.next()) {
                 RentalAgreement agreement = new RentalAgreement();
 
-                // Basic agreement info
+
                 agreement.setId(resultSet.getInt("id"));
                 agreement.setCarId(resultSet.getString("carId"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
@@ -323,6 +329,8 @@ public class RentalAgreementRepository {
                     agreement.setEndDate(sqlEndDate.toLocalDate());
                 }
 
+                // Neden for gemmes data for all objekterne og gemmes i en liste til rentalAgreement
+
                 agreement.setActive(resultSet.getBoolean("active"));
                 agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
                 agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
@@ -330,7 +338,6 @@ public class RentalAgreementRepository {
                 agreement.setTotalPrice(resultSet.getDouble("totalPrice"));
                 agreement.setMonthsRented(resultSet.getInt("monthsRented"));
 
-                // Car info
                 Car car = new Car();
                 car.setVehicleNumber(resultSet.getString("vehicleNumber"));
                 car.setModel(resultSet.getString("model"));
@@ -339,7 +346,6 @@ public class RentalAgreementRepository {
                 car.setCo2Emission(resultSet.getDouble("co2Emission"));
                 agreement.setCar(car);
 
-                // Customer info
                 Customer customer = new Customer();
                 customer.setId(resultSet.getInt("cu_id"));
                 customer.setName(resultSet.getString("cu_name"));
@@ -347,13 +353,11 @@ public class RentalAgreementRepository {
                 customer.setPhoneNumber(resultSet.getInt("cu_phoneNumber"));
                 agreement.setCustomer(customer);
 
-                // User info
                 User user = new User();
                 user.setUserLogin(resultSet.getString("userLogin"));
                 user.setName(resultSet.getString("u_name"));
                 agreement.setUser(user);
 
-                // Damage report if exists
                 if (resultSet.getInt("dr_id") > 0) {
                     DamageReport damageReport = new DamageReport();
                     damageReport.setId(resultSet.getInt("dr_id"));
@@ -398,13 +402,17 @@ public class RentalAgreementRepository {
 
                 int monthlyPrice=resultSet.getInt("monthlyCarPrice");
                 int allowedKM=resultSet.getInt("allowedKM");
+
                 int allowedKMPrice=0;
+
                 if (allowedKM==1750){
                     allowedKMPrice=250;
                 }if (allowedKM==2000){
                     allowedKMPrice=450;
                 }
+
                 monthlyPrice+=allowedKMPrice;
+
                 agreement.setMonthlyCarPrice(monthlyPrice);
 
 
@@ -415,5 +423,4 @@ public class RentalAgreementRepository {
         }
         return agreements;
     }
-
 }

@@ -38,7 +38,10 @@
       </tr>
       <tr>
         <th>Total Cost:</th>
-        <td th:text="${#numbers.formatDecimal(financeReport.totalCost, 1, 2)}"></td>
+        <td>
+          <span th:text="${financeReport.totalCost} + ' DKK'">1000 DKK</span><br>
+          <span th:text="${#numbers.formatDecimal(financeReport.totalCost / 7.5, 1, 2)} + ' EUR'">133.33 EUR</span>
+        </td>
       </tr>
       <tr>
         <th>Status:</th>

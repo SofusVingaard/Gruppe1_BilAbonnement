@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+
+// Sofus
 @Controller
 @RequestMapping("/damageReport")
 public class DamageReportController {
@@ -24,6 +26,8 @@ public class DamageReportController {
     @Autowired
     private DamageRepository damageRepository;
 
+
+    // Sofus
     @GetMapping("/damageReport")
     public String showDamageReport(HttpSession session,
                                    Model model,
@@ -43,16 +47,7 @@ public class DamageReportController {
         return "damageReport";
     }
 
-
-    @GetMapping("/damage")
-    public String showDamage(HttpSession session) {
-
-        if (session.getAttribute("currentUser") == null) {
-            return "redirect:/index";
-        }
-        return "/damage";
-    }
-
+    // Sofus
     @PostMapping("/damage")
     public String createDamage(@RequestParam("damageReportId") int damageReportId,
                                @RequestParam("damageType") String damageType,
@@ -65,6 +60,7 @@ public class DamageReportController {
         return "redirect:/damageReport/damageReport?damageReportId=" + damageReportId;
     }
 
+    // Sofus
     @PostMapping("/delete")
     public String deleteDamage(@RequestParam("damageReportId") int damageReportId,
                                @RequestParam("damageId") int damageId) {

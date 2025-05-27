@@ -30,7 +30,6 @@ public class CarController {
         return "carList";
     }
 
-
     @GetMapping("/availableCars")
     public String showAvailableCars(Model model, HttpSession session) {
 
@@ -39,7 +38,6 @@ public class CarController {
         }
 
         ArrayList<Car> carList = carRepository.showAvailableCars("available");
-
         model.addAttribute("carList", carList);
 
         return "carList";
@@ -51,6 +49,7 @@ public class CarController {
         if (session.getAttribute("currentUser") == null) {
             return "redirect:/index";
         }
+
         model.addAttribute("car", new Car());
         return "createCar";
     }
@@ -79,7 +78,6 @@ public class CarController {
         model.addAttribute("selectedStatus", status);
         return "carList";
     }
-
 
     @GetMapping("/edit/{vehicleNumber}")
     public String showEditForm(@PathVariable String vehicleNumber, Model model, HttpSession session) {

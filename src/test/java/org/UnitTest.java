@@ -1,9 +1,9 @@
 package org;
 
 
+import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.controller.CarController;
 import org.example.bilabonnement_gruppe1.controller.RentalAgreementController;
-import org.example.bilabonnement_gruppe1.model.Car;
 import org.example.bilabonnement_gruppe1.model.RentalAgreement;
 import org.example.bilabonnement_gruppe1.repository.CarRepository;
 import org.example.bilabonnement_gruppe1.repository.RentalAgreementRepository;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 
@@ -27,7 +28,7 @@ import static org.mockito.Mockito.verify;
 
 
 @ExtendWith(MockitoExtension.class)
-public class Show_RentalAgreement_UnitTest {
+public class UnitTest {
 
 
     @Mock
@@ -50,6 +51,7 @@ public class Show_RentalAgreement_UnitTest {
     @Test
     public void findRentalAgreementsHappyFlow() {
         // Assumption
+
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         RentalAgreement rentalAgreement = new RentalAgreement();
         rentalAgreement.setId(1);
@@ -57,7 +59,9 @@ public class Show_RentalAgreement_UnitTest {
         given(rentalAgreementRepository.getAllRentalAgreements()).willReturn(agreements);
 
         // Execution
-        String viewName = rentalAgreementController.rentalAgreement(model);
+        HttpSession session= Mockito.mock(HttpSession.class);
+        Mockito.when(session.getAttribute("currentUser")).thenReturn(new Object());
+        String viewName = rentalAgreementController.rentalAgreement(model, session);
 
         // Validation
         assertEquals("rentalAgreement", viewName);
@@ -73,7 +77,9 @@ public class Show_RentalAgreement_UnitTest {
 
         // Execution
         given(carRepository.getCarsByStatus(status)).willThrow(mockException);
-        String result = carController.filterCars(status, model);
+        HttpSession session= Mockito.mock(HttpSession.class);
+        Mockito.when(session.getAttribute("currentUser")).thenReturn(new Object());
+        String result = carController.filterCars(status, model, session);
 
         // Validation
         assertEquals("carList", result);
