@@ -1,0 +1,81 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    margin-left: 220px;
+}
+
+h1 {
+    text-align: center;
+    margin: 30px 0;
+    color: #2c3e50;
+}
+
+table {
+    width: 90%;
+    margin: 0 auto 40px;
+    border-collapse: collapse;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: #2980b9;
+    color: white;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #eaf2f8;
+}
+
+a {
+    color: #2980b9;
+    text-decoration: none;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1e8449;
+}
+
+form {
+    display: inline;
+}
+
+a[href*="generate"] {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    font-weight: bold;
+    color: #2c3e50;
+}
