@@ -79,19 +79,19 @@ CREATE TABLE rentalAgreement (
 
 
 
-CREATE TABLE carFinance(
+CREATE TABLE IF NOT EXISTS financeReport (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    totalPrice DOUBLE,
-    rentalAgreementId INT,
-    damagePrice DOUBLE,
-    co2Emission DOUBLE,
-    kmOverLimit DOUBLE,
-    date DATE,
-    damageReportId INT,
-    rentalFee double,
-
-    FOREIGN KEY (rentalAgreementId) REFERENCES rentalAgreement (id)
-);
+    rentalAgreementId INT NOT NULL,
+    monthlyPrice DECIMAL(10,2) NOT NULL,
+    kmOverLimitCost DECIMAL(10,2) NOT NULL,
+    repairCost DECIMAL(10,2) NOT NULL,
+    damageCost DECIMAL(10,2) NOT NULL,
+    totalCost DECIMAL(10,2) NOT NULL,
+    paid BOOLEAN DEFAULT FALSE,
+    paymentDate DATE,
+    status VARCHAR(20) DEFAULT 'Unpaid',
+    FOREIGN KEY (rentalAgreementId) REFERENCES rentalAgreement(id)
+    );
 
 
 

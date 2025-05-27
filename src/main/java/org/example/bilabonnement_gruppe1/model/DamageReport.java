@@ -5,9 +5,10 @@ import java.util.List;
 public class DamageReport {
     private int id;
     private int userID;
-    private int rentalAgreementID;
+    private int rentalAgreementID;  // Add this field
     private double kmOverLimit;
     private double repairCost;
+    private String note;           // Add this field
     private List<Damage> damage;
 
     public DamageReport() {
@@ -22,12 +23,29 @@ public class DamageReport {
         this.kmOverLimit = kmOverLimit;
     }
 
+    // Getters and Setters
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public int getRentalAgreementID() {
+        return rentalAgreementID;
+    }
+
+    public void setRentalAgreementID(int rentalAgreementID) {
+        this.rentalAgreementID = rentalAgreementID;
     }
 
     public double getKmOverLimit() {
@@ -46,19 +64,19 @@ public class DamageReport {
         this.repairCost = repairCost;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     public List<Damage> getDamage() {
         return damage;
     }
 
     public void setDamage(List<Damage> damage) {
         this.damage = damage;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 }

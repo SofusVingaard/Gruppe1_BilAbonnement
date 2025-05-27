@@ -1,17 +1,16 @@
 <div th:fragment="site-header">
-    <div class="site-header">
-      <img th:src="@{/img/logo.png}" alt="Logo" class="logo">
+  <div class="site-header">
+    <img th:src="@{/img/logo.png}" alt="Logo" class="logo">
 
-      <nav>
-        <a th:href="@{/cars/carList}" class="nav-menu-button">Biler</a>
-        <a th:href="@{/rentalAgreement/rentalAgreement}" class="nav-menu-button">Rental Agreement</a>
-        <a th:href="@{/cars/create}" class="nav-menu-button">opret bil</a>
-        <a th:href ="@{/financeReport}" class="nav-menu-button">Finans</a>
-        <a th:href ="@{/user/createCustomer}" class="nav-menu-button">Opret kunde</a>
+    <nav>
+      <a th:href="@{/cars/carList}" class="nav-menu-button">Biler</a>
+      <a th:href="@{/rentalAgreement/rentalAgreement}" class="nav-menu-button">Lejeaftaler</a>
+      <a th:href="@{/finance/reports}" class="nav-menu-button">Finansrapporter</a>
+      <a th:href="@{/cars/create}" class="nav-menu-button">Opret bil</a>
+      <a th:href="@{/user/createCustomer}" class="nav-menu-button">Opret kunde</a>
 
-        <a th:if="${session.currentUser != null}" th:href="@{/user/logout}" class="nav-menu-button">Logout</a>
-        <a th:if="${session.currentUser == null}" th:href="@{/user/login}" class="nav-menu-button">Login</a>
-      </nav>
-      </nav>
-    </div>
+      <a th:if="${session.currentUser != null}" th:href="@{/user/logout}" class="nav-menu-button">Logout</a>
+      <a th:if="${session.currentUser == null}" th:href="@{/user/login}" class="nav-menu-button">Login</a>
+    </nav>
+  </div>
 </div>

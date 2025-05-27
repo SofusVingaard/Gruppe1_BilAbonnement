@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Finance Reports</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/financeReport.css}">
+</head>
+<body>
+<header>
+    <div th:replace="~{fragments/header.html :: site-header}"></div>
+</header>
+<h1>Finance Reports</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Rental Agreement</th>
+        <th>Monthly Price</th>
+        <th>KM Over Limit Cost</th>
+        <th>Repair Cost</th>
+        <th>Damage Cost</th>
+        <th>Total Cost</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="report : ${financeReports}">
+        <td th:text="${report.id}"></td>
+        <td th:text="${report.rentalAgreementId}"></td>
+        <td th:text="${#numbers.formatDecimal(report.monthlyPrice, 1, 2)}"></td>
+        <td th:text="${#numbers.formatDecimal(report.kmOverLimitCost, 1, 2)}"></td>
+        <td th:text="${#numbers.formatDecimal(report.repairCost, 1, 2)}"></td>
+        <td th:text="${#numbers.formatDecimal(report.damageCost, 1, 2)}"></td>
+        <td th:text="${#numbers.formatDecimal(report.totalCost, 1, 2)}"></td>
+        <td th:text="${report.status}"></td>
+        <td>
+            <a th:href="@{/finance/generate/{id}(id=${report.rentalAgreementId})}">View</a>
+            <form th:action="@{/finance/updatePaymentStatus}" method="post" style="display: inline;">
+                <input type="hidden" name="financeReportId" th:value="${report.id}">
+                <input type="hidden" name="paid" th:value="${!report.paid}">
+                <button type="submit" th:text="${report.paid} ? 'Mark Unpaid' : 'Mark Paid'"></button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/finance/agreements}">Generate New Report</a>
+
+</body>
+</html>

@@ -244,34 +244,53 @@ public class RentalAgreementRepository {
     }
 
     public RentalAgreement getRentalAgreement(int id) {
-        String sql = "SELECT * FROM rentalAgreement WHERE id = ?";
+        String sql = "SELECT ra.*, dr.repairCost FROM rentalAgreement ra " +
+                "LEFT JOIN damageReport dr ON ra.damageReportId = dr.id " +
+                "WHERE ra.id = ?";
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
+
             if (resultSet.next()) {
                 RentalAgreement agreement = new RentalAgreement();
+
                 agreement.setId(resultSet.getInt("id"));
                 agreement.setCarId(resultSet.getString("carId"));
                 agreement.setCustomerPhoneNumber(resultSet.getInt("customerPhoneNumber"));
+                agreement.setUserLogin(resultSet.getString("userLogin"));
                 agreement.setDamageReportId(resultSet.getInt("damageReportId"));
+                agreement.setMonthlyCarPrice(resultSet.getInt("monthlyCarPrice"));
+                agreement.setMonthsRented(resultSet.getInt("monthsRented"));
+                agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+                agreement.setTotalPrice(resultSet.getDouble("totalPrice"));
 
                 Date sqlStartDate = resultSet.getDate("startDate");
-                LocalDate startDate = (sqlStartDate != null) ? sqlStartDate.toLocalDate() : null;
-                agreement.setStartDate(startDate);
-
+                if (sqlStartDate != null) {
+                    agreement.setStartDate(sqlStartDate.toLocalDate());
+                }
 
                 Date sqlEndDate = resultSet.getDate("endDate");
-                LocalDate endDate = (sqlEndDate != null) ? sqlEndDate.toLocalDate() : null;
-                agreement.setEndDate(endDate);
+                if (sqlEndDate != null) {
+                    agreement.setEndDate(sqlEndDate.toLocalDate());
+                }
 
                 agreement.setActive(resultSet.getBoolean("active"));
                 agreement.setAllowedKM(resultSet.getDouble("allowedKM"));
-                agreement.setKmOverLimit(resultSet.getDouble("kmOverLimit"));
+
+                if (resultSet.getInt("damageReportId") > 0) {
+                    DamageReport damageReport = new DamageReport();
+                    damageReport.setId(resultSet.getInt("damageReportId"));
+                    damageReport.setRepairCost(resultSet.getDouble("repairCost"));
+                    agreement.setDamageReport(damageReport);
+                }
+
                 return agreement;
             }
         } catch (SQLException e) {
+            System.err.println("Error getting rental agreement: " + e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -411,20 +430,6 @@ public class RentalAgreementRepository {
         return agreements;
     }
 
-    /*public void updateRentalAgreementDamageReport(int rentalAgreementId, DamageReport damageReport) {
-        String sql = "UPDATE rentalAgreement SET damageReportId = ? WHERE id = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setInt(1, damageReport.getId());
-            statement.setInt(2, rentalAgreementId);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 
 
     public RentalAgreement findById(int id) {
