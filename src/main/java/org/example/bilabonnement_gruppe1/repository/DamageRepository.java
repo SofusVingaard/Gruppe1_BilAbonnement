@@ -18,6 +18,7 @@ public class DamageRepository {
     @Autowired
     DataSource dataSource;
 
+
     public void createDamage(Damage damage) {
         String sql = "INSERT INTO damage (damageReportId, damageType, price) VALUES (?,?,?)";
 
@@ -30,29 +31,12 @@ public class DamageRepository {
 
             statement.executeUpdate();
 
-                updateDamageReportRepairCost(damage.getDamageReportId());
+            updateDamageReportRepairCost(damage.getDamageReportId());
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-    public void updateDamageReportRepairCost(int damageReportId) {
-        String sql = "UPDATE damageReport SET repairCost = ? WHERE id = ?";
-        double totalRepairCost = getRepairCost(damageReportId);
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setDouble(1, totalRepairCost);
-            statement.setInt(2, damageReportId);
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 
     public double getRepairCost(int damageReportId) {
@@ -108,7 +92,6 @@ public class DamageRepository {
 
         try (Connection connection = dataSource.getConnection()) {
 
-            // Først find damageReportId for den skade vi sletter
             try (PreparedStatement getStmt = connection.prepareStatement(getReportIdSql)) {
                 getStmt.setInt(1, damageId);
                 try (ResultSet rs = getStmt.executeQuery()) {
@@ -118,16 +101,29 @@ public class DamageRepository {
                 }
             }
 
-            // Slet skaden
             try (PreparedStatement deleteStmt = connection.prepareStatement(deleteSql)) {
                 deleteStmt.setInt(1, damageId);
                 deleteStmt.executeUpdate();
             }
 
-            // Opdater repairCost i damageReport hvis vi fandt en damageReportId
             if (damageReportId != -1) {
                 updateDamageReportRepairCost(damageReportId);  // <-- Kald din eksisterende metode her
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateDamageReportRepairCost(int damageReportId) {
+        String sql = "UPDATE damageReport SET repairCost = ? WHERE id = ?";
+        double totalRepairCost = getRepairCost(damageReportId);
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setDouble(1, totalRepairCost);
+            statement.setInt(2, damageReportId);
+            statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

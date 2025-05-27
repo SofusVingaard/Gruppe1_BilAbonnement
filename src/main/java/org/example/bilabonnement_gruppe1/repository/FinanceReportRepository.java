@@ -169,7 +169,6 @@ public class FinanceReportRepository {
         try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false); // Start transaction
 
-            // 1. Opdater financeReport
             try (PreparedStatement financeStmt = connection.prepareStatement(updateFinanceSql)) {
                 financeStmt.setBoolean(1, paid);
                 if (paymentDate != null) {
@@ -186,7 +185,6 @@ public class FinanceReportRepository {
                 int rentalAgreementId = -1;
                 String carId = null;
 
-                // 2. Find rentalAgreementId
                 try (PreparedStatement getRentalStmt = connection.prepareStatement(getRentalAgreementSql)) {
                     getRentalStmt.setInt(1, financeReportId);
                     try (ResultSet rs = getRentalStmt.executeQuery()) {
@@ -196,14 +194,12 @@ public class FinanceReportRepository {
                     }
                 }
 
-                // 3. Sæt rentalAgreement til inaktiv
                 if (rentalAgreementId != -1) {
                     try (PreparedStatement deactivateStmt = connection.prepareStatement(deactivateRentalAgreementSql)) {
                         deactivateStmt.setInt(1, rentalAgreementId);
                         deactivateStmt.executeUpdate();
                     }
 
-                    // 4. Find carId fra rentalAgreement
                     try (PreparedStatement getCarStmt = connection.prepareStatement(getCarIdSql)) {
                         getCarStmt.setInt(1, rentalAgreementId);
                         try (ResultSet rs = getCarStmt.executeQuery()) {
@@ -213,7 +209,6 @@ public class FinanceReportRepository {
                         }
                     }
 
-                    // 5. Sæt bil til 'Ledig'
                     if (carId != null) {
                         try (PreparedStatement makeCarAvailableStmt = connection.prepareStatement(makeCarAvailableSql)) {
                             makeCarAvailableStmt.setString(1, carId);
@@ -223,7 +218,7 @@ public class FinanceReportRepository {
                 }
             }
 
-            connection.commit(); // Alt lykkedes
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -15,6 +15,22 @@ public class DamageReportRepository {
     @Autowired
     private DataSource dataSource;
 
+    public void updateDamageReportRepairCost(int damageReportId) {
+        String sql = "UPDATE damageReport SET repairCost = ? WHERE id = ?";
+        double totalRepairCost = getRepairCost(damageReportId);
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setDouble(1, totalRepairCost);
+            statement.setInt(2, damageReportId);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void createDamageReport(DamageReport damageReport) {
         String sql = "INSERT INTO damageReport (repairCost, note, rentalAgreementId) VALUES (?, ?, ?)";
 

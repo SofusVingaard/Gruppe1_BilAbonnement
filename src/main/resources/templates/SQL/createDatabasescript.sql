@@ -17,12 +17,10 @@ CREATE TABLE car (
     co2Emission INT,
     image VARCHAR(250),
     status VARCHAR(50),
-    limited boolean,
+    limited boolean DEFAULT FALSE,
     monthlyFee int
 );
 
-ALTER TABLE car ADD COLUMN limited BOOLEAN DEFAULT FALSE;
-ALTER TABLE car ADD COLUMN monthlyFee INT;
 
 CREATE TABLE customer (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -33,11 +31,8 @@ CREATE TABLE customer (
 
 CREATE TABLE damageReport(
                              id INT AUTO_INCREMENT PRIMARY KEY,
-                             rentalAgreementId INT,
                              note TEXT,
-                             repairCost DOUBLE,
-
-                             FOREIGN KEY (rentalAgreementId) REFERENCES rentalAgreement (id)
+                             repairCost DOUBLE
 );
 
 
@@ -93,7 +88,6 @@ CREATE TABLE IF NOT EXISTS financeReport (
     FOREIGN KEY (rentalAgreementId) REFERENCES rentalAgreement(id)
     );
 
-SELECT * FROM damageReport WHERE id = 36;
 
 
 

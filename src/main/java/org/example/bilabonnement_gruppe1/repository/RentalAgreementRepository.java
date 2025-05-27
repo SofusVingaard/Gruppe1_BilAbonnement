@@ -101,20 +101,6 @@ public class RentalAgreementRepository {
     }
 
 
-
-    public void deleteRentalAgreement(int id) {
-        String sql = "DELETE FROM rentalAgreement WHERE id = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public ArrayList<RentalAgreement> getRentalAgreementsByActiveStatus(boolean active) {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement WHERE active = ?";
@@ -430,9 +416,4 @@ public class RentalAgreementRepository {
         return agreements;
     }
 
-
-
-    public RentalAgreement findById(int id) {
-        return null;
-    }
 }
