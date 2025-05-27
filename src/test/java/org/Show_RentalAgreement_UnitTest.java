@@ -1,6 +1,7 @@
 package org;
 
 
+import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.controller.CarController;
 import org.example.bilabonnement_gruppe1.controller.RentalAgreementController;
 import org.example.bilabonnement_gruppe1.model.Car;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 
@@ -57,7 +59,8 @@ public class Show_RentalAgreement_UnitTest {
         given(rentalAgreementRepository.getAllRentalAgreements()).willReturn(agreements);
 
         // Execution
-        String viewName = rentalAgreementController.rentalAgreement(model);
+        HttpSession session= Mockito.mock(HttpSession.class);
+        String viewName = rentalAgreementController.rentalAgreement(model, session);
 
         // Validation
         assertEquals("rentalAgreement", viewName);
@@ -73,7 +76,8 @@ public class Show_RentalAgreement_UnitTest {
 
         // Execution
         given(carRepository.getCarsByStatus(status)).willThrow(mockException);
-        String result = carController.filterCars(status, model);
+        HttpSession session= Mockito.mock(HttpSession.class);
+        String result = carController.filterCars(status, model, session);
 
         // Validation
         assertEquals("carList", result);
