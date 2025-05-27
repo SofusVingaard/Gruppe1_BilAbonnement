@@ -38,11 +38,9 @@ public class DamageRepository {
         }
     }
 
-
     public double getRepairCost(int damageReportId) {
         String sql = "SELECT price FROM damage WHERE damageReportId = ?";
         double totalPrice = 0;
-
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -107,13 +105,14 @@ public class DamageRepository {
             }
 
             if (damageReportId != -1) {
-                updateDamageReportRepairCost(damageReportId);  // <-- Kald din eksisterende metode her
+                updateDamageReportRepairCost(damageReportId);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public void updateDamageReportRepairCost(int damageReportId) {
         String sql = "UPDATE damageReport SET repairCost = ? WHERE id = ?";
         double totalRepairCost = getRepairCost(damageReportId);

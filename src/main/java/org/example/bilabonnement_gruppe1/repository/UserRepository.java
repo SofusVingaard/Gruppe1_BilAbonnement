@@ -32,7 +32,6 @@ public class UserRepository {
         }
     }
 
-
     public User findByUserLogin(String userLogin){
         String sql = "SELECT id, userLogin, name, password FROM `user` WHERE userLogin = ?";
         User user = null;
@@ -52,7 +51,6 @@ public class UserRepository {
                     user.setPassword(resultSet.getString("password"));
                 }
             }
-
         } catch (SQLException e){
             e.printStackTrace();
         }

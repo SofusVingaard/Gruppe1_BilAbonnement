@@ -21,8 +21,6 @@ public class FinanceReportRepository {
     @Autowired
     private RentalAgreementRepository rentalAgreementRepository;
 
-    @Autowired
-    private DamageReportRepository damageReportRepository;
 
     public void createFinanceReport(FinanceReport financeReport) {
         String sql = "INSERT INTO financeReport (rentalAgreementId, monthlyPrice, kmOverLimitCost, " +
@@ -54,6 +52,7 @@ public class FinanceReportRepository {
             System.err.println("No rental agreement found for ID: " + rentalAgreementId);
             return null;
         }
+
         double allowedKmPrice=0;
 
         if (agreement.getAllowedKM()==1750){
@@ -115,7 +114,6 @@ public class FinanceReportRepository {
                 report.setStatus(resultSet.getString("status"));
                 reports.add(report);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -167,7 +165,7 @@ public class FinanceReportRepository {
         String makeCarAvailableSql = "UPDATE car SET status = 'available' WHERE vehicleNumber = ?";
 
         try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(false); // Start transaction
+            connection.setAutoCommit(false);
 
             try (PreparedStatement financeStmt = connection.prepareStatement(updateFinanceSql)) {
                 financeStmt.setBoolean(1, paid);
@@ -217,12 +215,10 @@ public class FinanceReportRepository {
                     }
                 }
             }
-
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
 
 }

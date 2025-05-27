@@ -22,7 +22,6 @@ public class CarRepository {
         String sql = "select * from car WHERE status=?";
         ArrayList<Car> carList = new ArrayList<>();
 
-
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)){
 
@@ -89,6 +88,7 @@ public class CarRepository {
 
         return 0;
     }
+
     public ArrayList<Car> getCarsByLimited(boolean limited) {
         String sql = "SELECT * FROM car WHERE status = ? AND limited = ?";
         ArrayList<Car> carList = new ArrayList<>();
@@ -120,6 +120,7 @@ public class CarRepository {
 
         return carList;
     }
+
     public Car getCarByVehicleNumber(String vehicleNumber) {
         String sql = "SELECT * FROM car WHERE vehicleNumber = ?";
         try (Connection connection = dataSource.getConnection();
@@ -177,9 +178,9 @@ public class CarRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return carList;
     }
+
     public ArrayList<Car> getCarsByStatus(String status) {
         ArrayList<Car> carList = new ArrayList<>();
         String sql;
