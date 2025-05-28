@@ -50,6 +50,7 @@ public class CarRepository {
         return carList;
     }
 
+    //Christoffer
     public void createCar(Car car) {
         String sql = "INSERT INTO car (vehicleNumber, chassisnumber, model, equipment, kmDriven, co2Emission, image, status, limited, monthlyFee) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -73,6 +74,7 @@ public class CarRepository {
         }
     }
 
+    //Christoffer
     public int countAvailableCars() {
         String sql = "SELECT COUNT(*) FROM car WHERE status = 'available'";
 
@@ -89,6 +91,7 @@ public class CarRepository {
         return 0;
     }
 
+    //Sofus
     public ArrayList<Car> getCarsByLimited(boolean limited) {
         String sql = "SELECT * FROM car WHERE status = ? AND limited = ?";
         ArrayList<Car> carList = new ArrayList<>();
@@ -121,6 +124,7 @@ public class CarRepository {
         return carList;
     }
 
+    //Sofus
     public Car getCarByVehicleNumber(String vehicleNumber) {
         String sql = "SELECT * FROM car WHERE vehicleNumber = ?";
         try (Connection connection = dataSource.getConnection();
@@ -150,6 +154,7 @@ public class CarRepository {
         return null;
     }
 
+    //Gustav
     public ArrayList<Car> findAll(boolean limited) {
         String sql = "SELECT * FROM car WHERE status = ? AND limited = ?";
         ArrayList<Car> carList = new ArrayList<>();
@@ -181,6 +186,7 @@ public class CarRepository {
         return carList;
     }
 
+    //Gustav
     public ArrayList<Car> getCarsByStatus(String status) {
         ArrayList<Car> carList = new ArrayList<>();
         String sql;
@@ -216,6 +222,7 @@ public class CarRepository {
         return carList;
     }
 
+    //Christoffer
     public void updateCar(Car car) {
         String sql = "UPDATE car SET chassisnumber=?, model=?, equipment=?, kmDriven=?, co2Emission=?, image=?, status=?, limited=?, monthlyFee=? WHERE vehicleNumber=?";
 

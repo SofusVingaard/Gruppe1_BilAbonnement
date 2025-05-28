@@ -219,6 +219,7 @@ public class RentalAgreementRepository {
         return 0;
     }
 
+    //Christoffer
     public double averageRentalPeriodLength() {
         String sql = "SELECT AVG(DATEDIFF(endDate, startDate)) FROM rentalAgreement";
         try (Connection connection = dataSource.getConnection();
@@ -233,6 +234,7 @@ public class RentalAgreementRepository {
         return 0;
     }
 
+    //Christoffer
     public RentalAgreement getRentalAgreement(int id) {
         String sql = "SELECT ra.*, dr.repairCost FROM rentalAgreement ra " +
                 "LEFT JOIN damageReport dr ON ra.damageReportId = dr.id " +
@@ -374,7 +376,7 @@ public class RentalAgreementRepository {
         return null;
     }
 
-
+    //Christoffer
     public ArrayList<RentalAgreement> getAllRentalAgreements() {
         ArrayList<RentalAgreement> agreements = new ArrayList<>();
         String sql = "SELECT * FROM rentalAgreement";

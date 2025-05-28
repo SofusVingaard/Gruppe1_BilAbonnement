@@ -22,7 +22,7 @@ public class PageController {
     public String index() {
         return "index";
     }
-    //Christoffer
+    //Christoffer + Sofus
     @GetMapping("/dashboard")
     public String dashboard(Model model, HttpSession session) {
         if (session.getAttribute("currentUser") == null) {

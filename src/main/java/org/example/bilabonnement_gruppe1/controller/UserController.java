@@ -83,6 +83,7 @@ public class UserController {
         return "redirect:/index"; 
     }
 
+    //Sofus
     @GetMapping("/createCustomer")
     public String createCustomer(HttpSession session) {
 
@@ -93,6 +94,7 @@ public class UserController {
         return "createCustomer";
     }
 
+    //Sofus
     @PostMapping("/createCustomer")
     public String createCustomer(@RequestParam("name")String name,
                                      @RequestParam("email")String email,

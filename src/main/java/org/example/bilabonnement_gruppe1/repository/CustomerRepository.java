@@ -15,6 +15,7 @@ public class CustomerRepository {
 @Autowired
 private DataSource dataSource;
 
+    //Thomas
     public void createCustomer(Customer customer) {
         String sql = "INSERT INTO customer (name, email, phoneNumber) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection();

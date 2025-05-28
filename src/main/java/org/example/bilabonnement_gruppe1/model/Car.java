@@ -2,7 +2,6 @@ package org.example.bilabonnement_gruppe1.model;
 
 public class Car {
 
-    //Christoffer
 
     private String vehicleNumber;
     private String chassisnumber;
