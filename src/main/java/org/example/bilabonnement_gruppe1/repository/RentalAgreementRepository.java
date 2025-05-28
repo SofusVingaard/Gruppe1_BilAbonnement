@@ -204,6 +204,7 @@ public class RentalAgreementRepository {
         return agreements;
     }
 
+    //Christoffer
     public int countActiveAgreements() {
         String sql = "SELECT COUNT(*) FROM rentalAgreement WHERE active = TRUE";
         try (Connection connection = dataSource.getConnection();

@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-
+//Christoffer
 @Controller
 @RequestMapping("/cars")
 public class CarController {
@@ -19,6 +19,7 @@ public class CarController {
     @Autowired
     CarRepository carRepository;
 
+    //Christoffer
     @GetMapping("/carList")
     public String showCarList(Model model, HttpSession session) {
 
@@ -30,6 +31,7 @@ public class CarController {
         return "carList";
     }
 
+    //Christoffer
     @GetMapping("/availableCars")
     public String showAvailableCars(Model model, HttpSession session) {
 
@@ -43,6 +45,7 @@ public class CarController {
         return "carList";
     }
 
+    //Christoffer
     @GetMapping("/create")
     public String showCreateForm(Model model, HttpSession session) {
 
@@ -54,6 +57,7 @@ public class CarController {
         return "createCar";
     }
 
+    //Christtofer
     @PostMapping("/create")
     public String handleCreate(@ModelAttribute("car") Car car) {
 
@@ -62,6 +66,7 @@ public class CarController {
         return "redirect:/cars/create";
     }
 
+    //Christoffer
     @GetMapping("/filter")
     public String filterCars(@RequestParam(defaultValue = "all") String status, Model model, HttpSession session) {
 
@@ -79,6 +84,7 @@ public class CarController {
         return "carList";
     }
 
+    //Christoffer
     @GetMapping("/edit/{vehicleNumber}")
     public String showEditForm(@PathVariable String vehicleNumber, Model model, HttpSession session) {
         if (session.getAttribute("currentUser") == null) {
@@ -93,6 +99,7 @@ public class CarController {
         }
     }
 
+    //Christoffer
     @PostMapping("/edit")
     public String handleEdit(@ModelAttribute("car") Car car) {
         carRepository.updateCar(car);

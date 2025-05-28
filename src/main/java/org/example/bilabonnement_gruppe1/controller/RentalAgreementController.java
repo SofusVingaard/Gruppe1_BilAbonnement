@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-
+// Sofus og Thomas
 @Controller
 @RequestMapping("/rentalAgreement")
 public class RentalAgreementController {
