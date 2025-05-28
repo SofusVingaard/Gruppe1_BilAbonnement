@@ -21,7 +21,7 @@ public class FinanceReportRepository {
     @Autowired
     private RentalAgreementRepository rentalAgreementRepository;
 
-
+    //Gustav, Christoffer, Sofus
     public void createFinanceReport(FinanceReport financeReport) {
         String sql = "INSERT INTO financeReport (rentalAgreementId, monthlyPrice, kmOverLimitCost, " +
                 "repairCost, damageCost, totalCost, paid, status) " +
@@ -46,6 +46,7 @@ public class FinanceReportRepository {
         }
     }
 
+    //Christoffer, Gustav
     public FinanceReport generateFinanceReport(int rentalAgreementId) {
         RentalAgreement agreement = rentalAgreementRepository.getRentalAgreement(rentalAgreementId);
         if (agreement == null) {
@@ -87,6 +88,7 @@ public class FinanceReportRepository {
         return report;
     }
 
+    //Christoffer
     public List<FinanceReport> getAllFinanceReports() {
         List<FinanceReport> reports = new ArrayList<>();
         String sql = "SELECT * FROM financeReport";
@@ -121,6 +123,7 @@ public class FinanceReportRepository {
         return reports;
     }
 
+    //Gustav, Christoffer
     public FinanceReport getFinanceReportByRentalAgreementId(int rentalAgreementId) {
         String sql = "SELECT * FROM financeReport WHERE rentalAgreementId = ?";
 
@@ -157,6 +160,7 @@ public class FinanceReportRepository {
         return null;
     }
 
+    //Christoffer
     public void updatePaymentStatus(int financeReportId, boolean paid, LocalDate paymentDate) {
         String updateFinanceSql = "UPDATE financeReport SET paid = ?, paymentDate = ?, status = ? WHERE id = ?";
         String getRentalAgreementSql = "SELECT rentalAgreementId FROM financeReport WHERE id = ?";

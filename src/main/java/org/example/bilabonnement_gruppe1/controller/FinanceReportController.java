@@ -23,6 +23,7 @@ public class FinanceReportController {
     @Autowired
     private RentalAgreementRepository rentalAgreementRepository;
 
+    //Gustav
     @GetMapping("/reports")
     public String showAllFinanceReports(HttpSession session, Model model) {
         if (session.getAttribute("currentUser") == null) {
@@ -70,6 +71,7 @@ public class FinanceReportController {
         return "financeReportDetails";
     }
 
+    // Christoffer
     @PostMapping("/updatePaymentStatus")
     public String updatePaymentStatus(@RequestParam int financeReportId,
                                       @RequestParam boolean paid,
@@ -84,6 +86,7 @@ public class FinanceReportController {
         return "redirect:/finance/reports";
     }
 
+    //Christoffer
     @GetMapping("/agreements")
     public String showRentalAgreementsForFinance(HttpSession session, Model model) {
         if (session.getAttribute("currentUser") == null) {
