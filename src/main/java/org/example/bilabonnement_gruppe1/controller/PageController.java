@@ -14,14 +14,15 @@ public class PageController {
     @Autowired
     private RentalAgreementRepository rentalAgreementRepository;
 
+    //Christoffer
     @Autowired
     private CarRepository carRepository;
-
+    //Christoffer
     @GetMapping("/index")
     public String index() {
         return "index";
     }
-
+    //Christoffer
     @GetMapping("/dashboard")
     public String dashboard(Model model, HttpSession session) {
         if (session.getAttribute("currentUser") == null) {

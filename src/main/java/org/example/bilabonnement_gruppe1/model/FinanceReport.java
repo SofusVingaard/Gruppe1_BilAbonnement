@@ -2,6 +2,8 @@ package org.example.bilabonnement_gruppe1.model;
 
 import java.time.LocalDate;
 
+//Christoffer, Gustav, Sofus
+
 public class FinanceReport {
     private int id;
     private int rentalAgreementId;

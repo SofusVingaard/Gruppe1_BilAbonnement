@@ -2,9 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Rediger bil</title>
+    <link rel="stylesheet" th:href="@{/css/createCar.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
-
+<header>
+    <div th:replace="~{fragments/header.html :: site-header}"></div>
+</header>
 <h1>Rediger bil</h1>
 
 <form th:action="@{/cars/edit}" th:object="${car}" method="post">

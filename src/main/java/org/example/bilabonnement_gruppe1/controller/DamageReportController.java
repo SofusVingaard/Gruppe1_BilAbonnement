@@ -3,7 +3,6 @@ package org.example.bilabonnement_gruppe1.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.bilabonnement_gruppe1.model.Damage;
-import org.example.bilabonnement_gruppe1.repository.DamageReportRepository;
 import org.example.bilabonnement_gruppe1.repository.DamageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
